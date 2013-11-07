@@ -23,6 +23,7 @@ _wildfly_admin_user="admin"
 _wildfly_admin_pwd="admin"
 _wildfly_app_user="fiteagle"
 _wildfly_app_pwd="fiteagle"
+_wildfly_app_group="guest"
 
 function checkBinary {
   echo -n " * Checking for '$1'..."
@@ -60,7 +61,7 @@ function configContainer() {
     cp "${_installer_folder}/${_container_config}" "${_container_folder}/${_container_type}-${_container_version}/standalone/configuration"
     cd "${_container_folder}/${_container_type}-${_container_version}"
     ./bin/add-user.sh -u "${_wildfly_admin_user}" -p "${_wildfly_admin_pwd}"
-    ./bin/add-user.sh -a -u "${_wildfly_app_user}" -p "${_wildfly_app_pwd}"
+    ./bin/add-user.sh -a -g "${_wildfly_app_group}" -u "${_wildfly_app_user}" -p "${_wildfly_app_pwd}"
 }
 
 

@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
-_target_base="$(pwd)"
-_target="${_target_base}/fiteagle"
+_base="$(pwd)"
 
 _container_type="wildfly"
 _container_version="8.0.0.Beta1"
 _container_file="${_container_type}-${_container_version}.zip"
 _container_url="http://download.jboss.org/${_container_type}/${_container_version}/${_container_file}"
-_container_folder="${_target_base}/container"
+_container_folder="${_base}/container"
 _container_config="wildfly-standalone.xml"
 _container_config_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/wildfly-standalone.xml"
-
 
 _osgi_file="jbosgi-installer-2.1.0.jar"
 _osgi_url="http://sourceforge.net/projects/jboss/files/JBossOSGi/2.1.0/${_osgi_file}/download"
 _osgi_config="jbosgi-autoinstall.xml"
 _osgi_config_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/jbosgi-autoinstall.xml"
 
-_installer_folder="${_target_base}/tmp"
+_installer_folder="${_base}/tmp"
+
+_src_folder="${_base}/src"
 
 _wildfly_admin_user="admin"
 _wildfly_admin_pwd="admin"
@@ -90,12 +90,12 @@ function installFITeagle {
   repo="fiteagle_osgi"
   git_url="git://github.com/tubav/${repo}"
   
-  if [ -d "${_target}/.git" ]; then
+  if [ -d "${_src_folder}/.git" ]; then
     echo -n "Updating FITeagle sources..."
-    (cd "${_target}" && git pull -q)
+    (cd "${_src_folder}" && git pull -q)
   else
     echo -n "Getting FITeagle sources..."
-    git clone -q --recursive --depth 1 ${git_url} ${_target}
+    git clone -q --recursive --depth 1 ${git_url} ${_src_folder}
   fi
   if [ "0" != "$?" ]; then
     echo >&2 "FAILED. Please have a look above."

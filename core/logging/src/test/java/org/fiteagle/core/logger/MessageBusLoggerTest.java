@@ -2,6 +2,12 @@ package org.fiteagle.core.logger;
 
 import java.util.Properties;
 
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,12 +24,42 @@ public class MessageBusLoggerTest {
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
 
+	// @todo: mock/in-memory?
+
 	@Test
 	@Ignore
 	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
 		InitialContext jndiContext = createJndiContext();
-		new MessageBusLogger(jndiContext, DEFAULT_DESTINATION,
-				DEFAULT_CONNECTION_FACTORY);
+
+		ConnectionFactory cFactory = null;
+		Connection connection = null;
+		Session session = null;
+		MessageProducer producer = null;
+		MessageConsumer consumer = null;
+		Destination dest = null;
+
+		String destinationString = System.getProperty("destination",
+				DEFAULT_DESTINATION);
+
+		dest = (Destination) jndiContext.lookup(destinationString);
+
+		// Perform the JNDI lookups
+		String connectionFactoryString = System.getProperty(
+				"connection.factory", DEFAULT_CONNECTION_FACTORY);
+		cFactory = (ConnectionFactory) jndiContext
+				.lookup(connectionFactoryString);
+
+		// Create the JMS connection, session, producer, and consumer
+		connection = cFactory.createConnection(
+				System.getProperty("username", DEFAULT_USERNAME),
+				System.getProperty("password", DEFAULT_PASSWORD));
+
+		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		producer = session.createProducer(dest);
+		consumer = session.createConsumer(dest);
+		connection.start();
+
+		new MessageBusLogger(session, consumer, producer);
 	}
 
 	private InitialContext createJndiContext() throws NamingException {

@@ -337,6 +337,7 @@
                 <capability name="javax.servlet.api"/>
                 <capability name="javax.transaction.api"/>
                 <capability name="javax.ws.rs.api"/>
+                <capability name="javax.jms.api"/>
                 <capability name="javax.xml.bind.api"/>
                 <capability name="javax.xml.ws.api"/>
                 <capability name="org.apache.felix.log" startlevel="1"/>
@@ -388,5 +389,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-
 </server>

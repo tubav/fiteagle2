@@ -20,8 +20,8 @@ import org.osgi.framework.BundleContext;
 public class Activator implements BundleActivator {
 	private static final String DEFAULT_USERNAME = "fiteagle";
 	private static final String DEFAULT_PASSWORD = "fiteagle";
-	private static final String DEFAULT_CONNECTION_FACTORY = "java:jboss/DefaultJMSConnectionFactory";
-	private static final String DEFAULT_DESTINATION = "queue/fiteagle";
+	private static final String DEFAULT_CONNECTION_FACTORY = "java:/ConnectionFactory";
+	private static final String DEFAULT_DESTINATION = "java:/queue/fiteagle";
 
 	@Override
 	public void start(final BundleContext context) throws Exception {

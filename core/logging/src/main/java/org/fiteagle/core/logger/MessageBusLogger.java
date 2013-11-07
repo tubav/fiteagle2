@@ -2,6 +2,7 @@ package org.fiteagle.core.logger;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -16,28 +17,30 @@ public class MessageBusLogger {
 	private static final Logger log = Logger.getLogger(MessageBusLogger.class
 			.getName());
 
-	private static final String DEFAULT_MESSAGE = "Hello, World!";
-	private static final String DEFAULT_MESSAGE_COUNT = "1";
-
 	private String lastTextMessage;
+	private final int count;
+	private final String content;
+
+	{
+		final Preferences prefs = Preferences
+				.userNodeForPackage(MessageBusLogger.class);
+		this.count = prefs.getInt("count", 1);
+		this.content = prefs.get("content", "FITeagle message");
+	}
 
 	public MessageBusLogger(final Session session,
 			final MessageConsumer consumer, final MessageProducer producer)
 			throws JMSException {
 
-		final int count = Integer.parseInt(System.getProperty("message.count",
-				MessageBusLogger.DEFAULT_MESSAGE_COUNT));
-		final String content = System.getProperty("message.content",
-				MessageBusLogger.DEFAULT_MESSAGE);
+		MessageBusLogger.log.info("Sending " + this.count
+				+ " messages with content: " + this.content);
+		System.out.println("Sending " + this.count + " messages with content: "
+				+ this.content);
 
-		MessageBusLogger.log.info("Sending " + count
-				+ " messages with content: " + content);
-		System.out.println("Sending " + count + " messages with content: " 
-				+ content);
-
-		this.sendTestMessages(session, producer, count, content);
-		this.receiveTestMessages(consumer, count);
+		this.sendTestMessages(session, producer, this.count, this.content);
+		this.receiveTestMessages(consumer, this.count);
 		final MessageListener listener = new MessageBusLogger.MessagerListener();
+
 		consumer.setMessageListener(listener);
 	}
 
@@ -46,8 +49,12 @@ public class MessageBusLogger {
 		TextMessage message;
 		for (int i = 0; i < count; i++) {
 			message = (TextMessage) consumer.receive(5000);
-			MessageBusLogger.log.info("Received message with content "
-					+ message.getText());
+			if (null == message) {
+				MessageBusLogger.log.info("Received message with no content!");
+			} else {
+				MessageBusLogger.log.info("Received message with content "
+						+ message.getText());
+			}
 		}
 	}
 

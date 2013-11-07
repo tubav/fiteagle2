@@ -1,5 +1,7 @@
 package org.fiteagle.core.logger;
 
+import java.io.FileNotFoundException;
+
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -13,7 +15,8 @@ import org.junit.Test;
 
 public class MessageBusLoggerTest {
 	@Test
-	public void testInMemory() throws JMSException, InterruptedException {
+	public void testInMemory() throws JMSException, InterruptedException,
+			FileNotFoundException {
 		final Session session = this.getMockSession();
 		final Destination destination = session.createQueue("TESTQUEUE");
 		final MessageProducer producer = session.createProducer(destination);
@@ -21,7 +24,7 @@ public class MessageBusLoggerTest {
 
 		final MessageBusLogger mbLogger = new MessageBusLogger(session,
 				consumer, producer);
-		
+
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
 		producer.send(session.createTextMessage("test"));
 		Thread.sleep(50); // todo: find a better way

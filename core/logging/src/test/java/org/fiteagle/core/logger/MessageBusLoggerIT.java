@@ -25,10 +25,9 @@ public class MessageBusLoggerIT {
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
 
-
 	@Test
 	@Ignore
-	//todo: integrat in maven as integration test
+	// todo: convert to maven integration test
 	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
 		final InitialContext context = this.getContext();
 		final Destination dest = this.getDestination(context);

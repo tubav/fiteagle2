@@ -24,7 +24,7 @@ public class MessageBusLoggerTest {
 		
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
 		producer.send(session.createTextMessage("test"));
-		Thread.sleep(1); // todo: find a better way
+		Thread.sleep(50); // todo: find a better way
 		Assert.assertEquals("test", mbLogger.getLastTextMessage());
 	}
 

@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk7
+script: mvn test
+notifications:
+  email:
+    - alexander.willner@tu-berlin.de
+    - fitt@av.tu-berlin.de

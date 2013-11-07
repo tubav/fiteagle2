@@ -21,3 +21,12 @@ Deployment
 ----------
 
 Go to ```src/core/logging``` and run ```mvn clean package jboss-as:deploy```. Now you should have deployed the first JMS enabled FITeagle OSGi component.
+
+
+GUI
+---
+
+ * WildFly: [http://localhost:8080](http://localhost:8080)
+ * WildFly backend: [http://localhost:8080/console](http://localhost:8080/console) (user "admin", password "admin")
+ * OSGi: [http://localhost:8080/system/console](http://localhost:8080/system/console) (user "admin", password "admin")
+ * FITeagle: [https://localhost:8443](https://localhost:8443) (to be implemented)

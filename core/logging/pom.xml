@@ -4,11 +4,18 @@
 	<groupId>org.fiteagle.core.logger</groupId>
 	<artifactId>org.fiteagle.core.logger</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Logger</name>
+	<name>FITeagle :: Core :: Logger</name>
 	<packaging>bundle</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+  <parent>
+    <groupId>org.fiteagle</groupId>
+    <artifactId>core</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -19,14 +26,6 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.3.Final</version>
-				<configuration>
-					<filename>${project.build.finalName}.jar</filename>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -74,7 +73,6 @@
 			<artifactId>org.osgi.core</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

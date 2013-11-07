@@ -1,78 +1,40 @@
 package org.fiteagle.core.logger;
 
-import java.util.Properties;
-
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
+import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
-import org.junit.Ignore;
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class MessageBusLoggerTest {
-
-	private static final String DEFAULT_DESTINATION = "jms/queue/fiteagle";
-	private static final String DEFAULT_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
-	private static final String DEFAULT_USERNAME = "fiteagle";
-	private static final String DEFAULT_PASSWORD = "fiteagle";
-	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
-	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
-
-	// @todo: mock/in-memory?
-
 	@Test
-	@Ignore
-	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
-		InitialContext jndiContext = createJndiContext();
+	public void testInMemory() throws JMSException, InterruptedException {
+		final Session session = this.getMockSession();
+		final Destination destination = session.createQueue("TESTQUEUE");
+		final MessageProducer producer = session.createProducer(destination);
+		final MessageConsumer consumer = session.createConsumer(destination);
 
-		ConnectionFactory cFactory = null;
-		Connection connection = null;
-		Session session = null;
-		MessageProducer producer = null;
-		MessageConsumer consumer = null;
-		Destination dest = null;
+		final MessageBusLogger mbLogger = new MessageBusLogger(session,
+				consumer, producer);
+		
+		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
+		producer.send(session.createTextMessage("test"));
+		Thread.sleep(1); // todo: find a better way
+		Assert.assertEquals("test", mbLogger.getLastTextMessage());
+	}
 
-		String destinationString = System.getProperty("destination",
-				DEFAULT_DESTINATION);
-
-		dest = (Destination) jndiContext.lookup(destinationString);
-
-		// Perform the JNDI lookups
-		String connectionFactoryString = System.getProperty(
-				"connection.factory", DEFAULT_CONNECTION_FACTORY);
-		cFactory = (ConnectionFactory) jndiContext
-				.lookup(connectionFactoryString);
-
-		// Create the JMS connection, session, producer, and consumer
-		connection = cFactory.createConnection(
-				System.getProperty("username", DEFAULT_USERNAME),
-				System.getProperty("password", DEFAULT_PASSWORD));
-
-		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		producer = session.createProducer(dest);
-		consumer = session.createConsumer(dest);
+	private Session getMockSession() throws JMSException {
+		Session session;
+		final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+				"vm://localhost?broker.persistent=false");
+		final Connection connection = connectionFactory.createConnection();
 		connection.start();
-
-		new MessageBusLogger(session, consumer, producer);
+		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		return session;
 	}
-
-	private InitialContext createJndiContext() throws NamingException {
-		final Properties env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY, INITIAL_CONTEXT_FACTORY);
-		env.put(Context.PROVIDER_URL,
-				System.getProperty(Context.PROVIDER_URL, PROVIDER_URL));
-		env.put(Context.SECURITY_PRINCIPAL,
-				System.getProperty("username", DEFAULT_USERNAME));
-		env.put(Context.SECURITY_CREDENTIALS,
-				System.getProperty("password", DEFAULT_PASSWORD));
-		InitialContext context = new InitialContext(env);
-		return context;
-	}
-
 }

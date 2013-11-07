@@ -1,4 +1,4 @@
-package org.fiteagle.core.logger.osgi;
+package org.fiteagle.core.logger;
 
 import java.util.Properties;
 
@@ -13,39 +13,37 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.fiteagle.core.logger.MessageBusLogger;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class Activator implements BundleActivator {
+public class MessageBusLoggerIT {
+
+	private static final String DEFAULT_DESTINATION = "jms/queue/fiteagle";
+	private static final String DEFAULT_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
 	private static final String DEFAULT_USERNAME = "fiteagle";
 	private static final String DEFAULT_PASSWORD = "fiteagle";
-	private static final String DEFAULT_CONNECTION_FACTORY = "java:jboss/DefaultJMSConnectionFactory";
-	private static final String DEFAULT_DESTINATION = "queue/fiteagle";
+	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
+	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
 
-	@Override
-	public void start(final BundleContext context) throws Exception {
-		System.out.println("FITeagle MessageBus Logger started");
 
-		final InitialContext jndiContext = this.getContext();
-		final Destination dest = this.getDestination(jndiContext);
-		final Session session = this.getSession(jndiContext);
+	@Test
+	@Ignore
+	//todo: integrat in maven as integration test
+	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
+		final InitialContext context = this.getContext();
+		final Destination dest = this.getDestination(context);
+		final Session session = this.getSession(context);
 		final MessageProducer producer = session.createProducer(dest);
 		final MessageConsumer consumer = session.createConsumer(dest);
 
 		new MessageBusLogger(session, consumer, producer);
 	}
 
-	@Override
-	public void stop(final BundleContext context) throws Exception {
-		System.out.println("FITeagle MessageBus Logger stopped");
-	}
-
 	private Destination getDestination(final InitialContext jndiContext)
 			throws NamingException {
 		Destination dest;
 		final String destinationString = System.getProperty("destination",
-				Activator.DEFAULT_DESTINATION);
+				MessageBusLoggerIT.DEFAULT_DESTINATION);
 
 		dest = (Destination) jndiContext.lookup(destinationString);
 		return dest;
@@ -56,16 +54,15 @@ public class Activator implements BundleActivator {
 		ConnectionFactory cFactory;
 		Connection connection;
 		Session session;
-		// Perform the JNDI lookups
 		final String connectionFactoryString = System.getProperty(
-				"connection.factory", Activator.DEFAULT_CONNECTION_FACTORY);
+				"connection.factory",
+				MessageBusLoggerIT.DEFAULT_CONNECTION_FACTORY);
 		cFactory = (ConnectionFactory) jndiContext
 				.lookup(connectionFactoryString);
 
-		// Create the JMS connection, session, producer, and consumer
-		connection = cFactory.createConnection(
-				System.getProperty("username", Activator.DEFAULT_USERNAME),
-				System.getProperty("password", Activator.DEFAULT_PASSWORD));
+		connection = cFactory.createConnection(System.getProperty("username",
+				MessageBusLoggerIT.DEFAULT_USERNAME), System.getProperty(
+				"password", MessageBusLoggerIT.DEFAULT_PASSWORD));
 
 		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		connection.start();
@@ -74,12 +71,15 @@ public class Activator implements BundleActivator {
 
 	private InitialContext getContext() throws NamingException {
 		final Properties env = new Properties();
-		env.put(Context.SECURITY_PRINCIPAL,
-				System.getProperty("username", Activator.DEFAULT_USERNAME));
-		env.put(Context.SECURITY_CREDENTIALS,
-				System.getProperty("password", Activator.DEFAULT_PASSWORD));
+		env.put(Context.INITIAL_CONTEXT_FACTORY,
+				MessageBusLoggerIT.INITIAL_CONTEXT_FACTORY);
+		env.put(Context.PROVIDER_URL, System.getProperty(Context.PROVIDER_URL,
+				MessageBusLoggerIT.PROVIDER_URL));
+		env.put(Context.SECURITY_PRINCIPAL, System.getProperty("username",
+				MessageBusLoggerIT.DEFAULT_USERNAME));
+		env.put(Context.SECURITY_CREDENTIALS, System.getProperty("password",
+				MessageBusLoggerIT.DEFAULT_PASSWORD));
 		final InitialContext context = new InitialContext(env);
 		return context;
 	}
-
 }

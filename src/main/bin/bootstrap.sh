@@ -9,11 +9,16 @@ _container_url="http://download.jboss.org/${_container_type}/${_container_versio
 _container_folder="${_base}/container"
 _container_config="wildfly-standalone.xml"
 _container_config_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/wildfly-standalone.xml"
+_container_root="${_container_folder}/${_container_type}-${_container_version}"
 
 _osgi_file="jbosgi-installer-2.1.0.jar"
 _osgi_url="http://sourceforge.net/projects/jboss/files/JBossOSGi/2.1.0/${_osgi_file}/download"
 _osgi_config="jbosgi-autoinstall.xml"
 _osgi_config_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/jbosgi-autoinstall.xml"
+
+_osgi_console_file="org.apache.felix.webconsole-4.2.0-all.jar"
+_osgi_console_url="http://mirror.switch.ch/mirror/apache/dist/felix/${_osgi_console_file}"
+_osgi_console_folder="${_container_root}/standalone/deployments"
 
 _installer_folder="${_base}/tmp"
 
@@ -55,11 +60,20 @@ function installOSGi() {
     java -jar "${_installer_folder}/${_osgi_file}" "${_installer_folder}/${_osgi_config}"
 }
 
+
+function installWebconsole {
+  echo "Downloading OSGi web console..."
+  curl -C - -fsSkL -o "${_installer_folder}/${_osgi_console_file}" "${_osgi_console_url}"
+  echo "Installing OSGi web console..."
+  cp "${_installer_folder}/${_osgi_console_file}" "${_osgi_console_folder}"
+}
+
+
 function configContainer() {
     echo "Configuring container..."
     curl -C - -fsSSkL -o "${_installer_folder}/${_container_config}" "${_container_config_url}"
-    cp "${_installer_folder}/${_container_config}" "${_container_folder}/${_container_type}-${_container_version}/standalone/configuration"
-    cd "${_container_folder}/${_container_type}-${_container_version}"
+    cp "${_installer_folder}/${_container_config}" "${_container_root}/standalone/configuration"
+    cd "${_container_root}"
     ./bin/add-user.sh -u "${_wildfly_admin_user}" -p "${_wildfly_admin_pwd}"
     ./bin/add-user.sh -a -g "${_wildfly_app_group}" -u "${_wildfly_app_user}" -p "${_wildfly_app_pwd}"
 }
@@ -67,7 +81,7 @@ function configContainer() {
 
 function startContainer() {
     echo "Starting container..."
-    cd "${_container_folder}/${_container_type}-${_container_version}"
+    cd "${_container_root}"
     ./bin/standalone.sh -c "${_container_config}"
 }
 
@@ -110,6 +124,7 @@ checkEnvironment
 
 installContainer
 installOSGi
+installWebconsole
 configContainer
 installFITeagle
 startContainer

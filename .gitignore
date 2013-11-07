@@ -1,4 +1,6 @@
 target/
 tmp/
-fiteagle_osgi/
 container/
+.classpath
+.project
+.settings

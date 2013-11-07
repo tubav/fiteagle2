@@ -261,10 +261,10 @@
                 </jms-connection-factories>
 
                 <jms-destinations>
-                    <jms-queue name="fiteagleQueue">
-                        <entry name="queue/fiteagle"/>
-                        <entry name="java:jboss/exported/jms/queue/fiteagle"/>
-                    </jms-queue>
+                    <jms-topic name="fiteagleTopic">
+                        <entry name="topic/fiteagle"/>
+                        <entry name="java:jboss/exported/jms/topic/fiteagle"/>
+                    </jms-topic>
                 </jms-destinations>
             </hornetq-server>
         </subsystem>

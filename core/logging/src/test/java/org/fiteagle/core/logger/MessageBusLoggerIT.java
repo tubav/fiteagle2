@@ -18,7 +18,7 @@ import org.junit.Test;
 
 public class MessageBusLoggerIT {
 
-	private static final String DEFAULT_DESTINATION = "jms/queue/fiteagle";
+	private static final String DEFAULT_DESTINATION = "jms/topic/fiteagle";
 	private static final String DEFAULT_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
 	private static final String DEFAULT_USERNAME = "fiteagle";
 	private static final String DEFAULT_PASSWORD = "fiteagle";

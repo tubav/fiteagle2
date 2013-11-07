@@ -18,7 +18,7 @@ public class MessageBusLoggerTest {
 	public void testInMemory() throws JMSException, InterruptedException,
 			FileNotFoundException {
 		final Session session = this.getMockSession();
-		final Destination destination = session.createQueue("TESTQUEUE");
+		final Destination destination = session.createTopic("TESTTOPIC");
 		final MessageProducer producer = session.createProducer(destination);
 		final MessageConsumer consumer = session.createConsumer(destination);
 

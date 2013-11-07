@@ -3,6 +3,8 @@ FITeagle 2
 
 FITeagle implementation based on OSGi modules and JMS messaging within a WildFly container.
 
+Current build status: [![Build Status](https://travis-ci.org/tubav/fiteagle_osgi.png?branch=master)](https://travis-ci.org/tubav/fiteagle_osgi)
+
 Bootstrapping
 -------------
 

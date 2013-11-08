@@ -28,7 +28,7 @@ public class Activator implements BundleActivator {
 		InitialContext jndiContext = new InitialContext();
 		ConnectionFactory factory = (ConnectionFactory) jndiContext
 				.lookup(CONNECTION_FACTORY_LOCAL);
-
+		
 		Destination destination = (Destination) jndiContext.lookup(DESTINATION_FITEAGLE);
 		
 		this.messageBus = new MessageBus(username, password,

@@ -3,6 +3,7 @@ package org.fiteagle.core.logger;
 import java.io.FileNotFoundException;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
@@ -10,6 +11,7 @@ import javax.jms.Session;
 import javax.naming.NamingException;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +27,22 @@ public class MessageBusLoggerTest {
 		this.messageBus = new MessageBus("user", "pwd", factory, "topic");
 	}
 
+	@After
+	public void teardown() throws JMSException {
+		this.messageBus.close();
+	}
+
+	@Test
+	public void testMessageBusConstructorWithString() throws JMSException {
+		new MessageBus("user", "pwd", factory, "topic");
+	}
+	
+	@Test
+	public void testMessageBusConstructorWithDestination() throws JMSException {
+		Destination destination = this.factory.createConnection().createSession(false, Session.AUTO_ACKNOWLEDGE).createTopic("topic");
+		new MessageBus("user", "pwd", factory, destination);
+	}
+	
 	@Test
 	public void testMessageBusLogger() throws JMSException,
 			InterruptedException, FileNotFoundException, NamingException {

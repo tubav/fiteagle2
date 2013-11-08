@@ -10,27 +10,30 @@ import javax.jms.Session;
 
 public class MessageBus {
 
-	private Destination destination;
-	private Session session;
+	private final Destination destination;
+	private final Session session;
 
-	private Connection connection;
+	private final Connection connection;
 
-	public MessageBus(String username, String password, ConnectionFactory factory, Destination destination) throws JMSException {
+	public MessageBus(final String username, final String password,
+			final ConnectionFactory factory, final Destination destination)
+			throws JMSException {
 		this.connection = factory.createConnection(username, password);
-		this.session = this.connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		this.session = this.connection.createSession(false,
+				Session.AUTO_ACKNOWLEDGE);
 		this.destination = destination;
-		connection.start();
+		this.connection.start();
 	}
 
-
-	public MessageBus(String username, String password,
-			ConnectionFactory factory, String destination) throws JMSException {
+	public MessageBus(final String username, final String password,
+			final ConnectionFactory factory, final String destination)
+			throws JMSException {
 		this.connection = factory.createConnection(username, password);
-		this.session = this.connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		this.session = this.connection.createSession(false,
+				Session.AUTO_ACKNOWLEDGE);
 		this.destination = this.session.createTopic(destination);
-		connection.start();
+		this.connection.start();
 	}
-
 
 	public Session getSession() throws JMSException {
 		return this.session;
@@ -43,7 +46,6 @@ public class MessageBus {
 	public MessageConsumer getConsumer() throws JMSException {
 		return this.session.createConsumer(this.destination);
 	}
-
 
 	public void close() throws JMSException {
 		this.connection.close();

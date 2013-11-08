@@ -26,24 +26,24 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
-		log.log(Level.INFO, "Starting FITeagle MessageBus Logger...");
+		Activator.log.log(Level.INFO, "Starting FITeagle MessageBus Logger...");
 
-		String username = "fiteagle";
-		String password = "fiteagle";
+		final String username = "fiteagle";
+		final String password = "fiteagle";
 
-		InitialContext jndiContext = new InitialContext();
-		ConnectionFactory factory = (ConnectionFactory) jndiContext
-				.lookup(CONNECTION_FACTORY_LOCAL);
+		final InitialContext jndiContext = new InitialContext();
+		final ConnectionFactory factory = (ConnectionFactory) jndiContext
+				.lookup(Activator.CONNECTION_FACTORY_LOCAL);
 
-		Destination destination = (Destination) jndiContext
-				.lookup(DESTINATION_FITEAGLE);
+		final Destination destination = (Destination) jndiContext
+				.lookup(Activator.DESTINATION_FITEAGLE);
 
 		this.messageBus = new MessageBus(username, password, factory,
 				destination);
 
-		final Session session = messageBus.getSession();
-		final MessageProducer producer = messageBus.getProducer();
-		final MessageConsumer consumer = messageBus.getConsumer();
+		final Session session = this.messageBus.getSession();
+		final MessageProducer producer = this.messageBus.getProducer();
+		final MessageConsumer consumer = this.messageBus.getConsumer();
 
 		new MessageBusLogger(session, consumer);
 		producer.send(session.createTextMessage("self test"));
@@ -51,8 +51,9 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		log.log(Level.INFO, "Stopping FITeagle MessageBus Logger...");
-		if (null != this.messageBus)
+		Activator.log.log(Level.INFO, "Stopping FITeagle MessageBus Logger...");
+		if (null != this.messageBus) {
 			this.messageBus.close();
+		}
 	}
 }

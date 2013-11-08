@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.NamingException;
@@ -27,8 +25,9 @@ public class MessageBusLoggerTest {
 	public void setup() throws JMSException {
 		this.factory = new ActiveMQConnectionFactory(
 				"vm://localhost?broker.persistent=false");
-		this.messageBus = new MessageBus("user", "pwd", factory, "topic");
-		this.waitingMessageBus = new MessageBus("user", "pwd", factory, "topic");
+		this.messageBus = new MessageBus("user", "pwd", this.factory, "topic");
+		this.waitingMessageBus = new MessageBus("user", "pwd", this.factory,
+				"topic");
 	}
 
 	@After
@@ -38,24 +37,24 @@ public class MessageBusLoggerTest {
 
 	@Test
 	public void testMessageBusConstructorWithString() throws JMSException {
-		new MessageBus("user", "pwd", factory, "topic");
+		new MessageBus("user", "pwd", this.factory, "topic");
 	}
 
 	@Test
 	public void testMessageBusConstructorWithDestination() throws JMSException {
-		Destination destination = this.factory.createConnection()
+		final Destination destination = this.factory.createConnection()
 				.createSession(false, Session.AUTO_ACKNOWLEDGE)
 				.createTopic("topic");
-		new MessageBus("user", "pwd", factory, destination);
+		new MessageBus("user", "pwd", this.factory, destination);
 	}
 
 	@Test
 	public void testMessageBusLogger() throws JMSException,
 			InterruptedException, FileNotFoundException, NamingException {
 
-		final Session session = messageBus.getSession();
-		final MessageProducer producer = messageBus.getProducer();
-		final MessageConsumer consumer = messageBus.getConsumer();
+		final Session session = this.messageBus.getSession();
+		final MessageProducer producer = this.messageBus.getProducer();
+		final MessageConsumer consumer = this.messageBus.getConsumer();
 
 		final MessageBusLogger mbLogger = new MessageBusLogger(session,
 				consumer);

@@ -31,9 +31,10 @@ public class MessageBusLogger {
 		@Override
 		public void onMessage(final Message message) {
 			try {
-				String textMessage = ((TextMessage) message).getText();
+				final String textMessage = ((TextMessage) message).getText();
 				MessageBusLogger.this.lastTextMessage = textMessage;
-				log.log(Level.INFO, "[MessageBus] Received: '" + textMessage + "'");
+				MessageBusLogger.log.log(Level.INFO, "[MessageBus] Received: '"
+						+ textMessage + "'");
 			} catch (final JMSException e) {
 				MessageBusLogger.log.log(Level.SEVERE, e.toString());
 			}

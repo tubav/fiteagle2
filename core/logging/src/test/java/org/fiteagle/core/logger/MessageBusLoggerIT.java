@@ -27,7 +27,7 @@ public class MessageBusLoggerIT {
 
 	@Test
 	@Ignore
-	// todo: convert to maven integration test
+	// todo: refactor to maven integration test
 	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
 		final InitialContext context = this.getContext();
 		final Destination dest = this.getDestination(context);

@@ -1,85 +1,49 @@
 package org.fiteagle.core.logger.osgi;
 
-import java.util.Properties;
-
-import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
+import org.fiteagle.core.logger.MessageBus;
 import org.fiteagle.core.logger.MessageBusLogger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator {
-	private static final String DEFAULT_USERNAME = "fiteagle";
-	private static final String DEFAULT_PASSWORD = "fiteagle";
-	private static final String DEFAULT_CONNECTION_FACTORY = "java:/ConnectionFactory";
-	private static final String DEFAULT_DESTINATION = "java:/topic/fiteagle";
+
+	private MessageBus messageBus;
+	public static final String DESTINATION_FITEAGLE = "java:/topic/fiteagle";
+	public static final String CONNECTION_FACTORY_LOCAL = "java:/ConnectionFactory";
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
-		System.out.println("FITeagle MessageBus Logger started");
+		System.out.println("Starting FITeagle MessageBus Logger...");
+		
+		String username = "fiteagle";
+		String password = "fiteagle";
+		
+		InitialContext jndiContext = new InitialContext();
+		ConnectionFactory factory = (ConnectionFactory) jndiContext
+				.lookup(CONNECTION_FACTORY_LOCAL);
 
-		final InitialContext jndiContext = this.getContext();
-		final Destination dest = this.getDestination(jndiContext);
-		final Session session = this.getSession(jndiContext);
-		final MessageProducer producer = session.createProducer(dest);
-		final MessageConsumer consumer = session.createConsumer(dest);
+		Destination destination = (Destination) jndiContext.lookup(DESTINATION_FITEAGLE);
+		
+		this.messageBus = new MessageBus(username, password,
+				 factory, destination);
+
+		final Session session = messageBus.getSession();
+		final MessageProducer producer = messageBus.getProducer();
+		final MessageConsumer consumer = messageBus.getConsumer();
 
 		new MessageBusLogger(session, consumer, producer);
 	}
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		System.out.println("FITeagle MessageBus Logger stopped");
+		System.out.println("Stopping FITeagle MessageBus Logger...");
+		this.messageBus.close();
 	}
-
-	private Destination getDestination(final InitialContext jndiContext)
-			throws NamingException {
-		Destination dest;
-		final String destinationString = System.getProperty("destination",
-				Activator.DEFAULT_DESTINATION);
-
-		dest = (Destination) jndiContext.lookup(destinationString);
-		return dest;
-	}
-
-	private Session getSession(final InitialContext jndiContext)
-			throws NamingException, JMSException {
-		ConnectionFactory cFactory;
-		Connection connection;
-		Session session;
-		// Perform the JNDI lookups
-		final String connectionFactoryString = System.getProperty(
-				"connection.factory", Activator.DEFAULT_CONNECTION_FACTORY);
-		cFactory = (ConnectionFactory) jndiContext
-				.lookup(connectionFactoryString);
-
-		// Create the JMS connection, session, producer, and consumer
-		connection = cFactory.createConnection(
-				System.getProperty("username", Activator.DEFAULT_USERNAME),
-				System.getProperty("password", Activator.DEFAULT_PASSWORD));
-
-		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		connection.start();
-		return session;
-	}
-
-	private InitialContext getContext() throws NamingException {
-		final Properties env = new Properties();
-		env.put(Context.SECURITY_PRINCIPAL,
-				System.getProperty("username", Activator.DEFAULT_USERNAME));
-		env.put(Context.SECURITY_CREDENTIALS,
-				System.getProperty("password", Activator.DEFAULT_PASSWORD));
-		final InitialContext context = new InitialContext(env);
-		return context;
-	}
-
 }

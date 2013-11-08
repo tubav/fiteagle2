@@ -25,7 +25,7 @@ public class MessageBusLogger {
 		final Preferences prefs = Preferences
 				.userNodeForPackage(MessageBusLogger.class);
 		this.count = prefs.getInt("count", 1);
-		this.content = prefs.get("content", "FITeagle message");
+		this.content = prefs.get("content", "self test message");
 	}
 
 	public MessageBusLogger(final Session session,
@@ -37,11 +37,17 @@ public class MessageBusLogger {
 		System.out.println("Sending " + this.count + " messages with content: "
 				+ this.content);
 
+		selfTest(session, consumer, producer);
+
+		final MessageListener listener = new MessageBusLogger.MessagerListener();
+		consumer.setMessageListener(listener);
+	}
+
+	private void selfTest(final Session session,
+			final MessageConsumer consumer, final MessageProducer producer)
+			throws JMSException {
 		this.sendTestMessages(session, producer, this.count, this.content);
 		this.receiveTestMessages(consumer, this.count);
-		final MessageListener listener = new MessageBusLogger.MessagerListener();
-
-		consumer.setMessageListener(listener);
 	}
 
 	private void receiveTestMessages(final MessageConsumer consumer,

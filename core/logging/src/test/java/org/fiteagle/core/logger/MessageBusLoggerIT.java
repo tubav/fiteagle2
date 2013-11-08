@@ -7,7 +7,6 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -32,10 +31,9 @@ public class MessageBusLoggerIT {
 		final InitialContext context = this.getContext();
 		final Destination dest = this.getDestination(context);
 		final Session session = this.getSession(context);
-		final MessageProducer producer = session.createProducer(dest);
 		final MessageConsumer consumer = session.createConsumer(dest);
 
-		new MessageBusLogger(session, consumer, producer);
+		new MessageBusLogger(session, consumer);
 	}
 
 	private Destination getDestination(final InitialContext jndiContext)

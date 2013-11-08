@@ -36,13 +36,15 @@ public class MessageBusLoggerTest {
 	public void testMessageBusConstructorWithString() throws JMSException {
 		new MessageBus("user", "pwd", factory, "topic");
 	}
-	
+
 	@Test
 	public void testMessageBusConstructorWithDestination() throws JMSException {
-		Destination destination = this.factory.createConnection().createSession(false, Session.AUTO_ACKNOWLEDGE).createTopic("topic");
+		Destination destination = this.factory.createConnection()
+				.createSession(false, Session.AUTO_ACKNOWLEDGE)
+				.createTopic("topic");
 		new MessageBus("user", "pwd", factory, destination);
 	}
-	
+
 	@Test
 	public void testMessageBusLogger() throws JMSException,
 			InterruptedException, FileNotFoundException, NamingException {
@@ -52,7 +54,7 @@ public class MessageBusLoggerTest {
 		final MessageConsumer consumer = messageBus.getConsumer();
 
 		final MessageBusLogger mbLogger = new MessageBusLogger(session,
-				consumer, producer);
+				consumer);
 
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
 		producer.send(session.createTextMessage("test"));

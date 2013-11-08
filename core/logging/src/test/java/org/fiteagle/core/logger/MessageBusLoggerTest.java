@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.NamingException;
@@ -19,12 +21,14 @@ import org.junit.Test;
 public class MessageBusLoggerTest {
 	ConnectionFactory factory;
 	private MessageBus messageBus;
+	private MessageBus waitingMessageBus;
 
 	@Before
 	public void setup() throws JMSException {
 		this.factory = new ActiveMQConnectionFactory(
 				"vm://localhost?broker.persistent=false");
 		this.messageBus = new MessageBus("user", "pwd", factory, "topic");
+		this.waitingMessageBus = new MessageBus("user", "pwd", factory, "topic");
 	}
 
 	@After
@@ -58,7 +62,7 @@ public class MessageBusLoggerTest {
 
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
 		producer.send(session.createTextMessage("test"));
-		Thread.sleep(50); // todo: find a better way
+		this.waitingMessageBus.getConsumer().receive(50);
 		Assert.assertEquals("test", mbLogger.getLastTextMessage());
 	}
 }

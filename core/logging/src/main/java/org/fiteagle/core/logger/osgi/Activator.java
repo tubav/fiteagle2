@@ -8,6 +8,7 @@ import javax.jms.Destination;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
 import org.fiteagle.core.logger.MessageBus;
@@ -46,7 +47,9 @@ public class Activator implements BundleActivator {
 		final MessageConsumer consumer = this.messageBus.getConsumer();
 
 		new MessageBusLogger(session, consumer);
-		producer.send(session.createTextMessage("self test"));
+		final TextMessage textMessage = session.createTextMessage("self test");
+		textMessage.setBooleanProperty("test", true);
+		producer.send(textMessage);
 	}
 
 	@Override

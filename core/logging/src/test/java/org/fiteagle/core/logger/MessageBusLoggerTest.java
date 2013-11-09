@@ -8,6 +8,7 @@ import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -60,7 +61,9 @@ public class MessageBusLoggerTest {
 				consumer);
 
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
-		producer.send(session.createTextMessage("test"));
+		final TextMessage textMessage = session.createTextMessage("test");
+		textMessage.setBooleanProperty("test", true);
+		producer.send(textMessage);
 		this.waitingMessageBus.getConsumer().receive(50);
 		Assert.assertEquals("test", mbLogger.getLastTextMessage());
 	}

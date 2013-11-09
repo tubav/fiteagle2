@@ -31,14 +31,29 @@ public class MessageBusLogger {
 		@Override
 		public void onMessage(final Message message) {
 			try {
-				final String textMessage = ((TextMessage) message).getText();
-				MessageBusLogger.this.lastTextMessage = textMessage;
+				final TextMessage textMessage = (TextMessage) message;
+				MessageBusLogger.this.lastTextMessage = textMessage.getText();
 				MessageBusLogger.log.log(Level.INFO, "[MessageBus] Received: '"
-						+ textMessage + "'");
+						+ textMessage.getText() + "'");
+				if (textMessage.getBooleanProperty("test")) {
+					logTextMessage(textMessage);
+				}
 			} catch (final JMSException e) {
 				MessageBusLogger.log.log(Level.SEVERE, e.toString());
 			}
 		}
+
+		private void logTextMessage(final TextMessage textMessage)
+				throws JMSException {
+			Level[] levels = { Level.ALL, Level.CONFIG, Level.FINE,
+					Level.FINER, Level.FINEST, Level.INFO, Level.SEVERE,
+					Level.WARNING };
+			for (Level level : levels) {
+				MessageBusLogger.log.log(level, "[MessageBus] Test " + level
+						+ " Received: '" + textMessage.getText() + "'");
+			}
+		}
+
 	}
 
 }

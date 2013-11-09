@@ -1,4 +1,4 @@
-package org.fiteagle.core.logger;
+package org.fiteagle.core.messagebus;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;

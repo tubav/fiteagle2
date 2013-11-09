@@ -11,8 +11,8 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-import org.fiteagle.core.logger.MessageBus;
 import org.fiteagle.core.logger.MessageBusLogger;
+import org.fiteagle.core.messagebus.MessageBus;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 

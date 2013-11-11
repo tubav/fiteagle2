@@ -35,12 +35,4 @@
         </plugins>
     </build>
 
-    <dependencies>
-    	<dependency>
-    		<groupId>org.fiteagle.core</groupId>
-    		<artifactId>messagebus</artifactId>
-    		<version>0.1-SNAPSHOT</version>
-    		<type>bundle</type>
-    	</dependency>
-    </dependencies>
 </project>

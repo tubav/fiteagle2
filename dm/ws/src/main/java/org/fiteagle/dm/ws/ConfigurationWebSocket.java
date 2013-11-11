@@ -3,52 +3,33 @@ package org.fiteagle.dm.ws;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
-import javax.jms.Session;
 import javax.jms.TemporaryQueue;
 import javax.jms.TextMessage;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.websocket.OnMessage;
 import javax.websocket.server.ServerEndpoint;
 
+import org.fiteagle.boundary.MessageBus;
+
 @ServerEndpoint("/configuration")
 public class ConfigurationWebSocket {
 
-	public static final String DESTINATION_FITEAGLE = "java:/topic/fiteagle";
-	public static final String CONNECTION_FACTORY_LOCAL = "java:/ConnectionFactory";
 	private static final Logger LOGGER = Logger
 			.getLogger(ConfigurationWebSocket.class.getName());
 
 	private final javax.jms.Session session;
 	private final MessageProducer producer;
-	private Destination destination;
+
+	private MessageBus messagebus;
 
 	public ConfigurationWebSocket() throws NamingException, JMSException {
 		LOGGER.log(Level.INFO, "Starting FITeagle WebSocket Interface...");
-
-		final String username = "fiteagle";
-		final String password = "fiteagle";
-
-		final InitialContext jndiContext = new InitialContext();
-		final ConnectionFactory factory = (ConnectionFactory) jndiContext
-				.lookup(CONNECTION_FACTORY_LOCAL);
-
-		this.destination = (Destination) jndiContext
-				.lookup(DESTINATION_FITEAGLE);
-
-		Connection connection = factory.createConnection(username, password);
-		this.session = connection
-				.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-		this.producer = session.createProducer(destination);
-
-		connection.start();
+		this.messagebus = new MessageBus();
+		this.session = messagebus.getSession();
+		this.producer = messagebus.getProducer();
 	}
 
 	public ConfigurationWebSocket(javax.jms.Session session,

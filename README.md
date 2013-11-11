@@ -24,7 +24,7 @@ After the bootstrap, a pre-configured WildFly instance is running and you'll see
 Deployment
 ----------
 
-Go to ```src/core/logging``` and run ```mvn clean package jboss-as:deploy```. Now you should have deployed the first JMS enabled FITeagle OSGi component.
+Run ```mvn clean install package jboss-as:deploy```.
 
 
 GUI

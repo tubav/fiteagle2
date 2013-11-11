@@ -1,6 +1,5 @@
 package org.fiteagle.dm.rest;
 
-import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -10,42 +9,34 @@ import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.fiteagle.dm.rest.ConfigurationRest;
+import org.fiteagle.boundary.MessageBus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ConfigurationRestTest {
 
-	private static final String TOPIC = "topic";
 	private static final String EXPECTED = "123";
 
 	private ConnectionFactory factory = new ActiveMQConnectionFactory(
 			"vm://localhost?broker.persistent=false");
-	private Connection connection;
+	private MessageBus mockmessagebus;
 
 	@Before
 	public void setup() throws JMSException {
-		this.connection = factory.createConnection();
-		Session mockSession = connection.createSession(false,
-				Session.AUTO_ACKNOWLEDGE);
-		Topic destination = mockSession.createTopic(TOPIC);
-		MessageConsumer consumer = mockSession.createConsumer(destination);
-		consumer.setMessageListener(new MockListener(mockSession));
-		connection.start();
+		this.mockmessagebus = new MessageBus(this.factory);
+		MessageConsumer consumer = mockmessagebus.getConsumer();
+		consumer.setMessageListener(new MockListener(this.mockmessagebus.getSession()));
 	}
 
 	@Test
 	public void testGetVersionCall() throws JMSException {
-		Session session = this.connection.createSession(false,
-				Session.AUTO_ACKNOWLEDGE);
-		Topic destination = session.createTopic(TOPIC);
-		MessageProducer producer = session.createProducer(destination);
+		MessageBus messagebus = new MessageBus(this.factory);
+		MessageProducer producer = messagebus.getProducer();
 
-		ConfigurationRest v = new ConfigurationRest(session, producer);
+		ConfigurationRest v = new ConfigurationRest(messagebus.getSession(), producer);
 
 		Assert.assertEquals(EXPECTED, v.getValue("getVersion"));
 	}

@@ -14,7 +14,6 @@
 
 	<modules>
 		<module>logging</module>
-		<module>messagebus</module>
 		<module>configuration</module>
 	</modules>
 

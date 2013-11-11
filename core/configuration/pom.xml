@@ -28,22 +28,28 @@
                         <Import-Package>*</Import-Package>
                         <Export-Package>org.fiteagle.core.configuration</Export-Package>
                         <Private-Package>
-                            org.fiteagle.core.configuration.osgi, org.fiteagle.core.messagebus
+                            org.fiteagle.core.configuration.osgi, org.fiteagle.boundary
                         </Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<configuration>
+                    <skip>false</skip>
+                    <filename>${project.build.finalName}.jar</filename>
+                </configuration>
+			</plugin>
         </plugins>
     </build>
 
-	<dependencies>
 
-	<dependency>
-		<groupId>org.fiteagle.core</groupId>
-		<artifactId>messagebus</artifactId>
-		<version>0.1-SNAPSHOT</version>
-		<type>bundle</type>
-	</dependency>
-	</dependencies>
-
+    <dependencies>
+    	<dependency>
+    		<groupId>org.fiteagle</groupId>
+    		<artifactId>boundary</artifactId>
+    		<version>0.1-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
 </project>

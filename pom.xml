@@ -13,6 +13,7 @@
 		<module>core</module>
     <module>adapter</module>
     <module>dm</module>
+    <module>boundary</module>
 	</modules>
 
 	<description>
@@ -170,10 +171,16 @@
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>7.3.Final</version>
 				<configuration>
-					<filename>${project.build.finalName}.jar</filename>
-				</configuration>
+                    <skip>true</skip>
+                </configuration>
 			</plugin>
-
+			            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>

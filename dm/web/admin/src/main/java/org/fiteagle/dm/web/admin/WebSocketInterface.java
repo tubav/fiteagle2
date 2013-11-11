@@ -24,7 +24,7 @@ public class WebSocketInterface {
 	@OnMessage
 	public String echoMessage(String message) {
 		log.log(Level.INFO, "Received : " + message);
-		return message;
+		return message + "Echo";
 	}
 
 	@OnOpen

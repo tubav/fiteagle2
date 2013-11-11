@@ -423,13 +423,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-
-    <deployments>
-        <deployment name="jboss-as-helloworld-html5.war" runtime-name="jboss-as-helloworld-html5.war">
-            <content sha1="8514ac54d32e7a3e8b7ccf774e2849c422369b16"/>
-        </deployment>
-        <deployment name="configuration.jar" runtime-name="configuration.jar">
-            <content sha1="7758c83d0a84d2dbaa93811dcebef551d2e2bbcc"/>
-        </deployment>
-    </deployments>
 </server>

@@ -26,12 +26,17 @@ Deployment
 
 Run ```mvn clean install package jboss-as:deploy```.
 
-
 GUI
 ---
 
  * WildFly: [http://localhost:8080](http://localhost:8080)
  * WildFly backend: [http://localhost:8080/console](http://localhost:8080/console) (user "admin", password "admin")
  * OSGi: [http://localhost:8080/system/console](http://localhost:8080/system/console) (user "admin", password "admin")
- * FITeagle Backend: [https://localhost:8080/admin](https://localhost:8080/admin)
+ * FITeagle Backend: [http://localhost:8080/admin](http://localhost:8080/admin)
  * FITeagle: [https://localhost:8443](https://localhost:8443) (to be implemented)
+
+CLI
+---
+
+ * REST: curl http://localhost:8080/rest/configuration/json/getVersion
+ * WebSockets: ws-client ws://localhost:8080/ws/configuration # then send getVersion

@@ -1,4 +1,4 @@
-package org.fiteagle.dm.web.admin;
+package org.fiteagle.dm.ws;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +15,12 @@ import javax.websocket.server.ServerEndpoint;
  * 
  */
 
-@ServerEndpoint("/fiteagle")
-public class WebSocketInterface {
+@ServerEndpoint("/echo")
+public class EchoWebSocket {
 
-	private static final Logger log = Logger.getLogger(WebSocketInterface.class
+	private static final Logger log = Logger.getLogger(EchoWebSocket.class
 			.getName());
-
+	
 	@OnMessage
 	public String echoMessage(String message) {
 		log.log(Level.INFO, "Received : " + message);

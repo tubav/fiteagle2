@@ -15,6 +15,8 @@
         <extension module="org.jboss.as.security"/>
         <extension module="org.jboss.as.transactions"/>
         <extension module="org.jboss.as.ee"/>
+        <extension module="org.jboss.as.webservices"/>
+        <extension module="org.jboss.as.jaxrs"/>
         <extension module="org.wildfly.extension.batch"/>
         <extension module="org.wildfly.extension.io"/>
         <extension module="org.wildfly.extension.undertow"/>
@@ -377,6 +379,18 @@
             </concurrent>
             <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:jboss/datasources/ExampleDS" jms-connection-factory="java:jboss/DefaultJMSConnectionFactory" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
         </subsystem>
+        <subsystem xmlns="urn:jboss:domain:webservices:1.2">
+            <modify-wsdl-address>true</modify-wsdl-address>
+            <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
+            <endpoint-config name="Standard-Endpoint-Config"/>
+            <endpoint-config name="Recording-Endpoint-Config">
+                <pre-handler-chain name="recording-handlers" protocol-bindings="##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM">
+                    <handler name="RecordingHandler" class="org.jboss.ws.common.invocation.RecordingServerHandler"/>
+                </pre-handler-chain>
+            </endpoint-config>
+            <client-config name="Standard-Client-Config"/>
+        </subsystem>
+        <subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/>
     </profile>
 
     <interfaces>
@@ -410,4 +424,12 @@
         </outbound-socket-binding>
     </socket-binding-group>
 
+    <deployments>
+        <deployment name="jboss-as-helloworld-html5.war" runtime-name="jboss-as-helloworld-html5.war">
+            <content sha1="8514ac54d32e7a3e8b7ccf774e2849c422369b16"/>
+        </deployment>
+        <deployment name="configuration.jar" runtime-name="configuration.jar">
+            <content sha1="7758c83d0a84d2dbaa93811dcebef551d2e2bbcc"/>
+        </deployment>
+    </deployments>
 </server>

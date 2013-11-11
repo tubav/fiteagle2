@@ -3,6 +3,7 @@ package org.fiteagle.core.configuration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
@@ -16,6 +17,7 @@ public class Configuration {
 	private final Session session;
 	private final MessageConsumer consumer;
 	private final MessageProducer producer;
+	private MessageProducer specificProducer;
 	private static final Logger log = Logger.getLogger(Configuration.class.getName());
 
 
@@ -26,6 +28,7 @@ public class Configuration {
 		this.consumer = consumer;
 		this.producer = producer;
 		this.consumer.setMessageListener(listener);
+		this.specificProducer = session.createProducer(null);
 	}
 
 	private class ConfigurationListener implements MessageListener {
@@ -35,13 +38,18 @@ public class Configuration {
 				final TextMessage textMessage = (TextMessage) message;
 				Configuration.log.log(Level.INFO, "[Configuration] Received: '"
 						+ textMessage.getText() + "'");
-				String type = message.getStringProperty("type");
-				if (null != type && type.equals("getVersion")) {
+				if (textMessage.getText().equals("getVersion")) {
 					TextMessage result = session.createTextMessage("123");
-					result.setStringProperty("type", "setVersion");
+					result.setJMSCorrelationID(textMessage.getJMSCorrelationID());
+					
 					Configuration.log.log(Level.INFO, "[Configuration] Sending: '"
 							+ result.getText() + "'");
-					producer.send(result);
+					Destination replyTo = textMessage.getJMSReplyTo();
+					
+					if (null == replyTo)
+						producer.send(result);
+					else
+						specificProducer.send(replyTo, result);
 				}
 			} catch (final JMSException e) {
 				Configuration.log.log(Level.SEVERE, e.toString());

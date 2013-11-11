@@ -10,5 +10,7 @@
   <name>FITeagle :: DM</name>
   <modules>
   	<module>web</module>
+  	<module>ws</module>
+  	<module>rest</module>
   </modules>
 </project>

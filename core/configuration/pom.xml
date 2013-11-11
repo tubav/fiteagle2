@@ -28,7 +28,7 @@
                         <Import-Package>*</Import-Package>
                         <Export-Package>org.fiteagle.core.configuration</Export-Package>
                         <Private-Package>
-                            org.fiteagle.core.configuration.osgi,
+                            org.fiteagle.core.configuration.osgi, org.fiteagle.core.messagebus
                         </Private-Package>
                     </instructions>
                 </configuration>

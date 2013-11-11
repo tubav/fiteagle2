@@ -28,7 +28,7 @@
 						<Import-Package>*</Import-Package>
 						<Export-Package>org.fiteagle.core.logger</Export-Package>
 						<Private-Package>
-							org.fiteagle.core.logger.osgi,
+							org.fiteagle.core.logger.osgi, org.fiteagle.core.messagebus
 						</Private-Package>
 					</instructions>
 				</configuration>
@@ -50,21 +50,10 @@
 
 
 	<dependencies>
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-jms-client-bom</artifactId>
-			<version>8.0.0.Beta1</version>
-			<type>pom</type>
-		</dependency>
         <dependency>
             <groupId>org.fiteagle.core</groupId>
             <artifactId>messagebus</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 </project>

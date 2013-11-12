@@ -65,22 +65,16 @@
 		<dependency>
 			<groupId>org.igniterealtime.smack</groupId>
 			<artifactId>smack</artifactId>
-			<version>3.3.0</version>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.igniterealtime.smack</groupId>
 			<artifactId>smackx</artifactId>
-			<version>3.3.0</version>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.enterprise.concurrent</groupId>
-			<artifactId>javax.enterprise.concurrent-api</artifactId>
-			<version>1.0</version>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
 		</dependency>
 	</dependencies>
 </project>

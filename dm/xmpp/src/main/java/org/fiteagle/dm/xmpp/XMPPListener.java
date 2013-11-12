@@ -11,9 +11,11 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.NamingException;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 import org.fiteagle.boundary.MessageBus;
-import org.jivesoftware.smack.Connection;
+import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
@@ -23,15 +25,15 @@ import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
-public class XMPP implements Runnable {
+public class XMPPListener implements ServletContextListener {
 
 	private final Session session;
 	private final MessageConsumer consumer;
 	private final MessageProducer producer;
-	private MessageProducer specificProducer;
-	private static final Logger log = Logger.getLogger(XMPP.class.getName());
+	private XMPPConnection xmppConnection;
+	private static final Logger log = Logger.getLogger(XMPPListener.class.getName());
 
-	public XMPP() throws NamingException, JMSException, XMPPException {
+	public XMPPListener() throws NamingException, JMSException, XMPPException {
 		super();
 		MessageBus messageBus = new MessageBus();
 		this.session = messageBus.getSession();
@@ -40,24 +42,26 @@ public class XMPP implements Runnable {
 		startXmppListener();
 	}
 
-	public XMPP(final Session session, final MessageConsumer consumer,
+	public XMPPListener(final Session session, final MessageConsumer consumer,
 			final MessageProducer producer) throws JMSException, XMPPException {
-		final MessageListener listener = new XMPP.XMPPMessageBusListener();
+		final MessageListener listener = new XMPPListener.XMPPMessageBusListener();
 		this.session = session;
 		this.consumer = consumer;
 		this.producer = producer;
 		this.consumer.setMessageListener(listener);
-		this.specificProducer = session.createProducer(null);
 
 		startXmppListener();
 	}
 
 	private void startXmppListener() throws XMPPException {
-		Connection connection = new XMPPConnection("fuseco.fokus.fraunhofer.de");
-		connection.connect();
-		connection.login("test", "test");
+		ConnectionConfiguration config = new ConnectionConfiguration(
+				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
 
-		PubSubManager pubsub = new PubSubManager(connection);
+		xmppConnection = new XMPPConnection(config);
+		xmppConnection.connect();
+		xmppConnection.login("test", "test", "server");
+
+		PubSubManager pubsub = new PubSubManager(xmppConnection);
 		Node pubsubNode;
 		pubsubNode = pubsub.getNode("test");
 		pubsubNode.addItemEventListener(new XMPPNativeListener());
@@ -68,10 +72,10 @@ public class XMPP implements Runnable {
 		public void onMessage(final Message message) {
 			try {
 				final TextMessage textMessage = (TextMessage) message;
-				XMPP.log.log(Level.INFO,
-						"[XMPP] JMS Received: '" + textMessage.getText() + "'");
+				final String logMessage = "JMS Received: '" + textMessage.getText() + "'";
+				XMPPListener.log.log(Level.INFO,logMessage);
 			} catch (final JMSException e) {
-				XMPP.log.log(Level.SEVERE, e.toString());
+				XMPPListener.log.log(Level.SEVERE, e.toString());
 			}
 		}
 	}
@@ -83,7 +87,7 @@ public class XMPP implements Runnable {
 				ItemPublishEvent<PayloadItem<SimplePayload>> payload) {
 			final String message = payload.getItems().get(0).getPayload()
 					.toXML();
-			XMPP.log.log(Level.INFO, "[XMPP] XMPP Received: '" + message + "'");
+			XMPPListener.log.log(Level.INFO, "XMPP Received: '" + message + "'");
 			try {
 				producer.send(session.createTextMessage(message));
 			} catch (JMSException e) {
@@ -93,15 +97,13 @@ public class XMPP implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		System.out.print("Listening for XMPP pubsub messages...");
-		while (true) {
-			try {
-				System.out.print(".");
-				Thread.sleep(1000);
-			} catch (final InterruptedException e) {
-				log.log(Level.SEVERE, e.getMessage());
-			}
-		}		
+	public void contextInitialized(ServletContextEvent sce) {
+		log.log(Level.INFO, "Starting XMPP Listener...");
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
+		log.log(Level.INFO, "Stopping XMPP Listener...");
+		this.xmppConnection.disconnect();
 	}
 }

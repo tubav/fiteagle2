@@ -19,7 +19,7 @@ public class XMPPTest {
 	@Ignore
 	public void test() throws JMSException, XMPPException, InterruptedException {
 		this.mockmessagebus = new MessageBus(this.factory);
-		new XMPP(mockmessagebus.getSession(), mockmessagebus.getConsumer(), mockmessagebus.getProducer());	
+		new XMPPListener(mockmessagebus.getSession(), mockmessagebus.getConsumer(), mockmessagebus.getProducer());
 	}
 
 }

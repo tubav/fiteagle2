@@ -7,6 +7,7 @@ import org.fiteagle.boundary.MessageBusLocal;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class FrcpListenerTest {
@@ -15,6 +16,7 @@ public class FrcpListenerTest {
 	private XMPPConnection mockedxmppconnection;
 
 	@Test
+	@Ignore
 	public void test() throws JMSException, XMPPException, InterruptedException {
 		this.mockmessagebus = new MessageBusLocal();
 		this.mockedxmppconnection = getMockedConnection();

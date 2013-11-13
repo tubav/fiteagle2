@@ -1,4 +1,4 @@
-package org.fiteagle.dm.xmpp;
+package org.fiteagle.dm.xmpp.frcp;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -9,7 +9,7 @@ import org.jivesoftware.smack.XMPPException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class XMPPTest {
+public class FrcpListenerTest {
 
 	private ConnectionFactory factory = new ActiveMQConnectionFactory(
 			"vm://localhost?broker.persistent=false");
@@ -19,7 +19,7 @@ public class XMPPTest {
 	@Ignore
 	public void test() throws JMSException, XMPPException, InterruptedException {
 		this.mockmessagebus = new MessageBus(this.factory);
-		new XMPPListener(mockmessagebus.getSession(), mockmessagebus.getConsumer(), mockmessagebus.getProducer());
+		new FrcpListener(mockmessagebus);
 	}
 
 }

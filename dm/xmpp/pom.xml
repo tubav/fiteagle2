@@ -10,7 +10,7 @@
 	<groupId>org.fiteagle.dm</groupId>
 	<artifactId>xmpp</artifactId>
 
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 	<name>FITeagle :: DM :: XMPP</name>
 
 	<repositories>
@@ -44,15 +44,6 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-
-            <plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<configuration>
-                    <skip>false</skip>
-                </configuration>
-			</plugin>
-
         </plugins>
     </build>
 
@@ -77,4 +68,7 @@
 			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
 		</dependency>
 	</dependencies>
+	<modules>
+		<module>frcp</module>
+	</modules>
 </project>

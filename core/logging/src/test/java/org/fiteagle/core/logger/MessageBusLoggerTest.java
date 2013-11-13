@@ -2,7 +2,6 @@ package org.fiteagle.core.logger;
 
 import java.io.FileNotFoundException;
 
-
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -23,7 +22,7 @@ public class MessageBusLoggerTest {
 	@Before
 	public void setup() throws JMSException {
 		this.messageBus = new MessageBusLocal();
-		this.waitingMessageBus = new MessageBusLocal();		
+		this.waitingMessageBus = new MessageBusLocal();
 	}
 
 	@After
@@ -38,7 +37,8 @@ public class MessageBusLoggerTest {
 		final MessageBusLogger mbLogger = new MessageBusLogger(this.messageBus);
 
 		Assert.assertNotEquals("test", mbLogger.getLastTextMessage());
-		final TextMessage textMessage = this.messageBus.getSession().createTextMessage("test");
+		final TextMessage textMessage = this.messageBus.getSession()
+				.createTextMessage("test");
 		textMessage.setBooleanProperty("test", true);
 		this.messageBus.getProducer().send(textMessage);
 		this.waitingMessageBus.getConsumer().receive(50);

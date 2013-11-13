@@ -10,28 +10,28 @@ import javax.ws.rs.Produces;
 
 @Path("/echo/")
 public class EchoRest {
-	private static final Logger log = Logger.getLogger(EchoRest.class
-			.getName());
-	
-	
-    @GET
-    @Path("/json/{name}")
-    @Produces("application/json")
-    public String echoMessageJSON(@PathParam("name") String name) {
-        log.log(Level.INFO, "getting JSON: " + name);
-        return "{\"result\":\"" + createHelloMessage(name) + "\"}";
-    }
+	private static final Logger log = Logger
+			.getLogger(EchoRest.class.getName());
 
-    @GET
-    @Path("/xml/{name}")
-    @Produces("application/xml")
-    public String echoMessageXML(@PathParam("name") String name) {
-    	log.log(Level.INFO, "getting XML: " + name);
-        return "<xml><result>" + createHelloMessage(name) + "</result></xml>";
-    }
+	@GET
+	@Path("/json/{name}")
+	@Produces("application/json")
+	public String echoMessageJSON(@PathParam("name") final String name) {
+		EchoRest.log.log(Level.INFO, "getting JSON: " + name);
+		return "{\"result\":\"" + this.createHelloMessage(name) + "\"}";
+	}
 
-	private String createHelloMessage(String name) {
+	@GET
+	@Path("/xml/{name}")
+	@Produces("application/xml")
+	public String echoMessageXML(@PathParam("name") final String name) {
+		EchoRest.log.log(Level.INFO, "getting XML: " + name);
+		return "<xml><result>" + this.createHelloMessage(name)
+				+ "</result></xml>";
+	}
+
+	private String createHelloMessage(final String name) {
 		return name;
 	}
-	
+
 }

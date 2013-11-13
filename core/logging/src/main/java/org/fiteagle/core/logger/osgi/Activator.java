@@ -28,8 +28,10 @@ public class Activator implements BundleActivator {
 		this.messageBus = MessageBusApplicationServerFactory.createMessageBus();
 
 		final Session session = this.messageBus.getSession();
-		final MessageProducer producer = session.createProducer(this.messageBus.getDestination());
-		final MessageConsumer consumer = session.createConsumer(this.messageBus.getDestination());
+		final MessageProducer producer = session.createProducer(this.messageBus
+				.getDestination());
+		final MessageConsumer consumer = session.createConsumer(this.messageBus
+				.getDestination());
 
 		new MessageBusLogger(session, consumer);
 		final TextMessage textMessage = session.createTextMessage("self test");

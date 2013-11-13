@@ -1,8 +1,6 @@
 package org.fiteagle.dm.rest;
 
-import static org.junit.Assert.*;
-
-import org.fiteagle.dm.rest.EchoRest;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -11,14 +9,14 @@ import org.junit.Test;
 public class EchoRestTest {
 	@Test
 	public void testWebSockets() {
-		EchoRest ws = new EchoRest();
+		final EchoRest ws = new EchoRest();
 		final String testMessage = "test";
 		String actual;
-		
+
 		actual = ws.echoMessageXML(testMessage);
-		assertTrue(actual.contains(testMessage));
-		
+		Assert.assertTrue(actual.contains(testMessage));
+
 		actual = ws.echoMessageJSON(testMessage);
-		assertTrue(actual.contains(testMessage));
+		Assert.assertTrue(actual.contains(testMessage));
 	}
 }

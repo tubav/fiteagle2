@@ -19,22 +19,23 @@ public class FrcpListenerTest {
 	@Ignore
 	public void test() throws JMSException, XMPPException, InterruptedException {
 		this.mockmessagebus = new MessageBusLocal();
-		this.mockedxmppconnection = getMockedConnection();
+		this.mockedxmppconnection = this.getMockedConnection();
 
-		new FrcpListener(mockmessagebus, mockedxmppconnection);
+		new FrcpListener(this.mockmessagebus, this.mockedxmppconnection);
 	}
 
 	private XMPPConnection getMockedConnection() throws XMPPException {
-		ConnectionConfiguration config = new ConnectionConfiguration(
+		final ConnectionConfiguration config = new ConnectionConfiguration(
 				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
-		XMPPConnection xmppConnection = new XMPPConnection(config);
+		final XMPPConnection xmppConnection = new XMPPConnection(config);
 		xmppConnection.connect();
 		xmppConnection.login("test", "test", "server");
 
 		// todo: find a way to mock this
-		//XMPPConnection mockedConnection = EasyMock.createMock(XMPPConnection.class);
-		//EasyMock.replay(mockedConnection);
-		//new ServiceDiscoveryManager(mockedConnection);
+		// XMPPConnection mockedConnection =
+		// EasyMock.createMock(XMPPConnection.class);
+		// EasyMock.replay(mockedConnection);
+		// new ServiceDiscoveryManager(mockedConnection);
 
 		return xmppConnection;
 	}

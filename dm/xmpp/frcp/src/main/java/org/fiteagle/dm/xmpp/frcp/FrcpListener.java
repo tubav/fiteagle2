@@ -19,8 +19,8 @@ import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 public class FrcpListener {
 	private XMPPConnection xmppConnection;
-	private MessageBus jmsMessageBus;
-	private PubSubManager xmppMessageBus;
+	private final MessageBus jmsMessageBus;
+	private final PubSubManager xmppMessageBus;
 	private static final Logger log = Logger.getLogger(FrcpListener.class
 			.getName());
 
@@ -40,7 +40,7 @@ public class FrcpListener {
 				new FrcpListener.JmsMessageBusListener());
 	}
 
-	private void startXmppListener(String topic) throws XMPPException {
+	private void startXmppListener(final String topic) throws XMPPException {
 		this.xmppMessageBus.getNode(topic).addItemEventListener(
 				new XmppMessageBusListener());
 	}
@@ -82,7 +82,7 @@ public class FrcpListener {
 			FrcpListener.log
 					.log(Level.INFO, "XMPP Received: '" + message + "'");
 			try {
-				TextMessage jmsMessage = FrcpListener.this.jmsMessageBus
+				final TextMessage jmsMessage = FrcpListener.this.jmsMessageBus
 						.getSession().createTextMessage(message);
 				FrcpListener.this.jmsMessageBus.getProducer().send(jmsMessage);
 			} catch (final JMSException e) {

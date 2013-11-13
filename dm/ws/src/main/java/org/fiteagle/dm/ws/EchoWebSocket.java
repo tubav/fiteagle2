@@ -20,22 +20,22 @@ public class EchoWebSocket {
 
 	private static final Logger log = Logger.getLogger(EchoWebSocket.class
 			.getName());
-	
+
 	@OnMessage
-	public String echoMessage(String message) {
-		log.log(Level.INFO, "Received : " + message);
+	public String echoMessage(final String message) {
+		EchoWebSocket.log.log(Level.INFO, "Received : " + message);
 		return message + "Echo";
 	}
 
 	@OnOpen
-	public void onOpen(Session session) {
-		log.log(Level.INFO,
-				"Received : " + "WebSocket opened: " + session.getId());
+	public void onOpen(final Session session) {
+		EchoWebSocket.log.log(Level.INFO, "Received : " + "WebSocket opened: "
+				+ session.getId());
 	}
 
 	@OnClose
-	public void onClose(CloseReason reason) {
-		log.log(Level.INFO,
-				"Closing a WebSocket due to " + reason.getReasonPhrase());
+	public void onClose(final CloseReason reason) {
+		EchoWebSocket.log.log(Level.INFO, "Closing a WebSocket due to "
+				+ reason.getReasonPhrase());
 	}
 }

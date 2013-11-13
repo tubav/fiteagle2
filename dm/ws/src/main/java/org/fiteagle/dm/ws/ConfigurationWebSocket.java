@@ -27,34 +27,38 @@ public class ConfigurationWebSocket {
 	private MessageBus messagebus;
 
 	public ConfigurationWebSocket() throws NamingException, JMSException {
-		LOGGER.log(Level.INFO, "Starting FITeagle WebSocket Interface...");
+		ConfigurationWebSocket.LOGGER.log(Level.INFO,
+				"Starting FITeagle WebSocket Interface...");
 		this.messagebus = MessageBusApplicationServerFactory.createMessageBus();
-		this.session = messagebus.getSession();
-		this.producer = messagebus.getProducer();
+		this.session = this.messagebus.getSession();
+		this.producer = this.messagebus.getProducer();
 	}
 
-	public ConfigurationWebSocket(javax.jms.Session session,
-			MessageProducer producer) {
+	public ConfigurationWebSocket(final javax.jms.Session session,
+			final MessageProducer producer) {
 		this.session = session;
 		this.producer = producer;
 	}
 
 	@OnMessage
-	public String onMessage(String message) throws JMSException {
-		LOGGER.log(Level.INFO, "Received : " + message);
-		TemporaryQueue responseDestination = session.createTemporaryQueue();
-		MessageConsumer responseConsumer = session
+	public String onMessage(final String message) throws JMSException {
+		ConfigurationWebSocket.LOGGER.log(Level.INFO, "Received : " + message);
+		final TemporaryQueue responseDestination = this.session
+				.createTemporaryQueue();
+		final MessageConsumer responseConsumer = this.session
 				.createConsumer(responseDestination);
 		final TextMessage textMessage = this.session.createTextMessage(message);
 		textMessage.setJMSReplyTo(responseDestination);
-		
+
 		this.producer.send(textMessage);
-		
+
 		String responseText = "";
-		TextMessage response = (TextMessage) responseConsumer.receive(1000);
-		if (null != response)
+		final TextMessage response = (TextMessage) responseConsumer
+				.receive(1000);
+		if (null != response) {
 			responseText = response.getText();
-		
+		}
+
 		return responseText;
 	}
 }

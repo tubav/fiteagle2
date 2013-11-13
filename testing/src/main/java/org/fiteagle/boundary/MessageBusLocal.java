@@ -8,9 +8,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class MessageBusLocal extends MessageBus {
 	private final static ConnectionFactory FACTORY = new ActiveMQConnectionFactory(
 			"vm://localhost?broker.persistent=false");
-	
+
 	public MessageBusLocal() throws JMSException {
-		super(FACTORY);
+		super(MessageBusLocal.FACTORY);
 	}
 
 }

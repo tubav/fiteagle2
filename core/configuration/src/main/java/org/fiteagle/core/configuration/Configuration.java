@@ -21,12 +21,12 @@ public class Configuration {
 	private final Session session;
 	private final MessageConsumer consumer;
 	private final MessageProducer producer;
-	private MessageProducer specificProducer;
-	private static final Logger log = Logger.getLogger(Configuration.class.getName());
+	private final MessageProducer specificProducer;
+	private static final Logger log = Logger.getLogger(Configuration.class
+			.getName());
 
-
-	public Configuration(final Session session,
-			final MessageConsumer consumer, final MessageProducer producer) throws JMSException {
+	public Configuration(final Session session, final MessageConsumer consumer,
+			final MessageProducer producer) throws JMSException {
 		final MessageListener listener = new Configuration.ConfigurationListener();
 		this.session = session;
 		this.consumer = consumer;
@@ -35,8 +35,9 @@ public class Configuration {
 		this.specificProducer = session.createProducer(null);
 	}
 
-	public Configuration(MessageBus messageBus) throws JMSException {
-		this(messageBus.getSession(), messageBus.getConsumer(), messageBus.getProducer());
+	public Configuration(final MessageBus messageBus) throws JMSException {
+		this(messageBus.getSession(), messageBus.getConsumer(), messageBus
+				.getProducer());
 	}
 
 	private class ConfigurationListener implements MessageListener {
@@ -48,17 +49,22 @@ public class Configuration {
 				Configuration.log.log(Level.INFO, "[Configuration] Received: '"
 						+ textMessage.getText() + "'");
 				if (textMessage.getText().equals("getVersion")) {
-					TextMessage result = session.createTextMessage(VERSION);
-					result.setJMSCorrelationID(textMessage.getJMSCorrelationID());
-					
-					Configuration.log.log(Level.INFO, "[Configuration] Sending: '"
-							+ result.getText() + "'");
-					Destination replyTo = textMessage.getJMSReplyTo();
-					
-					if (null == replyTo)
-						producer.send(result);
-					else
-						specificProducer.send(replyTo, result);
+					final TextMessage result = Configuration.this.session
+							.createTextMessage(Configuration.VERSION);
+					result.setJMSCorrelationID(textMessage
+							.getJMSCorrelationID());
+
+					Configuration.log.log(Level.INFO,
+							"[Configuration] Sending: '" + result.getText()
+									+ "'");
+					final Destination replyTo = textMessage.getJMSReplyTo();
+
+					if (null == replyTo) {
+						Configuration.this.producer.send(result);
+					} else {
+						Configuration.this.specificProducer.send(replyTo,
+								result);
+					}
 				}
 			} catch (final JMSException e) {
 				Configuration.log.log(Level.SEVERE, e.toString());

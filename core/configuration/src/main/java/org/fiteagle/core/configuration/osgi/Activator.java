@@ -21,16 +21,18 @@ public class Activator implements BundleActivator {
 	public void start(final BundleContext context) throws Exception {
 		Activator.log.log(Level.INFO, "Starting FITeagle Configuration...");
 		this.messageBus = MessageBusApplicationServerFactory.createMessageBus();
-		Message message = this.messageBus.getSession().createTextMessage("new configuration");
+		final Message message = this.messageBus.getSession().createTextMessage(
+				"new configuration");
 		message.setBooleanProperty("config_updated", true);
-		this.messageBus.getProducer().send(message );
-		new Configuration(messageBus);
+		this.messageBus.getProducer().send(message);
+		new Configuration(this.messageBus);
 	}
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
 		Activator.log.log(Level.INFO, "Stopping FITeagle Configuration...");
-		if (null != this.messageBus)
+		if (null != this.messageBus) {
 			this.messageBus.close();
+		}
 	}
 }

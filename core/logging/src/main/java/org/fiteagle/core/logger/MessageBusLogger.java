@@ -25,7 +25,7 @@ public class MessageBusLogger {
 		consumer.setMessageListener(listener);
 	}
 
-	public MessageBusLogger(MessageBus messageBus) throws JMSException {
+	public MessageBusLogger(final MessageBus messageBus) throws JMSException {
 		this(messageBus.getSession(), messageBus.getConsumer());
 	}
 
@@ -42,7 +42,7 @@ public class MessageBusLogger {
 				MessageBusLogger.log.log(Level.INFO, "[MessageBus] Received: '"
 						+ textMessage.getText() + "'");
 				if (textMessage.getBooleanProperty("test")) {
-					logTextMessage(textMessage);
+					this.logTextMessage(textMessage);
 				}
 			} catch (final JMSException e) {
 				MessageBusLogger.log.log(Level.SEVERE, e.toString());
@@ -51,10 +51,10 @@ public class MessageBusLogger {
 
 		private void logTextMessage(final TextMessage textMessage)
 				throws JMSException {
-			Level[] levels = { Level.ALL, Level.CONFIG, Level.FINE,
+			final Level[] levels = { Level.ALL, Level.CONFIG, Level.FINE,
 					Level.FINER, Level.FINEST, Level.INFO, Level.SEVERE,
 					Level.WARNING };
-			for (Level level : levels) {
+			for (final Level level : levels) {
 				MessageBusLogger.log.log(level, "[MessageBus] Test " + level
 						+ " Received: '" + textMessage.getText() + "'");
 			}

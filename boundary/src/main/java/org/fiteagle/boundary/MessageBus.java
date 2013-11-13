@@ -17,23 +17,27 @@ public class MessageBus {
 	protected final Session session;
 	protected final Destination destination;
 
-	public MessageBus (ConnectionFactory factory, Connection connection, Session session, Destination destination) throws JMSException {
+	public MessageBus(final ConnectionFactory factory,
+			final Connection connection, final Session session,
+			final Destination destination) throws JMSException {
 		this.factory = factory;
 		this.connection = connection;
 		this.session = session;
 		this.destination = destination;
 		connection.start();
 	}
-	
-	public MessageBus (ConnectionFactory customFactory) throws JMSException {
+
+	public MessageBus(final ConnectionFactory customFactory)
+			throws JMSException {
 		this.factory = customFactory;
-		this.connection = factory.createConnection();
-		this.session = connection
-				.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		this.destination = session.createQueue(DESTINATION_DEFAULT);
-		connection.start();
+		this.connection = this.factory.createConnection();
+		this.session = this.connection.createSession(false,
+				Session.AUTO_ACKNOWLEDGE);
+		this.destination = this.session
+				.createQueue(MessageBus.DESTINATION_DEFAULT);
+		this.connection.start();
 	}
-		
+
 	public ConnectionFactory getFactory() throws NamingException {
 		return this.factory;
 	}
@@ -51,8 +55,9 @@ public class MessageBus {
 	}
 
 	public void close() throws JMSException {
-		if (null != this.connection)
-			this.connection.close();		
+		if (null != this.connection) {
+			this.connection.close();
+		}
 	}
 
 	public MessageProducer getProducer() throws JMSException {

@@ -13,18 +13,21 @@ public class MessageBusApplicationServerFactory {
 	public static final String CONNECTION_FACTORY_LOCAL = "java:/ConnectionFactory";
 	private static final String username = "fiteagle";
 	private static final String password = "fiteagle";
-	
-	public static MessageBus createMessageBus() throws NamingException, JMSException {
-		InitialContext mycontext = new InitialContext();
-		ConnectionFactory myfactory = (ConnectionFactory) mycontext
+
+	public static MessageBus createMessageBus() throws NamingException,
+			JMSException {
+		final InitialContext mycontext = new InitialContext();
+		final ConnectionFactory myfactory = (ConnectionFactory) mycontext
 				.lookup(MessageBusApplicationServerFactory.CONNECTION_FACTORY_LOCAL);
-		Destination mydestination = (Destination) mycontext
-		.lookup(MessageBusApplicationServerFactory.DESTINATION_DEFAULT);
-		Connection myconnection = myfactory.createConnection(username, password);
-		Session mysession = myconnection
-				.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		final Destination mydestination = (Destination) mycontext
+				.lookup(MessageBusApplicationServerFactory.DESTINATION_DEFAULT);
+		final Connection myconnection = myfactory.createConnection(
+				MessageBusApplicationServerFactory.username,
+				MessageBusApplicationServerFactory.password);
+		final Session mysession = myconnection.createSession(false,
+				Session.AUTO_ACKNOWLEDGE);
 		myconnection.start();
-		
+
 		return new MessageBus(myfactory, myconnection, mysession, mydestination);
 	}
 }

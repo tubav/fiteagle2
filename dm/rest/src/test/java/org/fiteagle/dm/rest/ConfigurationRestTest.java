@@ -23,35 +23,37 @@ public class ConfigurationRestTest {
 	@Before
 	public void setup() throws JMSException {
 		this.mockmessagebus = new MessageBusLocal();
-		MessageConsumer consumer = mockmessagebus.getConsumer();
+		final MessageConsumer consumer = this.mockmessagebus.getConsumer();
 		consumer.setMessageListener(new MockListener(this.mockmessagebus
 				.getSession()));
 	}
 
 	@Test
 	public void testGetVersionCall() throws JMSException {
-		MessageBus messagebus = new MessageBusLocal();
-		ConfigurationRest v = new ConfigurationRest(messagebus.getSession(),
-				messagebus.getProducer());
+		final MessageBus messagebus = new MessageBusLocal();
+		final ConfigurationRest v = new ConfigurationRest(
+				messagebus.getSession(), messagebus.getProducer());
 
-		Assert.assertEquals(EXPECTED, v.getValue("getVersion"));
+		Assert.assertEquals(ConfigurationRestTest.EXPECTED,
+				v.getValue("getVersion"));
 	}
 
 	private class MockListener implements MessageListener {
-		private Session session;
+		private final Session session;
 
-		public MockListener(Session session) {
+		public MockListener(final Session session) {
 			this.session = session;
 		}
 
 		@Override
-		public void onMessage(Message textMessage) {
+		public void onMessage(final Message textMessage) {
 			try {
-				TextMessage result = session.createTextMessage(EXPECTED);
+				final TextMessage result = this.session
+						.createTextMessage(ConfigurationRestTest.EXPECTED);
 				result.setJMSCorrelationID(textMessage.getJMSCorrelationID());
-				Destination replyTo = textMessage.getJMSReplyTo();
-				session.createProducer(null).send(replyTo, result);
-			} catch (JMSException e) {
+				final Destination replyTo = textMessage.getJMSReplyTo();
+				this.session.createProducer(null).send(replyTo, result);
+			} catch (final JMSException e) {
 				e.printStackTrace();
 			}
 		}

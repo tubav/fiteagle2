@@ -10,7 +10,7 @@ public class ConfigurationTest {
 
 	@Test
 	public void testConfiguration() throws JMSException {
-		MessageBus messageBus = new MessageBusLocal();
+		final MessageBus messageBus = new MessageBusLocal();
 
 		new Configuration(messageBus);
 	}

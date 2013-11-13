@@ -8,17 +8,12 @@
 	</parent>
 
 	<groupId>org.fiteagle.dm</groupId>
-	<artifactId>xmpp</artifactId>
-
+	<artifactId>tcp</artifactId>
+	<modules>
+		<module>omsp</module>
+	</modules>
 	<packaging>pom</packaging>
-	<name>FITeagle :: DM :: XMPP</name>
-
-	<repositories>
-		<repository>
-			<id>opencast-public</id>
-			<url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
-		</repository>
-	</repositories>
+	<name>FITeagle :: DM :: TCP</name>
 
     <dependencyManagement>
         <dependencies>
@@ -53,16 +48,6 @@
 			<artifactId>boundary</artifactId>
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.igniterealtime.smack</groupId>
-			<artifactId>smack</artifactId>
-			<version>3.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.igniterealtime.smack</groupId>
-			<artifactId>smackx</artifactId>
-			<version>3.3.1</version>
-		</dependency>
 		        <dependency>
             <groupId>org.fiteagle</groupId>
             <artifactId>testing</artifactId>
@@ -71,7 +56,4 @@
         </dependency>
     
 	</dependencies>
-	<modules>
-		<module>frcp</module>
-	</modules>
 </project>

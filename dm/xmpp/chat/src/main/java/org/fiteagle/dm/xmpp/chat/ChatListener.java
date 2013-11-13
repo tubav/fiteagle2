@@ -26,7 +26,8 @@ public class ChatListener {
 				final String logMessage = "JMS Received: '"
 						+ textMessage.getText() + "'";
 				ChatListener.log.log(Level.INFO, logMessage);
-				ChatListener.this.chat.sendMessage(logMessage);
+				if (null != ChatListener.this.chat)
+					ChatListener.this.chat.sendMessage(logMessage);
 			} catch (final JMSException | XMPPException e) {
 				ChatListener.log.log(Level.SEVERE, e.toString());
 			}

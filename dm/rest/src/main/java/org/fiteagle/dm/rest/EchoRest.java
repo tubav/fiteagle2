@@ -13,6 +13,10 @@ public class EchoRest {
 	private static final Logger log = Logger
 			.getLogger(EchoRest.class.getName());
 
+	private String createHelloMessage(final String name) {
+		return name;
+	}
+
 	@GET
 	@Path("/json/{name}")
 	@Produces("application/json")
@@ -28,10 +32,6 @@ public class EchoRest {
 		EchoRest.log.log(Level.INFO, "getting XML: " + name);
 		return "<xml><result>" + this.createHelloMessage(name)
 				+ "</result></xml>";
-	}
-
-	private String createHelloMessage(final String name) {
-		return name;
 	}
 
 }

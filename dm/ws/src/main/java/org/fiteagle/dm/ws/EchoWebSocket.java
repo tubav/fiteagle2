@@ -27,15 +27,15 @@ public class EchoWebSocket {
 		return message + "Echo";
 	}
 
-	@OnOpen
-	public void onOpen(final Session session) {
-		EchoWebSocket.log.log(Level.INFO, "Received : " + "WebSocket opened: "
-				+ session.getId());
-	}
-
 	@OnClose
 	public void onClose(final CloseReason reason) {
 		EchoWebSocket.log.log(Level.INFO, "Closing a WebSocket due to "
 				+ reason.getReasonPhrase());
+	}
+
+	@OnOpen
+	public void onOpen(final Session session) {
+		EchoWebSocket.log.log(Level.INFO, "Received : " + "WebSocket opened: "
+				+ session.getId());
 	}
 }

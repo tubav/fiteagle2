@@ -17,16 +17,6 @@ public class MessageBus {
 	protected final Session session;
 	protected final Destination destination;
 
-	public MessageBus(final ConnectionFactory factory,
-			final Connection connection, final Session session,
-			final Destination destination) throws JMSException {
-		this.factory = factory;
-		this.connection = connection;
-		this.session = session;
-		this.destination = destination;
-		connection.start();
-	}
-
 	public MessageBus(final ConnectionFactory customFactory)
 			throws JMSException {
 		this.factory = customFactory;
@@ -38,20 +28,14 @@ public class MessageBus {
 		this.connection.start();
 	}
 
-	public ConnectionFactory getFactory() throws NamingException {
-		return this.factory;
-	}
-
-	public Destination getDestination() throws NamingException {
-		return this.destination;
-	}
-
-	public Connection getConnection() {
-		return this.connection;
-	}
-
-	public Session getSession() {
-		return this.session;
+	public MessageBus(final ConnectionFactory factory,
+			final Connection connection, final Session session,
+			final Destination destination) throws JMSException {
+		this.factory = factory;
+		this.connection = connection;
+		this.session = session;
+		this.destination = destination;
+		connection.start();
 	}
 
 	public void close() throws JMSException {
@@ -60,12 +44,28 @@ public class MessageBus {
 		}
 	}
 
-	public MessageProducer getProducer() throws JMSException {
-		return this.session.createProducer(this.destination);
+	public Connection getConnection() {
+		return this.connection;
 	}
 
 	public MessageConsumer getConsumer() throws JMSException {
 		return this.session.createConsumer(this.destination);
+	}
+
+	public Destination getDestination() throws NamingException {
+		return this.destination;
+	}
+
+	public ConnectionFactory getFactory() throws NamingException {
+		return this.factory;
+	}
+
+	public MessageProducer getProducer() throws JMSException {
+		return this.session.createProducer(this.destination);
+	}
+
+	public Session getSession() {
+		return this.session;
 	}
 
 }

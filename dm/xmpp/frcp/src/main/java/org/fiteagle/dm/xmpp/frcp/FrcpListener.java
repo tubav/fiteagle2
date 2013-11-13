@@ -18,46 +18,6 @@ import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 public class FrcpListener {
-	private XMPPConnection xmppConnection;
-	private final MessageBus jmsMessageBus;
-	private final PubSubManager xmppMessageBus;
-	private static final Logger log = Logger.getLogger(FrcpListener.class
-			.getName());
-
-	public FrcpListener(final MessageBus messageBus,
-			final XMPPConnection xmppConnection) throws JMSException,
-			XMPPException {
-
-		this.jmsMessageBus = messageBus;
-		this.startJMSListener();
-
-		this.xmppMessageBus = new PubSubManager(xmppConnection);
-		this.startXmppListener("test");
-	}
-
-	private void startJMSListener() throws JMSException {
-		this.jmsMessageBus.getConsumer().setMessageListener(
-				new FrcpListener.JmsMessageBusListener());
-	}
-
-	private void startXmppListener(final String topic) throws XMPPException {
-		this.xmppMessageBus.getNode(topic).addItemEventListener(
-				new XmppMessageBusListener());
-	}
-
-	public void close() {
-		if (null != this.xmppConnection) {
-			this.xmppConnection.disconnect();
-		}
-		if (null != this.jmsMessageBus) {
-			try {
-				this.jmsMessageBus.close();
-			} catch (final JMSException e) {
-				FrcpListener.log.log(Level.SEVERE, e.getMessage());
-			}
-		}
-	}
-
 	private class JmsMessageBusListener implements MessageListener {
 		@Override
 		public void onMessage(final Message message) {
@@ -71,7 +31,6 @@ public class FrcpListener {
 			}
 		}
 	}
-
 	private class XmppMessageBusListener implements
 			ItemEventListener<PayloadItem<SimplePayload>> {
 		@Override
@@ -89,5 +48,46 @@ public class FrcpListener {
 				FrcpListener.log.log(Level.SEVERE, e.getMessage());
 			}
 		}
+	}
+	private XMPPConnection xmppConnection;
+	private final MessageBus jmsMessageBus;
+
+	private final PubSubManager xmppMessageBus;
+
+	private static final Logger log = Logger.getLogger(FrcpListener.class
+			.getName());
+
+	public FrcpListener(final MessageBus messageBus,
+			final XMPPConnection xmppConnection) throws JMSException,
+			XMPPException {
+
+		this.jmsMessageBus = messageBus;
+		this.startJMSListener();
+
+		this.xmppMessageBus = new PubSubManager(xmppConnection);
+		this.startXmppListener("test");
+	}
+
+	public void close() {
+		if (null != this.xmppConnection) {
+			this.xmppConnection.disconnect();
+		}
+		if (null != this.jmsMessageBus) {
+			try {
+				this.jmsMessageBus.close();
+			} catch (final JMSException e) {
+				FrcpListener.log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+	}
+
+	private void startJMSListener() throws JMSException {
+		this.jmsMessageBus.getConsumer().setMessageListener(
+				new FrcpListener.JmsMessageBusListener());
+	}
+
+	private void startXmppListener(final String topic) throws XMPPException {
+		this.xmppMessageBus.getNode(topic).addItemEventListener(
+				new XmppMessageBusListener());
 	}
 }

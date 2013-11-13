@@ -24,16 +24,18 @@ public class MessageBusLoggerIT {
 	private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String PROVIDER_URL = "http-remoting://localhost:8080";
 
-	@Test
-	@Ignore
-	// todo: refactor to maven integration test
-	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
-		final InitialContext context = this.getContext();
-		final Destination dest = this.getDestination(context);
-		final Session session = this.getSession(context);
-		final MessageConsumer consumer = session.createConsumer(dest);
-
-		new MessageBusLogger(session, consumer);
+	private InitialContext getContext() throws NamingException {
+		final Properties env = new Properties();
+		env.put(Context.INITIAL_CONTEXT_FACTORY,
+				MessageBusLoggerIT.INITIAL_CONTEXT_FACTORY);
+		env.put(Context.PROVIDER_URL, System.getProperty(Context.PROVIDER_URL,
+				MessageBusLoggerIT.PROVIDER_URL));
+		env.put(Context.SECURITY_PRINCIPAL, System.getProperty("username",
+				MessageBusLoggerIT.DEFAULT_USERNAME));
+		env.put(Context.SECURITY_CREDENTIALS, System.getProperty("password",
+				MessageBusLoggerIT.DEFAULT_PASSWORD));
+		final InitialContext context = new InitialContext(env);
+		return context;
 	}
 
 	private Destination getDestination(final InitialContext jndiContext)
@@ -66,17 +68,15 @@ public class MessageBusLoggerIT {
 		return session;
 	}
 
-	private InitialContext getContext() throws NamingException {
-		final Properties env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY,
-				MessageBusLoggerIT.INITIAL_CONTEXT_FACTORY);
-		env.put(Context.PROVIDER_URL, System.getProperty(Context.PROVIDER_URL,
-				MessageBusLoggerIT.PROVIDER_URL));
-		env.put(Context.SECURITY_PRINCIPAL, System.getProperty("username",
-				MessageBusLoggerIT.DEFAULT_USERNAME));
-		env.put(Context.SECURITY_CREDENTIALS, System.getProperty("password",
-				MessageBusLoggerIT.DEFAULT_PASSWORD));
-		final InitialContext context = new InitialContext(env);
-		return context;
+	@Test
+	@Ignore
+	// todo: refactor to maven integration test
+	public void testCommunicateWithJmsUsingMessageBusLogger() throws Exception {
+		final InitialContext context = this.getContext();
+		final Destination dest = this.getDestination(context);
+		final Session session = this.getSession(context);
+		final MessageConsumer consumer = session.createConsumer(dest);
+
+		new MessageBusLogger(session, consumer);
 	}
 }

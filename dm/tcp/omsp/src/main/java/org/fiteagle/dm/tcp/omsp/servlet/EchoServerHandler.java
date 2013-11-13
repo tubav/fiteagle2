@@ -10,6 +10,15 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 public class EchoServerHandler extends SimpleChannelHandler {
 
 	@Override
+	public void exceptionCaught(final ChannelHandlerContext ctx,
+			final ExceptionEvent e) {
+		e.getCause().printStackTrace();
+
+		final Channel ch = e.getChannel();
+		ch.close();
+	}
+
+	@Override
 	public void messageReceived(final ChannelHandlerContext ctx,
 			final MessageEvent e) {
 		final ChannelBuffer buf = (ChannelBuffer) e.getMessage();
@@ -17,14 +26,5 @@ public class EchoServerHandler extends SimpleChannelHandler {
 			System.out.println((char) buf.readByte());
 			System.out.flush();
 		}
-	}
-
-	@Override
-	public void exceptionCaught(final ChannelHandlerContext ctx,
-			final ExceptionEvent e) {
-		e.getCause().printStackTrace();
-
-		final Channel ch = e.getChannel();
-		ch.close();
 	}
 }

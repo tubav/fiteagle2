@@ -15,15 +15,6 @@ public class FrcpListenerTest {
 	private MessageBus mockmessagebus;
 	private XMPPConnection mockedxmppconnection;
 
-	@Test
-	@Ignore
-	public void test() throws JMSException, XMPPException, InterruptedException {
-		this.mockmessagebus = new MessageBusLocal();
-		this.mockedxmppconnection = this.getMockedConnection();
-
-		new FrcpListener(this.mockmessagebus, this.mockedxmppconnection);
-	}
-
 	private XMPPConnection getMockedConnection() throws XMPPException {
 		final ConnectionConfiguration config = new ConnectionConfiguration(
 				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
@@ -38,5 +29,14 @@ public class FrcpListenerTest {
 		// new ServiceDiscoveryManager(mockedConnection);
 
 		return xmppConnection;
+	}
+
+	@Test
+	@Ignore
+	public void test() throws JMSException, XMPPException, InterruptedException {
+		this.mockmessagebus = new MessageBusLocal();
+		this.mockedxmppconnection = this.getMockedConnection();
+
+		new FrcpListener(this.mockmessagebus, this.mockedxmppconnection);
 	}
 }

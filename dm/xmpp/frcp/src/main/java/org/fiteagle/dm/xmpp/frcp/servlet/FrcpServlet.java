@@ -21,6 +21,21 @@ public class FrcpServlet implements ServletContextListener {
 	private FrcpListener frcpListener;
 
 	@Override
+	public void contextDestroyed(final ServletContextEvent sce) {
+		FrcpServlet.log.log(Level.INFO, "Stopping XMPP Listener...");
+		if (null != this.frcpListener) {
+			this.frcpListener.close();
+		}
+		try {
+			if (null != this.messageBus) {
+				this.messageBus.close();
+			}
+		} catch (final JMSException e) {
+			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
+		}
+	}
+
+	@Override
 	public void contextInitialized(final ServletContextEvent sce) {
 		FrcpServlet.log.log(Level.INFO, "Starting XMPP Listener...");
 
@@ -36,21 +51,6 @@ public class FrcpServlet implements ServletContextListener {
 					MessageBusApplicationServerFactory.createMessageBus(),
 					xmppConnection);
 		} catch (final Exception e) {
-			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
-		}
-	}
-
-	@Override
-	public void contextDestroyed(final ServletContextEvent sce) {
-		FrcpServlet.log.log(Level.INFO, "Stopping XMPP Listener...");
-		if (null != this.frcpListener) {
-			this.frcpListener.close();
-		}
-		try {
-			if (null != this.messageBus) {
-				this.messageBus.close();
-			}
-		} catch (final JMSException e) {
 			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
 		}
 	}

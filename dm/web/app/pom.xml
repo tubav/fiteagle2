@@ -9,7 +9,9 @@
 	<artifactId>app</artifactId>
 	<packaging>war</packaging>
 	<name>FITeagle :: DM :: Web :: App</name>
+
 	<build>
+        <finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.jboss.as.plugins</groupId>
@@ -20,5 +22,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

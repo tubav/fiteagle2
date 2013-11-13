@@ -83,7 +83,7 @@ public class FrcpListener {
 		if (null != this.xmppConnection) {
 			this.xmppConnection.disconnect();
 		}
-		if (null != this.jmsSession) {
+		if (null != this.jmsMessageBus) {
 			try {
 				this.jmsMessageBus.close();
 			} catch (final JMSException e) {

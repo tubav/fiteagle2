@@ -16,6 +16,8 @@ import org.fiteagle.boundary.MessageBus;
 
 public class Configuration {
 
+	private static final String VERSION = "203";
+
 	private final Session session;
 	private final MessageConsumer consumer;
 	private final MessageProducer producer;
@@ -38,6 +40,7 @@ public class Configuration {
 	}
 
 	private class ConfigurationListener implements MessageListener {
+
 		@Override
 		public void onMessage(final Message message) {
 			try {
@@ -45,7 +48,7 @@ public class Configuration {
 				Configuration.log.log(Level.INFO, "[Configuration] Received: '"
 						+ textMessage.getText() + "'");
 				if (textMessage.getText().equals("getVersion")) {
-					TextMessage result = session.createTextMessage("123");
+					TextMessage result = session.createTextMessage(VERSION);
 					result.setJMSCorrelationID(textMessage.getJMSCorrelationID());
 					
 					Configuration.log.log(Level.INFO, "[Configuration] Sending: '"

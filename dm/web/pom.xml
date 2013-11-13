@@ -11,5 +11,6 @@
   <name>FITeagle :: DM :: Web</name>
   <modules>
     <module>admin</module>
+    <module>app</module>
   </modules>
 </project>

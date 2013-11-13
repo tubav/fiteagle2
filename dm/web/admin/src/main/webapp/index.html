@@ -15,7 +15,7 @@
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <!-- Page Specific CSS -->
-    <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+    <!--<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">-->
     <style>
     #logo {height:1.8em; padding:0.2em;}
     </style>
@@ -429,16 +429,8 @@
 
 
         <script language="javascript" type="text/javascript">
-            var wsUri = getRootUri() + "/ws/configuration";
-            function getRootUri() {
-                return "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" +
-                        (document.location.port == "" ? "8080" : document.location.port);
-            }
-            function init() {
-                output = document.getElementById("output");
-            }
-            function send_message() {
-                websocket = new WebSocket(wsUri);
+            var wsUri = getRootUri() + "/ws/log";
+            websocket = new WebSocket(wsUri);
                 websocket.onopen = function(evt) {
                     onOpen(evt)
                 };
@@ -448,10 +440,20 @@
                 websocket.onerror = function(evt) {
                     onError(evt)
                 };
+            writeToScreen("Connected to Endpoint!");
+            
+            function getRootUri() {
+                return "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" +
+                        (document.location.port == "" ? "8080" : document.location.port);
+            }
+            function init() {
+                output = document.getElementById("output");
+            }
+            function send_message() {
+                doSend(textID.value);
             }
             function onOpen(evt) {
-                writeToScreen("Connected to Endpoint!");
-                doSend(textID.value);
+                
             }
             function onMessage(evt) {
                 writeToScreen("Message Received: " + evt.data);

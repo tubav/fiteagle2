@@ -12,6 +12,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.fiteagle.boundary.MessageBus;
+
 public class Configuration {
 
 	private final Session session;
@@ -29,6 +31,10 @@ public class Configuration {
 		this.producer = producer;
 		this.consumer.setMessageListener(listener);
 		this.specificProducer = session.createProducer(null);
+	}
+
+	public Configuration(MessageBus messageBus) throws JMSException {
+		this(messageBus.getSession(), messageBus.getConsumer(), messageBus.getProducer());
 	}
 
 	private class ConfigurationListener implements MessageListener {

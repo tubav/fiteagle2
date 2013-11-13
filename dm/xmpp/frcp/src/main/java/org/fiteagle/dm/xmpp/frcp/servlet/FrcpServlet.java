@@ -4,14 +4,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.fiteagle.boundary.MessageBus;
+import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 import org.fiteagle.dm.xmpp.frcp.FrcpListener;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.XMPPConnection;
 
 public class FrcpServlet implements ServletContextListener {
 
@@ -22,12 +22,16 @@ public class FrcpServlet implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		log.log(Level.INFO, "Starting XMPP Listener...");
+		
 		try {
-			this.messageBus = new MessageBus();
-			Session session = messageBus.getSession();
-			MessageConsumer consumer = messageBus.getConsumer();
-			MessageProducer producer = messageBus.getProducer();
-			this.frcpListener = new FrcpListener(session, consumer, producer);
+			//todo: refactor this
+			ConnectionConfiguration config = new ConnectionConfiguration(
+					"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
+			XMPPConnection xmppConnection = new XMPPConnection(config);
+			xmppConnection.connect();
+			xmppConnection.login("test", "test", "server");
+			
+			this.frcpListener = new FrcpListener(MessageBusApplicationServerFactory.createMessageBus(), xmppConnection);
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
 		}

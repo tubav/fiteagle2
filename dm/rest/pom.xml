@@ -59,6 +59,12 @@
         	<artifactId>boundary</artifactId>
         	<version>0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+        	<groupId>org.fiteagle</groupId>
+        	<artifactId>testing</artifactId>
+        	<version>0.1-SNAPSHOT</version>
+        	<scope>test</scope>
+        </dependency>
   </dependencies>
   
     <build>

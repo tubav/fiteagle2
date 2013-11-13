@@ -1,7 +1,6 @@
 package org.fiteagle.dm.rest;
 
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
 import javax.jms.JMSException;
@@ -17,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.fiteagle.boundary.MessageBus;
+import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 
 @Path("/configuration/")
 public class ConfigurationRest {
@@ -30,7 +30,7 @@ public class ConfigurationRest {
 
 	public ConfigurationRest() throws NamingException, JMSException {
 		LOGGER.log(Level.INFO, "Starting FITeagle WebSocket Interface...");
-		MessageBus messagebus = new MessageBus();
+		MessageBus messagebus = MessageBusApplicationServerFactory.createMessageBus();
 		
 		this.session = messagebus.getSession();
 		this.producer = session.createProducer(messagebus.getDestination());

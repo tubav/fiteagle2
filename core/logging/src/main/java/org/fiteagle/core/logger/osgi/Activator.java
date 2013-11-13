@@ -9,6 +9,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.fiteagle.boundary.MessageBus;
+import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 import org.fiteagle.core.logger.MessageBusLogger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -24,7 +25,7 @@ public class Activator implements BundleActivator {
 	public void start(final BundleContext context) throws Exception {
 		Activator.log.log(Level.INFO, "Starting FITeagle MessageBus Logger...");
 
-		this.messageBus = new MessageBus();
+		this.messageBus = MessageBusApplicationServerFactory.createMessageBus();
 
 		final Session session = this.messageBus.getSession();
 		final MessageProducer producer = session.createProducer(this.messageBus.getDestination());

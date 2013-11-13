@@ -10,6 +10,8 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.fiteagle.boundary.MessageBus;
+
 public class MessageBusLogger {
 
 	private static final Logger log = Logger.getLogger(MessageBusLogger.class
@@ -21,6 +23,10 @@ public class MessageBusLogger {
 			final MessageConsumer consumer) throws JMSException {
 		final MessageListener listener = new MessageBusLogger.MessagerListener();
 		consumer.setMessageListener(listener);
+	}
+
+	public MessageBusLogger(MessageBus messageBus) throws JMSException {
+		this(messageBus.getSession(), messageBus.getConsumer());
 	}
 
 	public String getLastTextMessage() {

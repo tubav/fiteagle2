@@ -5,78 +5,44 @@ import java.util.logging.Logger;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.fiteagle.boundary.MessageBus;
-import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
-import org.jivesoftware.smackx.pubsub.Node;
 import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 public class FrcpListener {
-
-	private final Session jmsSession;
-	private final MessageConsumer jmsConsumer;
-	private final MessageProducer jmsProducer;
 	private XMPPConnection xmppConnection;
 	private MessageBus jmsMessageBus;
-	private Node xmppTopic;
 	private PubSubManager xmppMessageBus;
 	private static final Logger log = Logger.getLogger(FrcpListener.class
 			.getName());
 
-	public FrcpListener(final MessageBus messageBus) throws JMSException,
+	public FrcpListener(final MessageBus messageBus,
+			final XMPPConnection xmppConnection) throws JMSException,
 			XMPPException {
-		this(messageBus.getSession(), messageBus.getConsumer(), messageBus
-				.getProducer());
-	}
 
-	public FrcpListener(final Session session, final MessageConsumer consumer,
-			final MessageProducer producer) throws JMSException, XMPPException {
-
-		this.jmsSession = session;
-		this.jmsConsumer = consumer;
-		this.jmsProducer = producer;
-
+		this.jmsMessageBus = messageBus;
 		this.startJMSListener();
-		this.startXmppListener();
+
+		this.xmppMessageBus = new PubSubManager(xmppConnection);
+		this.startXmppListener("test");
 	}
 
 	private void startJMSListener() throws JMSException {
-		this.jmsConsumer
-				.setMessageListener(new FrcpListener.JmsMessageBusListener());
+		this.jmsMessageBus.getConsumer().setMessageListener(
+				new FrcpListener.JmsMessageBusListener());
 	}
 
-	private void startXmppListener() throws XMPPException {
-		final ConnectionConfiguration config = new ConnectionConfiguration(
-				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
-		final String xmppTopic = "test";
-
-		xmppConnect(config);
-		xmppSubscribeTopic(xmppTopic);
-	}
-
-	private void xmppSubscribeTopic(final String xmppTopic)
-			throws XMPPException {
-		this.xmppTopic = this.xmppMessageBus.getNode(xmppTopic);
-		this.xmppTopic.addItemEventListener(new XmppMessageBusListener());
-	}
-
-	private void xmppConnect(final ConnectionConfiguration config)
-			throws XMPPException {
-		this.xmppConnection = new XMPPConnection(config);
-		this.xmppConnection.connect();
-		this.xmppConnection.login("test", "test", "server");
-		this.xmppMessageBus = new PubSubManager(this.xmppConnection);
+	private void startXmppListener(String topic) throws XMPPException {
+		this.xmppMessageBus.getNode(topic).addItemEventListener(
+				new XmppMessageBusListener());
 	}
 
 	public void close() {
@@ -116,8 +82,9 @@ public class FrcpListener {
 			FrcpListener.log
 					.log(Level.INFO, "XMPP Received: '" + message + "'");
 			try {
-				FrcpListener.this.jmsProducer.send(FrcpListener.this.jmsSession
-						.createTextMessage(message));
+				TextMessage jmsMessage = FrcpListener.this.jmsMessageBus
+						.getSession().createTextMessage(message);
+				FrcpListener.this.jmsMessageBus.getProducer().send(jmsMessage);
 			} catch (final JMSException e) {
 				FrcpListener.log.log(Level.SEVERE, e.getMessage());
 			}

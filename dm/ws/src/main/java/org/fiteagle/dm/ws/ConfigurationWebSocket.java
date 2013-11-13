@@ -1,7 +1,6 @@
 package org.fiteagle.dm.ws;
 
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
 import javax.jms.JMSException;
@@ -14,6 +13,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.server.ServerEndpoint;
 
 import org.fiteagle.boundary.MessageBus;
+import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 
 @ServerEndpoint("/configuration")
 public class ConfigurationWebSocket {
@@ -28,7 +28,7 @@ public class ConfigurationWebSocket {
 
 	public ConfigurationWebSocket() throws NamingException, JMSException {
 		LOGGER.log(Level.INFO, "Starting FITeagle WebSocket Interface...");
-		this.messagebus = new MessageBus();
+		this.messagebus = MessageBusApplicationServerFactory.createMessageBus();
 		this.session = messagebus.getSession();
 		this.producer = messagebus.getProducer();
 	}

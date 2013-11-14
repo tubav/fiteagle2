@@ -82,7 +82,7 @@ function configContainer() {
 function startContainer() {
     echo "Starting container..."
     cd "${_container_root}"
-    ./bin/standalone.sh -c "${_container_config}"
+    ./bin/standalone.sh -b 0.0.0.0 -c "${_container_config}"
 }
 
 function checkEnvironment {

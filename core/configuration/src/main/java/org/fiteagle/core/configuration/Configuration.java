@@ -48,7 +48,7 @@ public class Configuration {
 		}
 	}
 
-	private static final String VERSION = "111";
+	private static final String VERSION = "222";
 	private final Session session;
 	private final MessageConsumer consumer;
 	private final MessageProducer producer;

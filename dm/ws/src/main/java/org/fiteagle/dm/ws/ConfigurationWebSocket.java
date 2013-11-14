@@ -52,7 +52,7 @@ public class ConfigurationWebSocket {
 
 		this.producer.send(textMessage);
 
-		String responseText = "";
+		String responseText = "I refuse to answer that";
 		final TextMessage response = (TextMessage) responseConsumer
 				.receive(1000);
 		if (null != response) {

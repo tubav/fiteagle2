@@ -3,9 +3,6 @@ package org.fiteagle.dm.rest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PreDestroy;
-import javax.ejb.Remove;
-import javax.enterprise.context.Destroyed;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
@@ -31,16 +28,10 @@ public class ConfigurationRest {
 	private final MessageProducer producer;
 
 	private MessageBus messagebus;
-
-	@Remove
-	public void destroy() throws JMSException {
-		if (null != this.messagebus)
-			this.messagebus.close();
-	}
 	
 	public ConfigurationRest() throws NamingException, JMSException {
 		ConfigurationRest.LOGGER.log(Level.INFO,
-				"Starting FITeagle WebSocket Interface...");
+				"Starting FITeagle REST Interface...");
 		this.messagebus = MessageBusApplicationServerFactory
 				.createMessageBus();
 
@@ -77,6 +68,7 @@ public class ConfigurationRest {
 			responseText = response.getText();
 		}
 
+		this.session.close();
 		return responseText;
 	}
 }

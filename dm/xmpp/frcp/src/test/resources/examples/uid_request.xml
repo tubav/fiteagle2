@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<request xmlns="http://schema.mytestbed.net/omf/6.0/protocol" mid="46d03974-ed07-4c39-9d96-6eaaab845398">
+  <props>
+    <uid/>
+  </props>
+  <ts>1384471407</ts>
+  <src>xmpp://node@example.org</src>
+</request>

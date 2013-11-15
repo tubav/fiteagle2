@@ -1,23 +1,50 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.fiteagle.dm</groupId>
-    <artifactId>xmpp</artifactId>
-    <version>0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>frcp</artifactId>
-  <packaging>war</packaging>
-  <name>FITeagle :: DM :: XMPP :: FRCP</name>
-  
-      <build>
-        <plugins>
-            <plugin>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.fiteagle.dm</groupId>
+		<artifactId>xmpp</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>frcp</artifactId>
+	<packaging>war</packaging>
+	<name>FITeagle :: DM :: XMPP :: FRCP</name>
+
+	<build>
+		<plugins>
+			<plugin>
 				<groupId>org.jboss.as.plugins</groupId>
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<configuration>
-                    <skip>false</skip>
-                </configuration>
+					<skip>false</skip>
+				</configuration>
 			</plugin>
-        </plugins>
-    </build>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xmlbeans-maven-plugin</artifactId>
+				<version>2.3.3</version>
+				<inherited>true</inherited>
+				<configuration>
+					<schemaDirectory>src/main/resources/schema</schemaDirectory>
+					<sourceGenerationDirectory>
+						src/main/java
+					</sourceGenerationDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>xmlbeans-maven-plugin</artifactId>
+			<version>2.3.3</version>
+			<type>maven-plugin</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+	</dependencies>
+
 </project>

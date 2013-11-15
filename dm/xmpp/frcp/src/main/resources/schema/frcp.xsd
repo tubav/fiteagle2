@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://schema.mytestbed.net/omf/6.0/protocol" xmlns:protocol="http://schema.mytestbed.net/omf/6.0/protocol">
+  <xs:group name="common_elements">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="protocol:ts"/>
+        <xs:element ref="protocol:src"/>
+        <xs:element ref="protocol:replyto"/>
+        <xs:element ref="protocol:props"/>
+        <xs:element ref="protocol:guard"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="ts" type="xs:string"/>
+  <xs:element name="src" type="xs:string"/>
+  <xs:element name="replyto" type="xs:string"/>
+  <xs:element name="props">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="protocol:property"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="guard">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="protocol:property"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="common_elements">
+    <xs:attribute name="mid" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:group name="anything">
+    <xs:sequence>
+      <xs:any minOccurs="0" processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="property">
+        <xs:choice>
+      <xs:any processContents="skip" />
+    </xs:choice>
+  </xs:group>
+  <xs:element name="create">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="protocol:common_elements"/>
+        <xs:element ref="protocol:rtype"/>
+      </xs:choice>
+      <xs:attributeGroup ref="protocol:common_elements"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rtype" type="xs:string"/>
+  <xs:element name="configure">
+    <xs:complexType>
+      <xs:group ref="protocol:common_elements"/>
+      <xs:attributeGroup ref="protocol:common_elements"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:group ref="protocol:common_elements"/>
+      <xs:attributeGroup ref="protocol:common_elements"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="release">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="protocol:common_elements"/>
+        <xs:element ref="protocol:res_id"/>
+      </xs:choice>
+      <xs:attributeGroup ref="protocol:common_elements"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="res_id" type="xs:string"/>
+  <xs:element name="inform">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="protocol:common_elements"/>
+        <xs:element ref="protocol:cid"/>
+        <xs:element ref="protocol:itype"/>
+      </xs:choice>
+      <xs:attributeGroup ref="protocol:common_elements"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cid" type="xs:string"/>
+  <xs:element name="itype">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="CREATION.OK"/>
+        <xs:enumeration value="CREATION.FAILED"/>
+        <xs:enumeration value="STATUS"/>
+        <xs:enumeration value="RELEASED"/>
+        <xs:enumeration value="ERROR"/>
+        <xs:enumeration value="WARN"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="env">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="protocol:create"/>
+        <xs:element ref="protocol:configure"/>
+        <xs:element ref="protocol:request"/>
+        <xs:element ref="protocol:release"/>
+        <xs:element ref="protocol:inform"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

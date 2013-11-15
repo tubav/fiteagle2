@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<inform xmlns="http://schema.mytestbed.net/omf/6.0/protocol" mid="501b6aee-fd22-484d-9612-a54afbb202ee">
+  <props>
+    <uid type="string">epc-client-alice</uid>
+  </props>
+  <ts>1384471180</ts>
+  <src>xmpp://test@example.org</src>
+  <cid>081954f0-77cc-4dde-ad7f-a19d8a2d807d</cid>
+  <itype>STATUS</itype>
+</inform>

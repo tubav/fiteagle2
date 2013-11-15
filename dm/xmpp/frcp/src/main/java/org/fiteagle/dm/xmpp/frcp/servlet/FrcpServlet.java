@@ -12,11 +12,18 @@ import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 import org.fiteagle.dm.xmpp.frcp.FrcpListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
 
 public class FrcpServlet implements ServletContextListener {
 
 	private static final Logger log = Logger.getLogger(FrcpServlet.class
 			.getName());
+	private static final String USER = "test";
+	private static final String PWD = "fiteaglepwd";
+	private static final String SERVER = "fuseco.fokus.fraunhofer.de";
+	private static final String PROTOCOL = "xmpp://";
+	private static final String SERVICE = "frcp_servlet";
+	
 	private MessageBus messageBus;
 	private FrcpListener frcpListener;
 
@@ -38,18 +45,23 @@ public class FrcpServlet implements ServletContextListener {
 	@Override
 	public void contextInitialized(final ServletContextEvent sce) {
 		FrcpServlet.log.log(Level.INFO, "Starting XMPP Listener...");
-
+		
 		try {
-			// todo: refactor this
-			final ConnectionConfiguration config = new ConnectionConfiguration(
-					"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
+			ConnectionConfiguration config = new ConnectionConfiguration(SERVER, 5222, SERVICE);
 			final XMPPConnection xmppConnection = new XMPPConnection(config);
 			xmppConnection.connect();
-			xmppConnection.login("test", "test", "server");
+			
+			try {
+				xmppConnection.getAccountManager().createAccount(USER, PWD);
+			} catch (XMPPException e) {
+				//
+			}
+				
+			xmppConnection.login(USER, PWD, SERVICE);
 
 			this.frcpListener = new FrcpListener(
 					MessageBusApplicationServerFactory.createMessageBus(),
-					xmppConnection);
+					xmppConnection, PROTOCOL, USER, SERVER);
 		} catch (final Exception e) {
 			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
 		}

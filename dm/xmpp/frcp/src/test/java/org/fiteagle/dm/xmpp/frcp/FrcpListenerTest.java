@@ -12,15 +12,19 @@ import org.junit.Test;
 
 public class FrcpListenerTest {
 
+	private static final String SERVER = "fuseco.fokus.fraunhofer.de";
+	private static final String USER = "fiteagle";
+	private static final String PWD = "fiteaglepwd";
+	private static final String PROTOCOL = "xmpp://";
 	private MessageBus mockmessagebus;
 	private XMPPConnection mockedxmppconnection;
 
 	private XMPPConnection getMockedConnection() throws XMPPException {
 		final ConnectionConfiguration config = new ConnectionConfiguration(
-				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle");
+				SERVER, 5222, "fiteagleserver");
 		final XMPPConnection xmppConnection = new XMPPConnection(config);
 		xmppConnection.connect();
-		xmppConnection.login("test", "test", "server");
+		xmppConnection.login(USER, PWD, "serverfiteagle");
 
 		// todo: find a way to mock this
 		// XMPPConnection mockedConnection =
@@ -37,6 +41,6 @@ public class FrcpListenerTest {
 		this.mockmessagebus = new MessageBusLocal();
 		this.mockedxmppconnection = this.getMockedConnection();
 
-		new FrcpListener(this.mockmessagebus, this.mockedxmppconnection);
+		new FrcpListener(this.mockmessagebus, this.mockedxmppconnection, PROTOCOL, USER, SERVER);
 	}
 }

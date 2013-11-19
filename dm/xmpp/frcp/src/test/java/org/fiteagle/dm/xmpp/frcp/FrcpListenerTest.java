@@ -19,6 +19,7 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.LeafNode;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -52,6 +53,7 @@ public class FrcpListenerTest implements MessageListener {
 
 
 	@Test
+	@Ignore
 	public void test() throws JMSException, XMPPException,
 			InterruptedException, NamingException {
 

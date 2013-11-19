@@ -11,6 +11,7 @@ import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Ignore;
 
 public class XmppControllerTest {
 
@@ -22,6 +23,7 @@ public class XmppControllerTest {
 	private LeafNode topic;
 
 	@Test
+	@Ignore
 	public void testRunXmppController() throws XMPPException,
 			InterruptedException {
 		XmppController xmppController = new XmppController(HOST, PORT,

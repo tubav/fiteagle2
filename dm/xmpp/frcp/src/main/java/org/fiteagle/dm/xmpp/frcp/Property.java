@@ -26,8 +26,4 @@ public class Property {
 
 	private String namespace;
 
-	@Override
-	public String toString() {
-		return this.namespace + "#" + this.name;
-	}
 }

@@ -23,9 +23,9 @@ import org.xml.sax.SAXException;
 public class FrcpXmppParser {
 
 	public enum FRCPMessageType {
-		CONFIGURE("http://schema.mytestbed.net/omf/6.0/protocol#configure"), REQUEST(
-				"http://schema.mytestbed.net/omf/6.0/protocol#request"),
-				UNKNOWN("");
+		CONFIGURE("configure"), REQUEST("request"), UNKNOWN(""), CREATE(
+				"create"), NAMESPACE(
+				"http://schema.mytestbed.net/omf/6.0/protocol");
 
 		private FRCPMessageType(final String text) {
 			this.text = text;
@@ -48,7 +48,7 @@ public class FrcpXmppParser {
 	public List<Property> getRequestProperties(RequestDocument request) {
 
 		List<Property> properties = new LinkedList<Property>();
-		
+
 		for (final Props prop : request.getRequest().getPropsArray()) {
 			final NodeList childs = prop.getDomNode().getChildNodes();
 			for (int i = 0; i < childs.getLength(); i++) {
@@ -56,21 +56,28 @@ public class FrcpXmppParser {
 				final String propertyName = child.getLocalName();
 				final String propertyNamespace = child.getNamespaceURI();
 				if (null != propertyName && !propertyName.isEmpty())
-					properties.add(new Property(propertyNamespace, propertyName));
+					properties
+							.add(new Property(propertyNamespace, propertyName));
 			}
 		}
 		return properties;
 	}
+
 	public static FRCPMessageType getType(String xml)
-			throws ParserConfigurationException, SAXException, IOException, XmlException {
-		
+			throws ParserConfigurationException, SAXException, IOException,
+			XmlException {
+
 		Document doc = loadXMLFromString(xml);
 		Property type = getType(doc);
 
-		if (type.toString().equals(FRCPMessageType.REQUEST.toString()))
-			return FRCPMessageType.REQUEST;
-		if (type.toString().equals(FRCPMessageType.CONFIGURE.toString()))
-			return FRCPMessageType.CONFIGURE;
+		if (type.getNamespace().equals(FRCPMessageType.NAMESPACE.toString())) {
+			if (type.getName().equals(FRCPMessageType.REQUEST.toString()))
+				return FRCPMessageType.REQUEST;
+			if (type.toString().equals(FRCPMessageType.CONFIGURE.toString()))
+				return FRCPMessageType.CONFIGURE;
+			if (type.toString().equals(FRCPMessageType.CREATE.toString()))
+				return FRCPMessageType.CREATE;
+		}
 
 		return FRCPMessageType.UNKNOWN;
 	}
@@ -82,13 +89,13 @@ public class FrcpXmppParser {
 		return new Property(namespace, name);
 	}
 
-	public static Document loadXMLFromString(String s) throws ParserConfigurationException, SAXException, IOException{
+	public static Document loadXMLFromString(String s)
+			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();	
+		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(new InputSource(new StringReader(s)));
 		return document;
 	}
-
 
 }

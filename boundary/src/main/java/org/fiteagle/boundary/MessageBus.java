@@ -7,11 +7,12 @@ import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
 public class MessageBus {
 
-	private static final String DESTINATION_DEFAULT = "fiteagle";
+	public static final String DESTINATION = "fiteagle";
 	protected final ConnectionFactory factory;
 	protected final Connection connection;
 	protected final Session session;
@@ -24,7 +25,7 @@ public class MessageBus {
 		this.session = this.connection.createSession(false,
 				Session.AUTO_ACKNOWLEDGE);
 		this.destination = this.session
-				.createQueue(MessageBus.DESTINATION_DEFAULT);
+				.createQueue(MessageBus.DESTINATION);
 		this.connection.start();
 	}
 
@@ -68,4 +69,33 @@ public class MessageBus {
 		return this.session;
 	}
 
+	public MessageConsumer getConsumer(String filter) throws JMSException {
+		return this.session.createConsumer(this.destination, filter);
+	}
+
+	public void sendTextMessage(String message, String key, String value) throws JMSException {
+		TextMessage jmsMessage = this.session.createTextMessage(message);
+		jmsMessage.setStringProperty(key, value);
+		this.getProducer().send(jmsMessage);
+	}
+
+	public static String normalize(String topic) {
+		return topic.replaceAll("[^a-zA-Z0-9]", "_");
+	}
+
+	public void sendMessage(String uid, String namespace, String type,
+			String message) throws JMSException {
+		TextMessage jmsMessage = getSession().createTextMessage();
+		jmsMessage.setStringProperty("uid", uid);
+		jmsMessage.setStringProperty("namespace", namespace);
+		jmsMessage.setStringProperty("type", type);
+		jmsMessage.setText(message);
+		getProducer().send(jmsMessage);
+	}
+
+	public static String getFilter(String uid, String type, String namespace) {
+		String filter = "uid='" + uid + "'" + " AND type='" + type + "'"
+				+ " AND namespace='" + namespace + "'";
+		return filter;
+	}
 }

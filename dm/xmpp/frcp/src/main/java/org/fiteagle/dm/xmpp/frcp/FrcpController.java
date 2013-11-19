@@ -20,12 +20,12 @@ import org.xml.sax.SAXException;
 
 public class FrcpController {
 
-	private String username;
+	private String resourceUID;
 	private String server;
 	private String protocol;
 
-	public FrcpController(String protocol, String username, String server) {
-		this.username = username;
+	public FrcpController(String protocol, String resourceUID, String server) {
+		this.resourceUID = resourceUID;
 		this.server = server;
 		this.protocol = protocol;
 	}
@@ -45,11 +45,11 @@ public class FrcpController {
 				cursor.toFirstContentToken();
 				cursor.beginElement(type);
 				cursor.insertAttributeWithValue("type", "string");
-				final String uidOfResource = this.username;
+				final String uidOfResource = this.resourceUID;
 				cursor.insertChars(uidOfResource);				
 			}
 		}
-		inform.addSrc(this.protocol + this.username + "@" + this.server);
+		inform.addSrc(this.protocol + this.resourceUID + "@" + this.server);
 		inform.addItype(Itype.STATUS);
 		inform.addTs(String.valueOf(System.currentTimeMillis()));
 		inform.setMid(UUID.randomUUID().toString());
@@ -58,12 +58,11 @@ public class FrcpController {
 	}
 
 	public Object handle(String xml) throws ParserConfigurationException, SAXException, IOException, XmlException {
-		FRCPMessageType type = new FrcpXmppParser().getType(xml);
+		FRCPMessageType type = FrcpXmppParser.getType(xml);
 		if (type.equals(FRCPMessageType.REQUEST)) {
 			RequestDocument request = RequestDocument.Factory.parse(xml);
-			return this.handle(request );
+			return this.handle(request);
 		}
 		return null;
 	}
-
 }

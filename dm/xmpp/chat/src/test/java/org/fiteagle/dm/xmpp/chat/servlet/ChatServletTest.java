@@ -17,7 +17,7 @@ public class ChatServletTest {
 			InterruptedException {
 
 		final ConnectionConfiguration config = new ConnectionConfiguration(
-				"fuseco.fokus.fraunhofer.de", 5222, "fiteagle_chat");
+				"localhost", 5222, "fiteagle_chat");
 		final XMPPConnection xmppConnection = new XMPPConnection(config);
 		xmppConnection.connect();
 		xmppConnection.login("logger", "test", "chat_server");

@@ -20,5 +20,16 @@
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.0_spec</artifactId>
         </dependency>
+  	<dependency>
+  		<groupId>org.fiteagle</groupId>
+  		<artifactId>boundary</artifactId>
+  		<version>0.1-SNAPSHOT</version>
+  	</dependency>
+  	        <dependency>
+            <groupId>org.fiteagle</groupId>
+            <artifactId>testing</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
   </dependencies>
 </project>

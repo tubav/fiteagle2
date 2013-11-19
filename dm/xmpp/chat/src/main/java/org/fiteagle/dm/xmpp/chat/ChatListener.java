@@ -95,7 +95,7 @@ public class ChatListener {
 		this.startJMSListener();
 
 		this.chatmanager = xmppConnection.getChatManager();
-		this.startXmppListener("foo@fuseco.fokus.fraunhofer.de");
+		this.startXmppListener(xmppConnection.getUser());
 	}
 
 	public void close() {
@@ -117,6 +117,7 @@ public class ChatListener {
 	}
 
 	private void startXmppListener(final String topic) throws XMPPException {
+		log.log(Level.INFO, "Chatting with: " + topic);
 		this.chatmanager.addChatListener(new XmppMessageBusListener());
 	}
 }

@@ -12,9 +12,12 @@ import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 import org.fiteagle.dm.xmpp.chat.ChatListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
 
 public class ChatServlet implements ServletContextListener {
 
+	private static final String PWD = "test";
+	private static final String USER = "fiteagle";
 	private static final Logger log = Logger.getLogger(ChatServlet.class
 			.getName());
 	private MessageBus messageBus;
@@ -42,10 +45,15 @@ public class ChatServlet implements ServletContextListener {
 		try {
 			// todo: refactor this
 			final ConnectionConfiguration config = new ConnectionConfiguration(
-					"fuseco.fokus.fraunhofer.de", 5222, "fiteagle_chat");
+					"localhost", 5222, "fiteagle_chat");
 			final XMPPConnection xmppConnection = new XMPPConnection(config);
 			xmppConnection.connect();
-			xmppConnection.login("logger", "test", "chat_server");
+			try {
+				xmppConnection.getAccountManager().createAccount(USER, PWD);
+			} catch (XMPPException e) {
+				//
+			}
+			xmppConnection.login(USER, PWD, "chat_server");
 
 			this.chatListener = new ChatListener(
 					MessageBusApplicationServerFactory.createMessageBus(),

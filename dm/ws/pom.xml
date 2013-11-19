@@ -11,6 +11,7 @@
   <artifactId>ws</artifactId>
   <name>FITeagle :: DM :: WebSocket </name>
   <url>http://maven.apache.org</url>
+  <packaging>war</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -19,19 +20,7 @@
   		<groupId>javax</groupId>
   		<artifactId>javaee-api</artifactId>
   		<version>7.0</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.fiteagle</groupId>
-  		<artifactId>boundary</artifactId>
-  		<version>0.1-SNAPSHOT</version>
-  	</dependency>
-  	        <dependency>
-            <groupId>org.fiteagle</groupId>
-            <artifactId>testing</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-  	
+  	</dependency>  	
   </dependencies>
   
     <build>
@@ -54,5 +43,4 @@
 			</plugin>
         </plugins>
     </build>
-    <packaging>war</packaging>
 </project>

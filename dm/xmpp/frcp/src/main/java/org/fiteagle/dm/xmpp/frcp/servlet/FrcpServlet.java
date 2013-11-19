@@ -18,12 +18,12 @@ public class FrcpServlet implements ServletContextListener {
 
 	private static final Logger log = Logger.getLogger(FrcpServlet.class
 			.getName());
-	private static final String USER = "test";
-	private static final String PWD = "fiteaglepwd";
-	private static final String SERVER = "fuseco.fokus.fraunhofer.de";
+	private static final String USER = "test1";
+	private static final String PWD = "test";
+	private static final String SERVER = "localhost";
 	private static final String PROTOCOL = "xmpp://";
-	private static final String SERVICE = "frcp_servlet";
-	
+	private static final String SERVICE = "";
+
 	private MessageBus messageBus;
 	private FrcpListener frcpListener;
 
@@ -42,28 +42,37 @@ public class FrcpServlet implements ServletContextListener {
 		}
 	}
 
+	private XMPPConnection connect(String host, int port, String user,
+			String password) throws XMPPException {
+		ConnectionConfiguration config = new ConnectionConfiguration(host, port);
+		XMPPConnection conn = new XMPPConnection(config);
+		conn.connect();
+
+		try {
+			conn.getAccountManager().createAccount(USER, PWD);
+		} catch (XMPPException e) {
+			log.log(Level.FINE, "User does already exist: " + USER);
+		} finally {
+			conn.login(USER, PWD, SERVICE);
+		}
+
+		return conn;
+	}
+
 	@Override
 	public void contextInitialized(final ServletContextEvent sce) {
-		FrcpServlet.log.log(Level.INFO, "Starting XMPP Listener...");
-		
-		try {
-			ConnectionConfiguration config = new ConnectionConfiguration(SERVER, 5222, SERVICE);
-			final XMPPConnection xmppConnection = new XMPPConnection(config);
-			xmppConnection.connect();
-			
-			try {
-				xmppConnection.getAccountManager().createAccount(USER, PWD);
-			} catch (XMPPException e) {
-				//
-			}
-				
-			xmppConnection.login(USER, PWD, SERVICE);
+		FrcpServlet.log.log(Level.INFO, "Starting FRCP Servlet...");
 
-			this.frcpListener = new FrcpListener(
-					MessageBusApplicationServerFactory.createMessageBus(),
-					xmppConnection, PROTOCOL, USER, SERVER);
+		try {
+			final XMPPConnection xmppConnection = connect(SERVER, 5222, USER,
+					PWD);
+			final MessageBus jmsMessageBus = MessageBusApplicationServerFactory
+					.createMessageBus();
+
+			this.frcpListener = new FrcpListener(jmsMessageBus, xmppConnection);
 		} catch (final Exception e) {
 			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

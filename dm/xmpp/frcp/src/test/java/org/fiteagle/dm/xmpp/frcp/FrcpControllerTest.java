@@ -19,7 +19,7 @@ public class FrcpControllerTest {
 		
 		final String id = "fiteagle";
 		final String protocol = "xmpp://";
-		final String server = "fuseco.fokus.fraunhofer.de";
+		final String server = "localhost";
 		final String filename = "examples/uid_request.xml";
 		
 		final String xml = FrcpXmppParserTest.readFile(filename);

@@ -96,7 +96,8 @@ function startXMPP() {
     export OPENFIRE_ARGS="-server ${OPENFIRE_OPTS} ${OPENFIRE_CLASS} ${OPENFIRE_JAR}"
     java $OPENFIRE_ARGS &
     _xmpp_pid=$!
-    echo "XMPP server PID: $_xmpp_pid"
+    sleep 10
+    echo "$_xmpp_pid" > ${_base}/xmpp.pid
 }
 
 function installContainer() {
@@ -139,9 +140,12 @@ function configContainer() {
 
 
 function startContainer() {
-    echo "Starting container..."
+    echo "Starting container in background..."
     cd "${_container_root}"
-    ./bin/standalone.sh -b 0.0.0.0 -c "${_container_config}"
+    ./bin/standalone.sh -b 0.0.0.0 -c "${_container_config}" &
+    _container_pid=$!
+    sleep 10
+    echo "$_container_pid" > ${_base}/container.pid
 }
 
 function checkEnvironment {
@@ -179,16 +183,26 @@ function installFITeagle {
   echo "OK"
 }
 
+function startFITeagle {
+    cd "${_src_folder}"
+    mvn -DskipTests clean install jboss-as:deploy
+}
+
 checkEnvironment
 installXMPP
 configXMPP
 startXMPP
-sleep 10
+
 installContainer
 installOSGi
 installWebconsole
 configContainer
-installFITeagle
 startContainer
 
+installFITeagle
+startFITeagle
+
+echo -n "Press enter to stop all servers..."; read
+
 kill $_xmpp_pid
+pkill -P $_container_pid

@@ -36,6 +36,7 @@
 					<sourceGenerationDirectory>
 						src/main/java
 					</sourceGenerationDirectory>
+					<javaSource>1.5</javaSource>
 				</configuration>
 			</plugin>
 		</plugins>

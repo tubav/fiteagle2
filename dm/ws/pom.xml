@@ -20,7 +20,12 @@
   		<groupId>javax</groupId>
   		<artifactId>javaee-api</artifactId>
   		<version>7.0</version>
-  	</dependency>  	
+  	</dependency>
+  	<dependency>
+  		<groupId>org.json</groupId>
+  		<artifactId>org.json</artifactId>
+  		<version>chargebee-1.0</version>
+  	</dependency>
   </dependencies>
   
     <build>

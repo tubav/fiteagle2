@@ -107,14 +107,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         
         
         /**
+         * Gets a List of "ts" elements
+         */
+        public java.util.List<java.lang.String> getTsList()
+        {
+            final class TsList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return InformImpl.this.getTsArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = InformImpl.this.getTsArray(i);
+                    InformImpl.this.setTsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { InformImpl.this.insertTs(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = InformImpl.this.getTsArray(i);
+                    InformImpl.this.removeTs(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfTsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new TsList();
+            }
+        }
+        
+        /**
          * Gets array of all "ts" elements
+         * @deprecated
          */
         public java.lang.String[] getTsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(TS$0, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -142,14 +182,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
-         * Gets (as xml) array of all "ts" elements
+         * Gets (as xml) a List of "ts" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetTsList()
+        {
+            final class TsList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return InformImpl.this.xgetTsArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetTsArray(i);
+                    InformImpl.this.xsetTsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { InformImpl.this.insertNewTs(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetTsArray(i);
+                    InformImpl.this.removeTs(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfTsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new TsList();
+            }
+        }
+        
+        /**
+         * Gets array of all "ts" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetTsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(TS$0, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -316,14 +396,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "src" elements
+         */
+        public java.util.List<java.lang.String> getSrcList()
+        {
+            final class SrcList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return InformImpl.this.getSrcArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = InformImpl.this.getSrcArray(i);
+                    InformImpl.this.setSrcArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { InformImpl.this.insertSrc(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = InformImpl.this.getSrcArray(i);
+                    InformImpl.this.removeSrc(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfSrcArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new SrcList();
+            }
+        }
+        
+        /**
          * Gets array of all "src" elements
+         * @deprecated
          */
         public java.lang.String[] getSrcArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(SRC$2, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -351,14 +471,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
-         * Gets (as xml) array of all "src" elements
+         * Gets (as xml) a List of "src" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetSrcList()
+        {
+            final class SrcList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return InformImpl.this.xgetSrcArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetSrcArray(i);
+                    InformImpl.this.xsetSrcArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { InformImpl.this.insertNewSrc(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetSrcArray(i);
+                    InformImpl.this.removeSrc(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfSrcArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new SrcList();
+            }
+        }
+        
+        /**
+         * Gets array of all "src" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetSrcArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(SRC$2, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -525,14 +685,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "replyto" elements
+         */
+        public java.util.List<java.lang.String> getReplytoList()
+        {
+            final class ReplytoList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return InformImpl.this.getReplytoArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = InformImpl.this.getReplytoArray(i);
+                    InformImpl.this.setReplytoArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { InformImpl.this.insertReplyto(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = InformImpl.this.getReplytoArray(i);
+                    InformImpl.this.removeReplyto(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfReplytoArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ReplytoList();
+            }
+        }
+        
+        /**
          * Gets array of all "replyto" elements
+         * @deprecated
          */
         public java.lang.String[] getReplytoArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(REPLYTO$4, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -560,14 +760,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
-         * Gets (as xml) array of all "replyto" elements
+         * Gets (as xml) a List of "replyto" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetReplytoList()
+        {
+            final class ReplytoList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return InformImpl.this.xgetReplytoArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetReplytoArray(i);
+                    InformImpl.this.xsetReplytoArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { InformImpl.this.insertNewReplyto(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetReplytoArray(i);
+                    InformImpl.this.removeReplyto(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfReplytoArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ReplytoList();
+            }
+        }
+        
+        /**
+         * Gets array of all "replyto" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetReplytoArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(REPLYTO$4, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -734,14 +974,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "props" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props> getPropsList()
+        {
+            final class PropsList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props get(int i)
+                    { return InformImpl.this.getPropsArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props set(int i, net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props old = InformImpl.this.getPropsArray(i);
+                    InformImpl.this.setPropsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props o)
+                    { InformImpl.this.insertNewProps(i).set(o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props old = InformImpl.this.getPropsArray(i);
+                    InformImpl.this.removeProps(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfPropsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new PropsList();
+            }
+        }
+        
+        /**
          * Gets array of all "props" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[] getPropsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props>();
                 get_store().find_all_element_users(PROPS$6, targetList);
                 net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[] result = new net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[targetList.size()];
                 targetList.toArray(result);
@@ -850,14 +1130,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "guard" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard> getGuardList()
+        {
+            final class GuardList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard get(int i)
+                    { return InformImpl.this.getGuardArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard set(int i, net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard old = InformImpl.this.getGuardArray(i);
+                    InformImpl.this.setGuardArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard o)
+                    { InformImpl.this.insertNewGuard(i).set(o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard old = InformImpl.this.getGuardArray(i);
+                    InformImpl.this.removeGuard(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfGuardArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new GuardList();
+            }
+        }
+        
+        /**
          * Gets array of all "guard" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[] getGuardArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard>();
                 get_store().find_all_element_users(GUARD$8, targetList);
                 net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[] result = new net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[targetList.size()];
                 targetList.toArray(result);
@@ -966,14 +1286,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "cid" elements
+         */
+        public java.util.List<java.lang.String> getCidList()
+        {
+            final class CidList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return InformImpl.this.getCidArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = InformImpl.this.getCidArray(i);
+                    InformImpl.this.setCidArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { InformImpl.this.insertCid(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = InformImpl.this.getCidArray(i);
+                    InformImpl.this.removeCid(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfCidArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new CidList();
+            }
+        }
+        
+        /**
          * Gets array of all "cid" elements
+         * @deprecated
          */
         public java.lang.String[] getCidArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(CID$10, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -1001,14 +1361,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
-         * Gets (as xml) array of all "cid" elements
+         * Gets (as xml) a List of "cid" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetCidList()
+        {
+            final class CidList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return InformImpl.this.xgetCidArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetCidArray(i);
+                    InformImpl.this.xsetCidArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { InformImpl.this.insertNewCid(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = InformImpl.this.xgetCidArray(i);
+                    InformImpl.this.removeCid(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfCidArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new CidList();
+            }
+        }
+        
+        /**
+         * Gets array of all "cid" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetCidArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(CID$10, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -1175,14 +1575,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
+         * Gets a List of "itype" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum> getItypeList()
+        {
+            final class ItypeList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum get(int i)
+                    { return InformImpl.this.getItypeArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum set(int i, net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum old = InformImpl.this.getItypeArray(i);
+                    InformImpl.this.setItypeArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum o)
+                    { InformImpl.this.insertItype(i, o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum old = InformImpl.this.getItypeArray(i);
+                    InformImpl.this.removeItype(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfItypeArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ItypeList();
+            }
+        }
+        
+        /**
          * Gets array of all "itype" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum[] getItypeArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype>();
                 get_store().find_all_element_users(ITYPE$12, targetList);
                 net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum[] result = new net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype.Enum[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -1210,14 +1650,54 @@ public class InformDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCompl
         }
         
         /**
-         * Gets (as xml) array of all "itype" elements
+         * Gets (as xml) a List of "itype" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype> xgetItypeList()
+        {
+            final class ItypeList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype get(int i)
+                    { return InformImpl.this.xgetItypeArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype set(int i, net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype old = InformImpl.this.xgetItypeArray(i);
+                    InformImpl.this.xsetItypeArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype o)
+                    { InformImpl.this.insertNewItype(i).set(o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype old = InformImpl.this.xgetItypeArray(i);
+                    InformImpl.this.removeItype(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return InformImpl.this.sizeOfItypeArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ItypeList();
+            }
+        }
+        
+        /**
+         * Gets array of all "itype" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype[] xgetItypeArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype>();
                 get_store().find_all_element_users(ITYPE$12, targetList);
                 net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype[] result = new net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype[targetList.size()];
                 targetList.toArray(result);

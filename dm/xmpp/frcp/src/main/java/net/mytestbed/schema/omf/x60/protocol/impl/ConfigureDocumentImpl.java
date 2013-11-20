@@ -103,14 +103,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         
         
         /**
+         * Gets a List of "ts" elements
+         */
+        public java.util.List<java.lang.String> getTsList()
+        {
+            final class TsList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return ConfigureImpl.this.getTsArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = ConfigureImpl.this.getTsArray(i);
+                    ConfigureImpl.this.setTsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { ConfigureImpl.this.insertTs(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = ConfigureImpl.this.getTsArray(i);
+                    ConfigureImpl.this.removeTs(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfTsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new TsList();
+            }
+        }
+        
+        /**
          * Gets array of all "ts" elements
+         * @deprecated
          */
         public java.lang.String[] getTsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(TS$0, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -138,14 +178,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
-         * Gets (as xml) array of all "ts" elements
+         * Gets (as xml) a List of "ts" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetTsList()
+        {
+            final class TsList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return ConfigureImpl.this.xgetTsArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetTsArray(i);
+                    ConfigureImpl.this.xsetTsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { ConfigureImpl.this.insertNewTs(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetTsArray(i);
+                    ConfigureImpl.this.removeTs(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfTsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new TsList();
+            }
+        }
+        
+        /**
+         * Gets array of all "ts" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetTsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(TS$0, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -312,14 +392,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
+         * Gets a List of "src" elements
+         */
+        public java.util.List<java.lang.String> getSrcList()
+        {
+            final class SrcList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return ConfigureImpl.this.getSrcArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = ConfigureImpl.this.getSrcArray(i);
+                    ConfigureImpl.this.setSrcArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { ConfigureImpl.this.insertSrc(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = ConfigureImpl.this.getSrcArray(i);
+                    ConfigureImpl.this.removeSrc(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfSrcArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new SrcList();
+            }
+        }
+        
+        /**
          * Gets array of all "src" elements
+         * @deprecated
          */
         public java.lang.String[] getSrcArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(SRC$2, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -347,14 +467,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
-         * Gets (as xml) array of all "src" elements
+         * Gets (as xml) a List of "src" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetSrcList()
+        {
+            final class SrcList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return ConfigureImpl.this.xgetSrcArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetSrcArray(i);
+                    ConfigureImpl.this.xsetSrcArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { ConfigureImpl.this.insertNewSrc(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetSrcArray(i);
+                    ConfigureImpl.this.removeSrc(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfSrcArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new SrcList();
+            }
+        }
+        
+        /**
+         * Gets array of all "src" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetSrcArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(SRC$2, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -521,14 +681,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
+         * Gets a List of "replyto" elements
+         */
+        public java.util.List<java.lang.String> getReplytoList()
+        {
+            final class ReplytoList extends java.util.AbstractList<java.lang.String>
+            {
+                public java.lang.String get(int i)
+                    { return ConfigureImpl.this.getReplytoArray(i); }
+                
+                public java.lang.String set(int i, java.lang.String o)
+                {
+                    java.lang.String old = ConfigureImpl.this.getReplytoArray(i);
+                    ConfigureImpl.this.setReplytoArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, java.lang.String o)
+                    { ConfigureImpl.this.insertReplyto(i, o); }
+                
+                public java.lang.String remove(int i)
+                {
+                    java.lang.String old = ConfigureImpl.this.getReplytoArray(i);
+                    ConfigureImpl.this.removeReplyto(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfReplytoArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ReplytoList();
+            }
+        }
+        
+        /**
          * Gets array of all "replyto" elements
+         * @deprecated
          */
         public java.lang.String[] getReplytoArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(REPLYTO$4, targetList);
                 java.lang.String[] result = new java.lang.String[targetList.size()];
                 for (int i = 0, len = targetList.size() ; i < len ; i++)
@@ -556,14 +756,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
-         * Gets (as xml) array of all "replyto" elements
+         * Gets (as xml) a List of "replyto" elements
+         */
+        public java.util.List<org.apache.xmlbeans.XmlString> xgetReplytoList()
+        {
+            final class ReplytoList extends java.util.AbstractList<org.apache.xmlbeans.XmlString>
+            {
+                public org.apache.xmlbeans.XmlString get(int i)
+                    { return ConfigureImpl.this.xgetReplytoArray(i); }
+                
+                public org.apache.xmlbeans.XmlString set(int i, org.apache.xmlbeans.XmlString o)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetReplytoArray(i);
+                    ConfigureImpl.this.xsetReplytoArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, org.apache.xmlbeans.XmlString o)
+                    { ConfigureImpl.this.insertNewReplyto(i).set(o); }
+                
+                public org.apache.xmlbeans.XmlString remove(int i)
+                {
+                    org.apache.xmlbeans.XmlString old = ConfigureImpl.this.xgetReplytoArray(i);
+                    ConfigureImpl.this.removeReplyto(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfReplytoArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new ReplytoList();
+            }
+        }
+        
+        /**
+         * Gets array of all "replyto" elements
+         * @deprecated
          */
         public org.apache.xmlbeans.XmlString[] xgetReplytoArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<org.apache.xmlbeans.XmlString> targetList = new java.util.ArrayList<org.apache.xmlbeans.XmlString>();
                 get_store().find_all_element_users(REPLYTO$4, targetList);
                 org.apache.xmlbeans.XmlString[] result = new org.apache.xmlbeans.XmlString[targetList.size()];
                 targetList.toArray(result);
@@ -730,14 +970,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
+         * Gets a List of "props" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props> getPropsList()
+        {
+            final class PropsList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props get(int i)
+                    { return ConfigureImpl.this.getPropsArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props set(int i, net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props old = ConfigureImpl.this.getPropsArray(i);
+                    ConfigureImpl.this.setPropsArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props o)
+                    { ConfigureImpl.this.insertNewProps(i).set(o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props old = ConfigureImpl.this.getPropsArray(i);
+                    ConfigureImpl.this.removeProps(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfPropsArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new PropsList();
+            }
+        }
+        
+        /**
          * Gets array of all "props" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[] getPropsArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props>();
                 get_store().find_all_element_users(PROPS$6, targetList);
                 net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[] result = new net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[targetList.size()];
                 targetList.toArray(result);
@@ -846,14 +1126,54 @@ public class ConfigureDocumentImpl extends org.apache.xmlbeans.impl.values.XmlCo
         }
         
         /**
+         * Gets a List of "guard" elements
+         */
+        public java.util.List<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard> getGuardList()
+        {
+            final class GuardList extends java.util.AbstractList<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard>
+            {
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard get(int i)
+                    { return ConfigureImpl.this.getGuardArray(i); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard set(int i, net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard o)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard old = ConfigureImpl.this.getGuardArray(i);
+                    ConfigureImpl.this.setGuardArray(i, o);
+                    return old;
+                }
+                
+                public void add(int i, net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard o)
+                    { ConfigureImpl.this.insertNewGuard(i).set(o); }
+                
+                public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard remove(int i)
+                {
+                    net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard old = ConfigureImpl.this.getGuardArray(i);
+                    ConfigureImpl.this.removeGuard(i);
+                    return old;
+                }
+                
+                public int size()
+                    { return ConfigureImpl.this.sizeOfGuardArray(); }
+                
+            }
+            
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return new GuardList();
+            }
+        }
+        
+        /**
          * Gets array of all "guard" elements
+         * @deprecated
          */
         public net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[] getGuardArray()
         {
             synchronized (monitor())
             {
                 check_orphaned();
-                java.util.List targetList = new java.util.ArrayList();
+                java.util.List<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard> targetList = new java.util.ArrayList<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard>();
                 get_store().find_all_element_users(GUARD$8, targetList);
                 net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[] result = new net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[targetList.size()];
                 targetList.toArray(result);

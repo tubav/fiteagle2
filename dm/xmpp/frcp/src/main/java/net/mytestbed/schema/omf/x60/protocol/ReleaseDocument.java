@@ -45,7 +45,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
             org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Release.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.sD09C80FBB114BA180EC1CB4846999213").resolveHandle("release994delemtype");
         
         /**
+         * Gets a List of "ts" elements
+         */
+        java.util.List<java.lang.String> getTsList();
+        
+        /**
          * Gets array of all "ts" elements
+         * @deprecated
          */
         java.lang.String[] getTsArray();
         
@@ -55,7 +61,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         java.lang.String getTsArray(int i);
         
         /**
+         * Gets (as xml) a List of "ts" elements
+         */
+        java.util.List<org.apache.xmlbeans.XmlString> xgetTsList();
+        
+        /**
          * Gets (as xml) array of all "ts" elements
+         * @deprecated
          */
         org.apache.xmlbeans.XmlString[] xgetTsArray();
         
@@ -115,7 +127,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         void removeTs(int i);
         
         /**
+         * Gets a List of "src" elements
+         */
+        java.util.List<java.lang.String> getSrcList();
+        
+        /**
          * Gets array of all "src" elements
+         * @deprecated
          */
         java.lang.String[] getSrcArray();
         
@@ -125,7 +143,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         java.lang.String getSrcArray(int i);
         
         /**
+         * Gets (as xml) a List of "src" elements
+         */
+        java.util.List<org.apache.xmlbeans.XmlString> xgetSrcList();
+        
+        /**
          * Gets (as xml) array of all "src" elements
+         * @deprecated
          */
         org.apache.xmlbeans.XmlString[] xgetSrcArray();
         
@@ -185,7 +209,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         void removeSrc(int i);
         
         /**
+         * Gets a List of "replyto" elements
+         */
+        java.util.List<java.lang.String> getReplytoList();
+        
+        /**
          * Gets array of all "replyto" elements
+         * @deprecated
          */
         java.lang.String[] getReplytoArray();
         
@@ -195,7 +225,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         java.lang.String getReplytoArray(int i);
         
         /**
+         * Gets (as xml) a List of "replyto" elements
+         */
+        java.util.List<org.apache.xmlbeans.XmlString> xgetReplytoList();
+        
+        /**
          * Gets (as xml) array of all "replyto" elements
+         * @deprecated
          */
         org.apache.xmlbeans.XmlString[] xgetReplytoArray();
         
@@ -255,7 +291,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         void removeReplyto(int i);
         
         /**
+         * Gets a List of "props" elements
+         */
+        java.util.List<net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props> getPropsList();
+        
+        /**
          * Gets array of all "props" elements
+         * @deprecated
          */
         net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props[] getPropsArray();
         
@@ -295,7 +337,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         void removeProps(int i);
         
         /**
+         * Gets a List of "guard" elements
+         */
+        java.util.List<net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard> getGuardList();
+        
+        /**
          * Gets array of all "guard" elements
+         * @deprecated
          */
         net.mytestbed.schema.omf.x60.protocol.GuardDocument.Guard[] getGuardArray();
         
@@ -335,7 +383,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         void removeGuard(int i);
         
         /**
+         * Gets a List of "res_id" elements
+         */
+        java.util.List<java.lang.String> getResIdList();
+        
+        /**
          * Gets array of all "res_id" elements
+         * @deprecated
          */
         java.lang.String[] getResIdArray();
         
@@ -345,7 +399,13 @@ public interface ReleaseDocument extends org.apache.xmlbeans.XmlObject
         java.lang.String getResIdArray(int i);
         
         /**
+         * Gets (as xml) a List of "res_id" elements
+         */
+        java.util.List<org.apache.xmlbeans.XmlString> xgetResIdList();
+        
+        /**
          * Gets (as xml) array of all "res_id" elements
+         * @deprecated
          */
         org.apache.xmlbeans.XmlString[] xgetResIdArray();
         

@@ -24,7 +24,7 @@ function updateStatus(resource, status) {
         resource_name:resource,
         resource_status_logo:logo,
         resource_status_name:name,
-    }
+    };
     node.innerHTML = tmpl("item_tmpl")(data);
 }
 

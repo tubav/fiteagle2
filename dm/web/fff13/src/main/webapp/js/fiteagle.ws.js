@@ -7,32 +7,34 @@ function getRootUri() {
 			+ (document.location.port == "" ? "8080" : document.location.port);
 }
 
-function onError(evt) {
-	alert(evt.data);
-}
-
-function onOpen(evt) {
-	websocket.send("push");
-}
-
-function onMessage(evt) {
-	data = JSON.parse(evt.data);
-	resource = data.resource;
-	status = data.status;
-	if (null == document.getElementById(resource)) {
-		addResource(results, resource);
-	}
-
-	updateStatus(resource, status);
-}
-
 function showError(message) {
 	addResource(results, message);
 }
 
+function onError(evt) {
+	showError(evt.data);
+}
+
+function onOpen(evt) {
+	//
+}
+
+function onMessage(evt) {
+    console.log("Parsing" + evt.data);
+	data = JSON.parse(evt.data);
+	uid = data.uid;
+	status = data.status;
+	if (null == document.getElementById(uid)) {
+		addResource(results, uid);
+	}
+
+	updateStatus(uid, status);
+}
+
+
 try {
 	var success = false;
-	websocket = new WebSocket(getRootUri() + "/ws/fff13");
+	websocket = new WebSocket(getRootUri() + "/ws/status");
 	websocket.onopen = function(evt) {
 		success = true;
 		onOpen(evt);
@@ -46,7 +48,7 @@ try {
 	websocket.onclose = function() {
 		if (!success)
 			showError("connection error");
-	}
+	};
 } catch (e) {
 	showError(e.message);
 }

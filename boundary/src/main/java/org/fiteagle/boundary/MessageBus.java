@@ -13,6 +13,49 @@ import javax.naming.NamingException;
 public class MessageBus {
 
 	public static final String DESTINATION = "fiteagle";
+	
+	public static enum Type {
+		STATUSNOTIFICATION("statusnotification");
+		private final String type;
+		
+		Type(String type) {
+			this.type = type;
+		}
+
+		@Override
+		public String toString() {
+			return type;
+		}
+	}
+	
+	public static enum Property {
+		TYPE("type"), UID("uid");
+		private final String type;
+		
+		Property(String type) {
+			this.type = type;
+		}
+
+		@Override
+		public String toString() {
+			return type;
+		}
+	}
+	
+	public static enum Status {
+		UNKNOWN(-1), UP(0), WARNING(1), ERROR(2);
+		private final int status;
+
+		Status(int status) {
+			this.status = status;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(status);
+		}
+	}
+
 	protected final ConnectionFactory factory;
 	protected final Connection connection;
 	protected final Session session;
@@ -97,5 +140,9 @@ public class MessageBus {
 		String filter = "uid='" + uid + "'" + " AND type='" + type + "'"
 				+ " AND namespace='" + namespace + "'";
 		return filter;
+	}
+
+	public static String getFilter(Type type) {
+		return "type='"+type+"'";
 	}
 }

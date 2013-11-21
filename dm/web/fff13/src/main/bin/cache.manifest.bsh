@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MANIFEST_FILE="cache.manifest"
+echo "CACHE MANIFEST" > ${MANIFEST_FILE}
+echo "#Created at `date`" >> ${MANIFEST_FILE}
+echo "" >> ${MANIFEST_FILE}
+echo "CACHE:" >> ${MANIFEST_FILE}
+find . -type f | cut -c 2- | grep -v '^[[:space:]]*$' | grep -v '^/cache.manifest' | grep -v '/.DS' >> ${MANIFEST_FILE} 
+echo "" >> ${MANIFEST_FILE}
+echo "NETWORK:" >> ${MANIFEST_FILE}
+echo "/ws" >> ${MANIFEST_FILE}

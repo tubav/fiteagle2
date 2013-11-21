@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="./cache.manifest">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./apple-touch-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./apple-touch-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="./apple-touch-icon-57x57-precomposed.png" />         
+    <link rel="apple-touch-startup-image" href="./startup.png" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+
     <title>FITeagle</title>
-
-        <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-        <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon-precomposed.png" />
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./apple-touch-icon-144x144-precomposed.png" />
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./apple-touch-icon-114x114-precomposed.png" />
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./apple-touch-icon-72x72-precomposed.png" />
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="./apple-touch-icon-57x57-precomposed.png" />         
-        <link rel="apple-touch-startup-image" href="./startup.png" />
-        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -56,7 +54,6 @@
       </nav>
 
       <div id="page-wrapper">
-
         <div class="row">
           <div class="col-lg-12">
             <h1>Demo <small>Dashboard</small></h1>
@@ -69,16 +66,11 @@
             </div>
           </div>
         </div><!-- /.row -->
-
         <div class="row">
           <div id="results"></div>
         </div><!-- /.row -->
-
       </div><!-- /#page-wrapper -->
-
     </div><!-- /#wrapper -->
-
-
     
 <script type="text/html" id="item_tmpl">
           <div class="col-lg-3">
@@ -109,8 +101,6 @@
             </div>
           </div>
 </script>
-
-
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/snippet.js"></script>

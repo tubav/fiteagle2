@@ -15,6 +15,7 @@ import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.fiteagle.boundary.MessageBus;
@@ -22,7 +23,7 @@ import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@ServerEndpoint("/status")
+@ServerEndpoint("/status/{syntax}")
 public class StatusWebSocket {
 	private static final String JSON_FIELD_STATUS = "status";
 	private static final String JSON_FIELD_UID = "uid";
@@ -39,8 +40,7 @@ public class StatusWebSocket {
 		this.bus = bus;
 		final String filter = MessageBus
 				.getFilter(MessageBus.Type.STATUSNOTIFICATION);
-		this.bus.getConsumer(filter).setMessageListener(
-				new StatusListener());
+		this.bus.getConsumer(filter).setMessageListener(new StatusListener());
 	}
 
 	@OnClose
@@ -50,7 +50,8 @@ public class StatusWebSocket {
 	}
 
 	@OnOpen
-	public void onOpen(final Session websocket) {
+	public void onOpen(final Session websocket,
+			@PathParam("syntax") final String syntax) throws JMSException {
 		StatusWebSocket.LOGGER.log(Level.INFO,
 				"WebSocket opened: " + websocket.getId());
 		StatusWebSocket.LOGGER.log(Level.INFO,
@@ -59,10 +60,19 @@ public class StatusWebSocket {
 				"URI: " + websocket.getRequestURI());
 		StatusWebSocket.LOGGER.log(Level.INFO,
 				"Path: " + websocket.getPathParameters());
+		StatusWebSocket.LOGGER.log(Level.INFO,
+				"Syntax: " + syntax);
 
 		this.socket = websocket;
-
+		
+		this.queryData();
 		this.simulateChange();
+	}
+
+	private void queryData() throws JMSException {
+		TextMessage message = this.bus.getSession().createTextMessage();
+		message.setStringProperty(MessageBus.Property.TYPE.toString(), MessageBus.Type.STATUSQUERY.toString());
+		this.bus.getProducer().send(message);
 	}
 
 	private void sendStatusUpdate(final String uid, final String status)

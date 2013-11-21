@@ -15,7 +15,7 @@ public class MessageBus {
 	public static final String DESTINATION = "fiteagle";
 	
 	public static enum Type {
-		STATUSNOTIFICATION("statusnotification");
+		STATUSNOTIFICATION("statusNotification"), STATUSQUERY("statusQuery");
 		private final String type;
 		
 		Type(String type) {

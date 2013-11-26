@@ -1,10 +1,16 @@
 package org.fiteagle.dm.xmpp.frcp.servlet;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import org.fiteagle.boundary.MessageBus;
 import org.fiteagle.boundary.MessageBus.Status;
+import org.fiteagle.boundary.MessageBus.Type;
 import org.fiteagle.dm.xmpp.frcp.XmppController;
 import org.fiteagle.dm.xmpp.frcp.XmppController.XmppReceiverDetails;
 import org.jivesoftware.smack.XMPPConnection;
@@ -16,62 +22,84 @@ import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 public class FFFListener implements
-		ItemEventListener<PayloadItem<SimplePayload>> {
+		ItemEventListener<PayloadItem<SimplePayload>>, MessageListener {
 
-	private XMPPConnection xmppBus;
-	private MessageBus jmsBus;
-	private XmppController controller;
+	private final MessageBus jmsBus;
+	private final XmppController controller;
+	private Status status;
+	private static final Logger LOGGER = Logger.getLogger(FFFListener.class
+			.getName());
 
-	public FFFListener(MessageBus jmsBus, XMPPConnection xmppBus)
-			throws XMPPException {
-		this.jmsBus = jmsBus;
-		this.xmppBus = xmppBus;
+	public FFFListener(final MessageBus jmsBus, final XMPPConnection xmppBus)
+			throws XMPPException, JMSException {
+
+		this.status = MessageBus.Status.UNKNOWN;
+
 		this.controller = new XmppController(xmppBus);
-		subscribe("epc-enablers");
+		this.subscribeToXmppTopic("epc-enablers");
+
+		this.jmsBus = jmsBus;
+		this.subscribeToJmsEvent(Type.STATUSQUERY);
 	}
 
-	private void subscribe(String topicName) throws XMPPException {
-		LeafNode topic = controller.getTopic(topicName);
+	private void subscribeToJmsEvent(final Type type) throws JMSException {
+		final String filter = MessageBus.getFilter(type);
+		this.jmsBus.getConsumer(filter).setMessageListener(this);
+	}
+
+	private void subscribeToXmppTopic(final String topicName)
+			throws XMPPException {
+		final LeafNode topic = this.controller.getTopic(topicName);
 		topic.addItemEventListener(this);
-		topic.subscribe(controller.getJid());
+		topic.subscribe(this.controller.getJid());
 	}
 
 	@Override
 	public void handlePublishedItems(
-			ItemPublishEvent<PayloadItem<SimplePayload>> items) {
+			final ItemPublishEvent<PayloadItem<SimplePayload>> items) {
 
-		for (PayloadItem<SimplePayload> item : items.getItems()) {
+		for (final PayloadItem<SimplePayload> item : items.getItems()) {
 			try {
-
-				XmppReceiverDetails details = XmppController.getDetails(item);
-				String uid = items.getNodeId();
-				String namespace = details.getNamespace();
-				String type = details.getElement();
-				String message = item.getPayload().toXML();
+				final XmppReceiverDetails details = XmppController
+						.getDetails(item);
+				items.getNodeId();
+				details.getNamespace();
+				details.getElement();
+				final String message = item.getPayload().toXML();
 				if (message.contains("epcQoSControl stop")) {
 					System.out.println("stop");
-					send(MessageBus.Status.UP);
+					this.status = MessageBus.Status.UP;
+					this.sendStatus();
 				} else if (message.contains("epcQoSControl start")
 						|| message.contains("touch")) {
 					System.out.println("start");
-					send(MessageBus.Status.WARNING);
+					this.status = MessageBus.Status.WARNING;
+					this.sendStatus();
 				}
-			} catch (JMSException e) {
-				e.printStackTrace();
+			} catch (final JMSException e) {
+				FFFListener.LOGGER.log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}
 
-	private void send(Status status) throws JMSException {
-		TextMessage busmessage = this.jmsBus.getSession()
+	private void sendStatus() throws JMSException {
+		final TextMessage busmessage = this.jmsBus.getSession()
 				.createTextMessage();
 
-		busmessage.setStringProperty(
-				MessageBus.Property.TYPE.toString(),
+		busmessage.setStringProperty(MessageBus.Property.TYPE.toString(),
 				MessageBus.Type.STATUSNOTIFICATION.toString());
-		busmessage.setStringProperty(
-				MessageBus.Property.UID.toString(), "Samsung S4");
-		busmessage.setText(String.valueOf(status));
+		busmessage.setStringProperty(MessageBus.Property.UID.toString(),
+				"Samsung S4");
+		busmessage.setText(String.valueOf(this.status));
 		this.jmsBus.getProducer().send(busmessage);
+	}
+
+	@Override
+	public void onMessage(final Message arg0) {
+		try {
+			this.sendStatus();
+		} catch (final JMSException e) {
+			FFFListener.LOGGER.log(Level.SEVERE, e.getMessage());
+		}
 	}
 }

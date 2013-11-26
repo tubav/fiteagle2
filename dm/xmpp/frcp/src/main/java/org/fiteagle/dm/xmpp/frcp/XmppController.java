@@ -36,7 +36,7 @@ public class XmppController {
 		this.mgr = this.getManager();
 	}
 
-	private PubSubManager getManager() {
+	public PubSubManager getManager() {
 		return new PubSubManager(this.connection);
 	}
 	
@@ -46,11 +46,12 @@ public class XmppController {
 		final XMPPConnection conn = new XMPPConnection(config);
 		conn.connect();
 		try {
-			conn.login(user, password);
-		} catch (XMPPException e) {
 			conn.getAccountManager().createAccount(user, password);
+		} catch (XMPPException e) {
+			e.printStackTrace();
+		} finally {
 			conn.login(user, password);
-		} 
+		}
 		return conn;
 	}
 
@@ -58,7 +59,7 @@ public class XmppController {
 		
 		LeafNode topicNode = this.getTopic(topic);
 		
-		String subscriber = this.connection.getUser();
+		String subscriber = this.getJid();
 		LOGGER.log(Level.INFO, "Subscribing '"+subscriber+"' to '"+topic+"'");
 		topicNode.subscribe(subscriber);
 		
@@ -152,6 +153,10 @@ public class XmppController {
 				text);
 		return new PayloadItem<SimplePayload>("", reply);
 	
+	}
+
+	public String getJid() {
+		return this.connection.getUser();
 	}
 
 }

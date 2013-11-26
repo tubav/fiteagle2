@@ -46,7 +46,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-              <li class="active"><a href="index.html"><i class="fa fa-dashboard"></i> Experiment</a></li>
+            <li class="active"><a href="index.html"><i class="fa fa-dashboard"></i> Demo</a></li>
             <li><a href="http://fiteagle.org"><i class="fa fa-desktop"></i> Info</a></li>
           </ul>
 
@@ -56,24 +56,45 @@
       <div id="page-wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h1>Monitoring <small>Dashboard</small></h1>
+            <h1>Experiment <small>Dashboard</small></h1>
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> LTE Bandwidth via OpenEPC QoS</li>
             </ol>
             <div class="alert alert-info alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              Welcome to the FFF 2013 Demo FITeagle page!
+              Welcome to the FFF 2013 Experiment FITeagle page!
             </div>
           </div>
         </div><!-- /.row -->
         <div class="row">
+        
+          <div class="col-lg-12">
+
+            <form role="form">
+<!--               <button type="submit" class="btn btn-primary">Limit Bandwidth</button>-->
+<div class="form-group input-group">
+                <span class="input-group-addon">Bandwidth</span>
+                <input type="text" class="form-control" placeholder="maximum b/w">
+                <span class="input-group-addon">kbit/s</span>
+</div>
+<div class="form-group input-group">
+                <span class="input-group-addon">Duration</span>
+                <input type="text" class="form-control" placeholder="limit. duration">
+                <span class="input-group-addon">seconds</span>
+              </div>
+               <button type="submit" class="btn btn-danger">Start limitation</button>
+            </form>
+
+          </div>
+
+        
           <div id="results"></div>
         </div><!-- /.row -->
       </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
     
 <script type="text/html" id="item_tmpl">
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="panel panel-<%=resource_status_name%>">
               <div class="panel-heading">
                 <div class="row">
@@ -81,19 +102,19 @@
                     <i class="fa fa-<%=resource_status_logo%> fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading" style="font-size:large; white-space:nowrap;"><%=resource_name%></p>
-                    <p class="announcement-text" style="color:#666; white-space:nowrap;"><%=resource_status%></p>
+                    <p class="announcement-heading"></p>
+                    <p class="announcement-text"><%=resource_name%></p>
                   </div>
                 </div>
               </div>
               <a href="#">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
-                    <div class="col-xs-6" style="white-space:nowrap;">
-                      waiting for updates...
+                    <div class="col-xs-6">
+                      More info
                     </div>
                     <div class="col-xs-6 text-right">
-
+                      <i class="fa fa-arrow-circle-right"></i>
                     </div>
                   </div>
                 </div>
@@ -105,6 +126,6 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/snippet.js"></script>
 <script src="js/fiteagle.js"></script>
-<script src="js/fiteagle.ws.js"></script>
+<!--<script src="js/fiteagle.ws.js"></script>-->
   </body>
 </html>

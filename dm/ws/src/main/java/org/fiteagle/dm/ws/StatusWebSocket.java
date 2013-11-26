@@ -24,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @ServerEndpoint("/status/{syntax}")
-public class StatusWebSocket {
+public class StatusWebSocket implements MessageListener {
 	private static final String JSON_FIELD_STATUS = "status";
 	private static final String JSON_FIELD_UID = "uid";
 	private static final Logger LOGGER = Logger.getLogger(StatusWebSocket.class
@@ -40,7 +40,7 @@ public class StatusWebSocket {
 		this.bus = bus;
 		final String filter = MessageBus
 				.getFilter(MessageBus.Type.STATUSNOTIFICATION);
-		this.bus.getConsumer(filter).setMessageListener(new StatusListener());
+		this.bus.getConsumer(filter).setMessageListener(this);
 	}
 
 	@OnClose
@@ -60,18 +60,18 @@ public class StatusWebSocket {
 				"URI: " + websocket.getRequestURI());
 		StatusWebSocket.LOGGER.log(Level.INFO,
 				"Path: " + websocket.getPathParameters());
-		StatusWebSocket.LOGGER.log(Level.INFO,
-				"Syntax: " + syntax);
+		StatusWebSocket.LOGGER.log(Level.INFO, "Syntax: " + syntax);
 
 		this.socket = websocket;
-		
+
 		this.queryData();
-		this.simulateChange();
+		// this.simulateChange();
 	}
 
 	private void queryData() throws JMSException {
 		TextMessage message = this.bus.getSession().createTextMessage();
-		message.setStringProperty(MessageBus.Property.TYPE.toString(), MessageBus.Type.STATUSQUERY.toString());
+		message.setStringProperty(MessageBus.Property.TYPE.toString(),
+				MessageBus.Type.STATUSQUERY.toString());
 		this.bus.getProducer().send(message);
 	}
 
@@ -85,37 +85,29 @@ public class StatusWebSocket {
 		this.socket.getBasicRemote().sendText(result);
 	}
 
-	private class StatusListener implements MessageListener {
-		@Override
-		public void onMessage(final Message message) {
-			try {
-				final TextMessage textMessage = (TextMessage) message;
-				final String uid = textMessage
-						.getStringProperty(MessageBus.Property.UID.toString());
-				final String status = textMessage.getText();
-				StatusWebSocket.this.sendStatusUpdate(uid, status);
-			} catch (JMSException | JSONException | IOException e) {
-				StatusWebSocket.LOGGER.log(Level.SEVERE, e.getMessage());
-			}
+	@Override
+	public void onMessage(final Message message) {
+		try {
+			final TextMessage textMessage = (TextMessage) message;
+			final String uid = textMessage
+					.getStringProperty(MessageBus.Property.UID.toString());
+			final String status = textMessage.getText();
+			this.sendStatusUpdate(uid, status);
+		} catch (JMSException | JSONException | IOException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
 	private void simulateChange() {
 		final Timer timer = new Timer();
+		timer.schedule(new SimulateChange("Samsung S4",
+				MessageBus.Status.UNKNOWN), 4000);
 		timer.schedule(
-				new SimulateChange("OpenEPC", MessageBus.Status.UNKNOWN), 4000);
-		timer.schedule(new SimulateChange("OpenEPC", MessageBus.Status.ERROR),
-				8000);
-		timer.schedule(
-				new SimulateChange("OpenEPC", MessageBus.Status.WARNING), 13000);
-		timer.schedule(new SimulateChange("OpenEPC", MessageBus.Status.UP),
+				new SimulateChange("Samsung S4", MessageBus.Status.ERROR), 8000);
+		timer.schedule(new SimulateChange("Samsung S4",
+				MessageBus.Status.WARNING), 13000);
+		timer.schedule(new SimulateChange("Samsung S4", MessageBus.Status.UP),
 				19000);
-		timer.schedule(new SimulateChange("OpenMTC", MessageBus.Status.UP),
-				20000);
-		timer.schedule(new SimulateChange("OpenIMSCore",
-				MessageBus.Status.ERROR), 24000);
-		timer.schedule(new SimulateChange("OpenSDNCore",
-				MessageBus.Status.UNKNOWN), 5000);
 	}
 
 	private class SimulateChange extends TimerTask {

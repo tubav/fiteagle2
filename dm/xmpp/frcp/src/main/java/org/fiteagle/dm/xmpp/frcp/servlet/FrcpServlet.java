@@ -64,12 +64,17 @@ public class FrcpServlet implements ServletContextListener {
 		FrcpServlet.log.log(Level.INFO, "Starting FRCP Servlet...");
 
 		try {
-			final XMPPConnection xmppConnection = connect(SERVER, 5222, USER,
+			XMPPConnection xmppConnection = connect(SERVER, 5222, USER,
 					PWD);
 			final MessageBus jmsMessageBus = MessageBusApplicationServerFactory
 					.createMessageBus();
 
 			this.frcpListener = new FrcpListener(jmsMessageBus, xmppConnection);
+			
+			System.out.println("Starting FFF13 demo listener");
+			xmppConnection = connect("fuseco.fokus.fraunhofer.de", 5222, "fiteagle", "test");
+			FFFListener fffListener = new FFFListener(jmsMessageBus, xmppConnection);
+			
 		} catch (final Exception e) {
 			FrcpServlet.log.log(Level.SEVERE, e.getMessage());
 			e.printStackTrace();

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#Created at Mi 27 Nov 2013 00:09:24 CET
+#Created at Mi 27 Nov 2013 00:12:37 CET
 
 CACHE:
 ./admin.html
@@ -22,7 +22,6 @@ CACHE:
 ./font-awesome/fonts/FontAwesome.otf
 ./img/icon_fiteagle.png
 ./index.html
-./js/.DS_Store
 ./js/bootstrap.js
 ./js/fiteagle.js
 ./js/fiteagle.ws.js

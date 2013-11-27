@@ -34,12 +34,13 @@ import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class FrcpListener {
 	
-	private static String RESOURCE_TOPIC = "test1";
+	private static String RESOURCE_TOPIC = "testbar";
 	
 	private class JmsMessageBusListener implements MessageListener {
 		@Override
@@ -55,7 +56,7 @@ public class FrcpListener {
 		}
 	}
 
-	public String getMembershipFromConfigureMessage(final String xml)
+	public static String getMembershipFromConfigureMessage(final String xml)
 			throws XmlException {
 		String actual = "";
 
@@ -70,7 +71,25 @@ public class FrcpListener {
 		return actual.replace("xmpp://", "").replace("@" + "localhost", "");
 	}
 
-	private String getTextFromNode(final org.w3c.dom.Node child,
+	public static String getMembershipFromInformMessage(String xml) throws XmlException {
+		String actual = "";
+
+		final InformDocument doc = InformDocument.Factory.parse(xml);
+		for (final Props prop : doc.getInform().getPropsArray()) {
+			final NodeList childs = prop.getDomNode().getChildNodes();
+			for (int i = 0; i < childs.getLength(); i++) {
+				final org.w3c.dom.Node child = childs.item(i);
+				if (child.getLocalName().equals("membership") && child.hasChildNodes()) {
+					Node subchild = child.getChildNodes().item(0);
+					actual = getTextFromNode(subchild, "it");
+				}
+			}
+		}
+		return actual.replace("xmpp://", "").replace("@" + "localhost", "");
+	}
+
+	
+	private static String getTextFromNode(final org.w3c.dom.Node child,
 			final String expectedNodeName) {
 		String text = "";
 		final String nodeName = child.getLocalName();
@@ -80,7 +99,7 @@ public class FrcpListener {
 		return text;
 	}
 
-	private class XmppMessageBusListener implements
+	public class XmppMessageBusListener implements
 			ItemEventListener<PayloadItem<SimplePayload>> {
 
 	
@@ -95,7 +114,8 @@ public class FrcpListener {
 
 			try {
 				FRCPMessageType type = FrcpXmppParser.getType(message);
-
+				FrcpListener.log.log(Level.INFO, "Type: " + type.name());
+				
 				if (type.equals(FRCPMessageType.REQUEST)) {
 					RequestDocument request = RequestDocument.Factory.parse(message);
 					InformDocument informDoc = (InformDocument) frcp.handle(request);
@@ -111,6 +131,11 @@ public class FrcpListener {
 				} else if (type.equals(FRCPMessageType.CONFIGURE)) {
 					System.out.println("CONFIGURE!");
 					final String topic = getMembershipFromConfigureMessage(message);
+					subscribeToMembership(topic);
+					informAboutMembership(topic);
+				} else if (type.equals(FRCPMessageType.INFORM)) {
+					System.out.println("INFORM!");
+					final String topic = getMembershipFromInformMessage(message);
 					subscribeToMembership(topic);
 					informAboutMembership(topic);
 				} else if (type.equals(FRCPMessageType.CREATE)) {
@@ -134,14 +159,14 @@ public class FrcpListener {
 			}
 		}
 
-		private void subscribeTo(final String[] sources)
+		public void subscribeTo(final String[] sources)
 				throws URISyntaxException, XMPPException {
 			for (String source : sources) {
 				subscribeTo(source);
 			}
 		}
 
-		private void subscribeTo(String source)
+		public void subscribeTo(String source)
 				throws URISyntaxException, XMPPException {
 			
 			URI uri = new URI(source);
@@ -154,7 +179,7 @@ public class FrcpListener {
 
 	private void subscribeToMembership(final String topic) throws XMPPException {
 		System.out.println("Subscribing to: " + topic);
-		if (null != this.xmppBus) {
+		if (null != this.xmppBus && topic != null && !topic.isEmpty()) {
 			this.xmppBus.getNode(topic)
 					.subscribe(this.xmppConnection.getUser());
 			this.xmppBus.getNode(topic).addItemEventListener(
@@ -232,16 +257,11 @@ public class FrcpListener {
 		
 		this.xmppController = new XmppController(xmppConnection);
 		
-		
-		
-		
 		this.xmppBus = new PubSubManager(xmppConnection);
 		
 		this.execAdapter = new ExecAdapter();
-		
 
 		this.jid = xmppConnection.getUser() + "@" + xmppConnection.getHost();
-				
 
 		this.xmppMessageBusListener = new XmppMessageBusListener();
 		
@@ -261,6 +281,7 @@ public class FrcpListener {
 				});
 
 		this.frcp = new FrcpController("xmpp://", RESOURCE_TOPIC,
+				this.jid, this.mytopic,
 				xmppConnection.getHost());
 	}
 
@@ -281,5 +302,6 @@ public class FrcpListener {
 		this.jmsBus.getConsumer().setMessageListener(
 				new FrcpListener.JmsMessageBusListener());
 	}
+
 
 }

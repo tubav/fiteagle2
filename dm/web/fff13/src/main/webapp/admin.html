@@ -60,7 +60,7 @@
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> LTE Bandwidth via OpenEPC QoS</li>
             </ol>
-            <div class="alert alert-info alert-dismissable">
+            <div id="output" class="alert alert-info alert-dismissable">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               Welcome to the FFF 2013 Experiment FITeagle page!
             </div>
@@ -70,18 +70,30 @@
         
           <div class="col-lg-12">
 
-            <form role="form">
+            <form role="form" onsubmit="send_message(); return false;" >
+                
 <!--               <button type="submit" class="btn btn-primary">Limit Bandwidth</button>-->
 <div class="form-group input-group">
                 <span class="input-group-addon">Bandwidth</span>
-                <input type="text" class="form-control" placeholder="maximum b/w">
+                <input id="bw" type="text" class="form-control" placeholder="maximum b/w">
                 <span class="input-group-addon">kbit/s</span>
 </div>
 <div class="form-group input-group">
                 <span class="input-group-addon">Duration</span>
-                <input type="text" class="form-control" placeholder="limit. duration">
+                <input id="duration" type="text" class="form-control" placeholder="limit. duration">
                 <span class="input-group-addon">seconds</span>
               </div>
+<div class="form-group input-group">
+                <span class="input-group-addon">Device</span>
+                <input id="ip" type="text" class="form-control" placeholder="target device" value="192.168.3.101">
+                <span class="input-group-addon">IP</span>
+              </div>
+<div class="form-group input-group">
+                <span class="input-group-addon">ID</span>
+                <input id="resource" type="text" class="form-control" placeholder="target resource" value="epc-enablers">
+                <span class="input-group-addon">Name</span>
+              </div>
+
                <button type="submit" class="btn btn-danger">Start limitation</button>
             </form>
 
@@ -127,5 +139,65 @@
 <script src="js/snippet.js"></script>
 <script src="js/fiteagle.js"></script>
 <!--<script src="js/fiteagle.ws.js"></script>-->
+
+            <script language="javascript" type="text/javascript">
+            var wsUri = getRootUri() + "/ws/fff";
+            websocket = new WebSocket(wsUri);
+                websocket.onopen = function(evt) {
+                    onOpen(evt)
+                };
+                websocket.onmessage = function(evt) {
+                    onMessage(evt)
+                };
+                websocket.onerror = function(evt) {
+                    onError(evt)
+                };
+            writeToScreen("Connected to Endpoint!");
+            
+            function getRootUri() {
+                return "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" +
+                        (document.location.port == "" ? "8080" : document.location.port);
+            }
+            function init() {
+                output = document.getElementById("output");
+            }
+            function send_message() {
+            	var bandwidth=$('#bw').val();
+            	var duration=$('#duration').val();
+            	var ip=$('#ip').val();
+            	var resource=$('#resource').val();
+                var data = new Object();
+                data.bandwidth = bandwidth;
+                data.duration = duration;
+                data.ip = ip;
+                data.resource = resource;
+                var json=JSON.stringify(data);
+                doSend(json);
+            }
+            
+            function onOpen(evt) {
+                
+            }
+            function onMessage(evt) {
+                writeToScreen("Message Received: " + evt.data);
+            }
+            function onError(evt) {
+                writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+            }
+            function doSend(message) {
+                writeToScreen("Message Sent: " + message);
+                websocket.send(message);
+            }
+            function writeToScreen(message) {
+                var pre = document.createElement("p");
+                pre.style.wordWrap = "break-word";
+                pre.innerHTML = message;
+                 
+                //output.appendChild(pre);
+                output.innerHTML = message;
+            }
+            window.addEventListener("load", init, false);
+        </script>
+        
   </body>
 </html>

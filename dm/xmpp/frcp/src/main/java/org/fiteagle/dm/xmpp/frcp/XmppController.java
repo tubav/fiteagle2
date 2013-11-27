@@ -3,8 +3,6 @@ package org.fiteagle.dm.xmpp.frcp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.fiteagle.dm.xmpp.frcp.XmppController.XmppReceiverDetails;
-import org.fiteagle.dm.xmpp.frcp.servlet.FrcpServlet;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -17,6 +15,7 @@ import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
+import org.jivesoftware.smackx.pubsub.Subscription;
 
 public class XmppController {
 
@@ -61,9 +60,13 @@ public class XmppController {
 		
 		String subscriber = this.getJid();
 		LOGGER.log(Level.INFO, "Subscribing '"+subscriber+"' to '"+topic+"'");
-		topicNode.subscribe(subscriber);
+		this.subscribe(topicNode, subscriber);
 		
 		return topicNode;
+	}
+	
+	public Subscription subscribe(LeafNode topicNode, String subscriber) throws XMPPException {
+		return topicNode.subscribe(subscriber);
 	}
 
 	public LeafNode getTopic(String topic) throws XMPPException {
@@ -97,6 +100,7 @@ public class XmppController {
 
 
 	public static void sendTextMessage2(LeafNode topic, String message) throws XMPPException {
+		System.out.println("Sending to '"+topic.getId()+"': " + message);
 		String element = "";
 		String namespace = "";
 		SimplePayload payload = new SimplePayload(element, namespace , message);
@@ -106,7 +110,7 @@ public class XmppController {
 	
 	
 	public static void sendTextMessage(LeafNode topic, String message, String namespace, String element) {
-		System.out.println("Sending: " + message);
+		System.out.println("Sending to '"+topic.getId()+"': " + message);
 		SimplePayload payload = new SimplePayload(element, namespace, message);
 		PayloadItem<SimplePayload> payloadItem = new PayloadItem<SimplePayload>(
 				payload);
@@ -157,6 +161,10 @@ public class XmppController {
 
 	public String getJid() {
 		return this.connection.getUser();
+	}
+
+	public XMPPConnection getConnection() {
+		return this.connection;
 	}
 
 }

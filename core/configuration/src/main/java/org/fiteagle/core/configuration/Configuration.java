@@ -24,6 +24,7 @@ public class Configuration {
 				final TextMessage textMessage = (TextMessage) message;
 				Configuration.log.log(Level.INFO, "[Configuration] Received: '"
 						+ textMessage.getText() + "'");
+				if (null == textMessage.getText()) return;
 				if (textMessage.getText().equals("getVersion")) {
 					final TextMessage result = Configuration.this.session
 							.createTextMessage(Configuration.VERSION);

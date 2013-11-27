@@ -7,7 +7,9 @@ import java.util.UUID;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.mytestbed.schema.omf.x60.protocol.CreateDocument;
 import net.mytestbed.schema.omf.x60.protocol.InformDocument;
+import net.mytestbed.schema.omf.x60.protocol.CreateDocument.Create;
 import net.mytestbed.schema.omf.x60.protocol.InformDocument.Inform;
 import net.mytestbed.schema.omf.x60.protocol.ItypeDocument.Itype;
 import net.mytestbed.schema.omf.x60.protocol.PropsDocument.Props;
@@ -23,9 +25,13 @@ public class FrcpController {
 	private String resourceUID;
 	private String server;
 	private String protocol;
+	private String sourceUID;
+	private String pubsub;
 
-	public FrcpController(String protocol, String resourceUID, String server) {
+	public FrcpController(String protocol, String resourceUID, String sourceUID, String pubsub, String server) {
 		this.resourceUID = resourceUID;
+		this.sourceUID = sourceUID;
+		this.pubsub = pubsub;
 		this.server = server;
 		this.protocol = protocol;
 	}
@@ -65,4 +71,33 @@ public class FrcpController {
 		}
 		return null;
 	}
+
+	public CreateDocument createApplicationRequest(
+			String string) {
+		CreateDocument createDoc = CreateDocument.Factory.newInstance();
+		createDoc.addNewCreate();
+		Create create = createDoc.getCreate();
+		create.addTs(String.valueOf(System.currentTimeMillis()));
+		create.addRtype("application");
+		create.addSrc(this.protocol + this.sourceUID);
+		Props props = create.addNewProps();
+		
+		addToProps(props, "binary_path", string);
+		addToProps(props, "hrn", string);
+		addToProps(props, "membership", this.protocol + this.pubsub);
+		addToProps(props, "type", "application");
+		
+		return createDoc;
+	}
+	
+	public static void addToProps(Props props, String key, String value) {
+		final QName type = new QName("http://schema.mytestbed.net/omf/6.0/protocol/application",
+				key);
+		XmlCursor cursor = props.newCursor();
+		cursor.toFirstContentToken();
+		cursor.beginElement(type);
+		cursor.insertAttributeWithValue("type", "string");
+		cursor.insertChars(value);
+	}
+
 }

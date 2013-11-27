@@ -18,7 +18,7 @@ public class FrcpServlet implements ServletContextListener {
 
 	private static final Logger log = Logger.getLogger(FrcpServlet.class
 			.getName());
-	private static final String USER = "test1";
+	private static final String USER = "testbar";
 	private static final String PWD = "test";
 	private static final String SERVER = "localhost";
 	private static final String PROTOCOL = "xmpp://";
@@ -72,7 +72,8 @@ public class FrcpServlet implements ServletContextListener {
 			this.frcpListener = new FrcpListener(jmsMessageBus, xmppConnection);
 			
 			System.out.println("Starting FFF13 demo listener");
-			xmppConnection = connect("fuseco.fokus.fraunhofer.de", 5222, "fiteagle", "test");
+			//xmppConnection = connect("fuseco.fokus.fraunhofer.de", 5222, "fiteagle", "test");
+			xmppConnection = connect("localhost", 5222, "alex", "test");
 			FFFListener fffListener = new FFFListener(jmsMessageBus, xmppConnection);
 			
 		} catch (final Exception e) {

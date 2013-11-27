@@ -30,11 +30,11 @@ public class XmppListener implements
 
 	@Override
 	public void handlePublishedItems(
-			ItemPublishEvent<PayloadItem<SimplePayload>> items) {
+			ItemPublishEvent<PayloadItem<SimplePayload>> xmppItems) {
 		try {
-			for (PayloadItem<SimplePayload> item : items.getItems()) {
+			for (PayloadItem<SimplePayload> item : xmppItems.getItems()) {
 				XmppReceiverDetails details = XmppController.getDetails(item);
-				String uid = items.getNodeId();
+				String uid = xmppItems.getNodeId();
 				String namespace = details.getNamespace();
 				String type = details.getElement();
 				String message = item.getPayload().toXML();
@@ -67,9 +67,9 @@ public class XmppListener implements
 	}
 
 	@Override
-	public void onMessage(Message message) {
+	public void onMessage(Message jmsMessage) {
 		try {
-			TextMessage textMessage = ((TextMessage) message);
+			TextMessage textMessage = ((TextMessage) jmsMessage);
 			String protocol = textMessage.getStringProperty("protocol");
 			boolean isReply = protocol != null && protocol.equalsIgnoreCase("xmpp"); 
 			if (isReply) {	

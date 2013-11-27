@@ -24,7 +24,7 @@ public class FrcpXmppParser {
 
 	public enum FRCPMessageType {
 		CONFIGURE("configure"), REQUEST("request"), UNKNOWN(""), CREATE(
-				"create"), NAMESPACE(
+				"create"), INFORM("inform"), NAMESPACE(
 				"http://schema.mytestbed.net/omf/6.0/protocol");
 
 		private FRCPMessageType(final String text) {
@@ -73,10 +73,12 @@ public class FrcpXmppParser {
 		if (type.getNamespace().equals(FRCPMessageType.NAMESPACE.toString())) {
 			if (type.getName().equals(FRCPMessageType.REQUEST.toString()))
 				return FRCPMessageType.REQUEST;
-			if (type.toString().equals(FRCPMessageType.CONFIGURE.toString()))
+			if (type.getName().toString().equals(FRCPMessageType.CONFIGURE.toString()))
 				return FRCPMessageType.CONFIGURE;
-			if (type.toString().equals(FRCPMessageType.CREATE.toString()))
+			if (type.getName().toString().equals(FRCPMessageType.CREATE.toString()))
 				return FRCPMessageType.CREATE;
+			if (type.getName().toString().equals(FRCPMessageType.INFORM.toString()))
+				return FRCPMessageType.INFORM;
 		}
 
 		return FRCPMessageType.UNKNOWN;

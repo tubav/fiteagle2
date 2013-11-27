@@ -1,8 +1,6 @@
 package org.fiteagle.dm.xmpp.frcp;
 
 import java.io.IOException;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jms.JMSException;
@@ -18,16 +16,9 @@ import net.mytestbed.schema.omf.x60.protocol.InformDocument;
 import org.apache.xmlbeans.XmlException;
 import org.fiteagle.boundary.MessageBus;
 import org.fiteagle.boundary.MessageBusLocal;
-import org.fiteagle.dm.xmpp.frcp.XmppController.XmppReceiverDetails;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.LeafNode;
-import org.jivesoftware.smackx.pubsub.PayloadItem;
-import org.jivesoftware.smackx.pubsub.PubSubManager;
-import org.jivesoftware.smackx.pubsub.SimplePayload;
-import org.jivesoftware.smackx.pubsub.Subscription;
-import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -55,7 +46,7 @@ public class FrcpListenerTest implements MessageListener {
 		this.xmppConnection = this.getMockedConnection();
 		this.xmppController = new XmppController(xmppConnection);
 		this.messagebus = new MessageBusLocal();
-		this.frcpController = new FrcpController("xmpp://", "test1", SERVER);
+		this.frcpController = new FrcpController("xmpp://", "test1", "testJID", "testPUBSUB", SERVER);
 
 		String filter = MessageBus.getFilter("test1",
 				FrcpXmppParser.FRCPMessageType.REQUEST.toString(),
@@ -84,15 +75,15 @@ public class FrcpListenerTest implements MessageListener {
 	}
 
 	@Override
-	public void onMessage(Message message) {
+	public void onMessage(Message jmsMessage) {
 		LeafNode topic;
 		try {
-			String requestXml = ((TextMessage) message).getText();
+			String requestXml = ((TextMessage) jmsMessage).getText();
 			InformDocument result = (InformDocument) this.frcpController
 					.handle(requestXml);
 
 			String resultXml = result.toString();
-			topic = this.xmppController.getTopic(message
+			topic = this.xmppController.getTopic(jmsMessage
 					.getStringProperty("uid"));
 			XmppController.sendTextMessage2(topic, resultXml);
 		} catch (XMPPException | JMSException | ParserConfigurationException

@@ -8,7 +8,8 @@ public class ExecAdapter {
 
 	public String exec(String string) throws IOException, InterruptedException {
 		Runtime r = Runtime.getRuntime();
-		Process p = r.exec(string);
+		//Process p = r.exec(string);
+		Process p = r.exec("");
 		p.waitFor();
 		BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line = "";

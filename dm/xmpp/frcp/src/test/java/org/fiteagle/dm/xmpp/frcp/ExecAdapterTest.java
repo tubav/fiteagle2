@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import org.fiteagle.dm.xmpp.frcp.ExecAdapter;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ExecAdapterTest {
 
+	@Ignore
 	@Test
 	public void test() throws IOException, InterruptedException {
 		ExecAdapter adapter = new ExecAdapter();

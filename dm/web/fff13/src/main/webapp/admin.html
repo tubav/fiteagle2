@@ -71,9 +71,9 @@
           <div class="col-lg-12">
 
             <form role="form" onsubmit="send_message(); return false;" >
-                
-<!--               <button type="submit" class="btn btn-primary">Limit Bandwidth</button>-->
-<div class="form-group input-group">
+                <input id="ip" type="hidden" class="form-control" placeholder="target device" value="192.168.3.101">
+                <input id="resource" type="hidden" class="form-control" placeholder="target resource" value="epc-enablers">
+                <div class="form-group input-group">
                 <span class="input-group-addon">Bandwidth</span>
                 <input id="bw" type="text" class="form-control" placeholder="maximum b/w">
                 <span class="input-group-addon">kbit/s</span>
@@ -82,18 +82,12 @@
                 <span class="input-group-addon">Duration</span>
                 <input id="duration" type="text" class="form-control" placeholder="limit. duration">
                 <span class="input-group-addon">seconds</span>
-              </div>
+              </div>              
 <div class="form-group input-group">
                 <span class="input-group-addon">Device</span>
-                <input id="ip" type="text" class="form-control" placeholder="target device" value="192.168.3.101">
-                <span class="input-group-addon">IP</span>
+                <input id="duration" type="text" class="form-control" placeholder="identifies" value="544321254938274">
+                <span class="input-group-addon">IMSI</span>
               </div>
-<div class="form-group input-group">
-                <span class="input-group-addon">ID</span>
-                <input id="resource" type="text" class="form-control" placeholder="target resource" value="epc-enablers">
-                <span class="input-group-addon">Name</span>
-              </div>
-
                <button type="submit" class="btn btn-danger">Start limitation</button>
             </form>
 

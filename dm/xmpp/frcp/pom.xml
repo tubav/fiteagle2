@@ -27,7 +27,7 @@
 				 <executions>
        <execution>
           <goals>
-             <goal>xmlbeans-test</goal>
+             <goal>xmlbeans</goal>
           </goals>
        </execution>
     </executions>

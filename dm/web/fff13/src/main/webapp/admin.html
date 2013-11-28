@@ -70,7 +70,7 @@
         
           <div class="col-lg-12">
 
-            <form role="form" onsubmit="send_message(); return false;" >
+            <form role="form" onsubmit="return false;" >
                 <input id="ip" type="hidden" class="form-control" value="192.168.3.101">
                 <input id="resource" type="hidden" class="form-control" value="epc-enablers">
                 <div class="form-group input-group">
@@ -88,7 +88,21 @@
                 <input id="imei" type="text" class="form-control" placeholder="identifies" value="001011234567891">
                 <span class="input-group-addon">IMSI</span>
               </div>
-               <button type="submit" class="btn btn-danger">Start limitation</button>
+               <button type="submit" id="submitbtn" class="btn btn-danger" onclick
+               ="
+               function disable() {
+                   $('#submitbtn').addClass('btn-default');
+                   $('#submitbtn').removeClass('btn-danger');
+                   $('#submitbtn').attr('disabled','disabled');
+               };
+               function enable() {
+                   $('#submitbtn').removeClass('btn-default');
+                   $('#submitbtn').addClass('btn-danger');
+                   $('#submitbtn').removeAttr('disabled','disabled');
+               };
+               disable();
+               setTimeout(enable, $('#duration').val()*1000);
+               ">Start limitation</button>
             </form>
 
           </div>

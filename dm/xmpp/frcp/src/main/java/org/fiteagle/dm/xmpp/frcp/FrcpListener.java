@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
 
 public class FrcpListener {
 	
-	private static String RESOURCE_TOPIC = "testbar";
+	private static String RESOURCE_TOPIC = "epc-enablers";
 	
 	private class JmsMessageBusListener implements MessageListener {
 		@Override
@@ -140,7 +140,7 @@ public class FrcpListener {
 					informAboutMembership(topic);
 				} else if (type.equals(FRCPMessageType.CREATE)) {
 					System.out.println("CREATE!");
-					handleCreateApplicationMessage(message);
+					//handleCreateApplicationMessage(message);
 				} else {
 					// final TextMessage jmsMessage =
 					// FrcpListener.this.jmsMessageBus
@@ -152,9 +152,6 @@ public class FrcpListener {
 					| IOException | XmlException | XMPPException
 					| URISyntaxException e) {
 				FrcpListener.log.log(Level.SEVERE, e.getMessage());
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

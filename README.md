@@ -24,7 +24,7 @@ After the bootstrap, a pre-configured WildFly instance is running and you'll see
 Deployment
 ----------
 
-Run ```mvn clean install package jboss-as:deploy```.
+Run ```mvn clean install package wildfly:deploy```.
 
 GUI
 ---

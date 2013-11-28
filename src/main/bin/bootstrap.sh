@@ -175,17 +175,13 @@ function installFITeagle {
     echo -n "Getting FITeagle sources..."
     git clone -q --recursive --depth 1 ${git_url} ${_src_folder}
   fi
-  if [ "0" != "$?" ]; then
-    echo >&2 "FAILED. Please have a look above."
-    exit 2
-  fi
   
   echo "OK"
 }
 
 function startFITeagle {
     cd "${_src_folder}"
-    mvn -DskipTests clean install jboss-as:deploy
+    mvn -DskipTests clean install wildfly:deploy
 }
 
 checkEnvironment

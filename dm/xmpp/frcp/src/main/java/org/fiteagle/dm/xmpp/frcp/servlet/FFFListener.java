@@ -72,12 +72,10 @@ public class FFFListener implements
 	public void handlePublishedItems(
 			final ItemPublishEvent<PayloadItem<SimplePayload>> xmppItems) {
 		try {
-
 			FrcpListener frcpListener = new FrcpListener(this.jms,
 					this.xmpp.getConnection());
 			XmppMessageBusListener handler = frcpListener.new XmppMessageBusListener();
 			handler.handlePublishedItems(xmppItems);
-
 			for (final PayloadItem<SimplePayload> item : xmppItems.getItems()) {
 				final XmppReceiverDetails details = XmppController
 						.getDetails(item);
@@ -85,6 +83,7 @@ public class FFFListener implements
 				details.getNamespace();
 				details.getElement();
 				final String message = item.getPayload().toXML();
+				LOGGER.log(Level.INFO, " FFF got: " + message);
 				if (message.contains("epcQoSControl stop")) {
 					System.out.println("stop");
 					this.status = MessageBus.Status.UP;
@@ -159,6 +158,7 @@ public class FFFListener implements
 		this.topic.addItemEventListener(this);
 		String subscriber;
 		subscriber = this.xmpp.getJid();
+		LOGGER.log(Level.INFO, "DEBUG2: subscribing " + subscriber + " (XMPP) to " + topic.getId());
 		return this.topic.subscribe(subscriber);
 	}
 
@@ -203,8 +203,7 @@ public class FFFListener implements
 		try {
 			sendCommandFake(commandLine); // bad work for now
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		} 
 	}
 }

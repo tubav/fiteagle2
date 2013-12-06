@@ -10,7 +10,7 @@
 </com.izforge.izpack.panels.TreePacksPanel>
 <com.izforge.izpack.panels.UserInputPanel id="jboss.home.select">
 <userInput>
-<entry key="wildFlyInstallPath" value="./server/wildfly-8.0.0.Beta1"/>
+<entry key="wildFlyInstallPath" value="./server/wildfly"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.SummaryPanel id="UNKNOWN (com.izforge.izpack.panels.SummaryPanel)"/>

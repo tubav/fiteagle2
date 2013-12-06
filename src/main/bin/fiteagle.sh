@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 _base="$(pwd)"
 _resources_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/"
 
@@ -24,24 +25,25 @@ _xmpp_root="${_xmpp_folder}/${_xmpp_type}"
 
 _container_type="wildfly"
 _container_version="8.0.0.Beta1"
-_container_file="${_container_type}-${_container_version}.zip"
+_container_name="${_container_type}-${_container_version}"
+_container_file="${_container_name}.zip"
 _container_url="http://download.jboss.org/${_container_type}/${_container_version}/${_container_file}"
 _container_folder="${_base}/server"
 _container_config="standalone-fiteagle.xml"
 _container_config_url="${_resources_url}//wildfly/standalone/configuration/standalone-fiteagle.xml"
-_container_root="${_container_folder}/${_container_type}-${_container_version}"
+_container_root="${_container_folder}/${_container_type}"
 
 _osgi_file="jbosgi-installer-2.1.0.jar"
 _osgi_url="http://sourceforge.net/projects/jboss/files/JBossOSGi/2.1.0/${_osgi_file}/download"
 _osgi_config="autoinstall.xml"
-_osgi_config_url="${_resources_url}//jbosgi/autoinstall.xml"
+_osgi_config_url="${_resources_url}//jbosgi/${_osgi_config}"
 
 _osgi_console_file="org.apache.felix.webconsole-4.2.0-all.jar"
 _osgi_console_url="http://mirror.switch.ch/mirror/apache/dist/felix/${_osgi_console_file}"
 _osgi_console_folder="${_container_root}/standalone/deployments"
 
 _installer_folder="${_base}/tmp"
-
+_logfile="${_installer_folder}/log"
 _src_folder="${_base}/src"
 
 _wildfly_admin_user="admin"
@@ -64,7 +66,7 @@ function checkBinary {
 function installXMPP() {
     echo "Downloading XMPP server..."
     mkdir -p "${_installer_folder}"
-    curl -fsSSkL -o "${_installer_folder}/${_xmpp_file}" "${_xmpp_url}"
+    [ -f "${_installer_folder}/${_xmpp_file}" ] || curl -fsSSkL -o "${_installer_folder}/${_xmpp_file}" "${_xmpp_url}"
     echo "Installing XMPP server..."
     mkdir -p "${_xmpp_folder}"
     tar xzf "${_installer_folder}/${_xmpp_file}" -C "${_xmpp_folder}"
@@ -86,19 +88,6 @@ function configXMPP() {
     cp "${_installer_folder}/${_xmpp_keystore}" "${_xmpp_root}/${_xmpp_keystore_path}"
 }
 
-function startXMPP() {
-    echo "Starting XMPP server in background..."
-    export OPENFIRE_HOME="${_xmpp_root}"
-    export OPENFIRE_LIB="${OPENFIRE_HOME}/lib"
-    export OPENFIRE_OPTS="-Xmx256m -DopenfireHome=${OPENFIRE_HOME} -Dopenfire.lib.dir=${OPENFIRE_LIB}"
-    export OPENFIRE_CLASS="-classpath ${OPENFIRE_LIB}/startup.jar"
-    export OPENFIRE_JAR="-jar ${OPENFIRE_LIB}/startup.jar"
-    export OPENFIRE_ARGS="-server ${OPENFIRE_OPTS} ${OPENFIRE_CLASS} ${OPENFIRE_JAR}"
-    java $OPENFIRE_ARGS &
-    _xmpp_pid=$!
-    sleep 10
-    echo "$_xmpp_pid" > ${_base}/xmpp.pid
-}
 
 function installContainer() {
     echo "Downloading container..."
@@ -107,17 +96,19 @@ function installContainer() {
     echo "Installing container..."
     mkdir -p "${_installer_folder}"
     unzip -qu "${_installer_folder}/${_container_file}" -d "${_container_folder}"
+    rm -r "${_container_root}"
+    mv "${_container_folder}/${_container_name}" "${_container_root}"
 }
 
 
 function installOSGi() {
     echo "Downloading OSGi..."
     mkdir -p "${_installer_folder}"
-    curl -fsSkL -o "${_installer_folder}/${_osgi_file}" "${_osgi_url}"
+    [ -f "${_installer_folder}/${_osgi_file}" ] || curl -fsSkL -o "${_installer_folder}/${_osgi_file}" "${_osgi_url}"
     echo "Installing OSGi..."
     mkdir -p "${_installer_folder}"
     curl -fsSSkL -o "${_installer_folder}/${_osgi_config}" "${_osgi_config_url}"
-    java -jar "${_installer_folder}/${_osgi_file}" "${_installer_folder}/${_osgi_config}"
+    java -jar "${_installer_folder}/${_osgi_file}" "${_installer_folder}/${_osgi_config}" >> "${_logfile}"
 }
 
 
@@ -134,18 +125,8 @@ function configContainer() {
     curl -fsSSkL -o "${_installer_folder}/${_container_config}" "${_container_config_url}"
     cp "${_installer_folder}/${_container_config}" "${_container_root}/standalone/configuration"
     cd "${_container_root}"
-    ./bin/add-user.sh -u "${_wildfly_admin_user}" -p "${_wildfly_admin_pwd}"
-    ./bin/add-user.sh -a -g "${_wildfly_app_group}" -u "${_wildfly_app_user}" -p "${_wildfly_app_pwd}"
-}
-
-
-function startContainer() {
-    echo "Starting container in background..."
-    cd "${_container_root}"
-    ./bin/standalone.sh -b 0.0.0.0 -c "${_container_config}" &
-    _container_pid=$!
-    sleep 10
-    echo "$_container_pid" > ${_base}/container.pid
+    ./bin/add-user.sh -s -u "${_wildfly_admin_user}" -p "${_wildfly_admin_pwd}"
+    ./bin/add-user.sh -s -a -g "${_wildfly_app_group}" -u "${_wildfly_app_user}" -p "${_wildfly_app_pwd}"
 }
 
 function checkEnvironment {
@@ -176,29 +157,58 @@ function installFITeagle {
     git clone -q --recursive --depth 1 ${git_url} ${_src_folder}
   fi
   
+  cp "${_src_folder}/src/main/bin/fiteagle.sh" .
   echo "OK"
 }
 
-function startFITeagle {
+
+function startXMPP() {
+    echo "Starting XMPP Server..."
+    [ -z "${OPENFIRE_HOME}" ] || OPENFIRE_HOME="${_xmpp_root}"
+    export OPENFIRE_LIB="${OPENFIRE_HOME}/lib"
+    export OPENFIRE_OPTS="-Xmx256m -DopenfireHome=${OPENFIRE_HOME} -Dopenfire.lib.dir=${OPENFIRE_LIB}"
+    export OPENFIRE_JAR="${OPENFIRE_LIB}/startup.jar"
+    export OPENFIRE_ARGS="-server ${OPENFIRE_OPTS} -classpath ${OPENFIRE_JAR} -jar ${OPENFIRE_JAR}"
+    [ -f "${OPENFIRE_JAR}" ] || { echo "Please set OPENFIRE_HOME first "; exit 3; }
+    java $OPENFIRE_ARGS
+}
+
+function startContainer() {
+    echo "Starting J2EE Container..."
+    [ -z "${WILDFLY_HOME}" ] || WILDFLY_HOME="${_container_root}"
+    CMD="${WILDFLY_HOME}/bin/standalone.sh"
+    [ -x "${CMD}" ] || { echo "Please set WILDFLY_HOME first "; exit 2; }
+    cd "${WILDFLY_HOME}"
+    ${CMD} -b 0.0.0.0 -c "${_container_config}"
+}
+
+function deployAll {
     cd "${_src_folder}"
     mvn -DskipTests clean install wildfly:deploy
 }
 
-checkEnvironment
-installXMPP
-configXMPP
-startXMPP
+function bootstrap() {
+    [ ! -d ".git" ] || { echo "Do not bootstrap within a repository"; exit 4; }
+    checkEnvironment
+    installXMPP
+    configXMPP
+    
+    installContainer
+    installOSGi
+    installWebconsole
+    configContainer
+    
+    installFITeagle
 
-installContainer
-installOSGi
-installWebconsole
-configContainer
-startContainer
+    echo "Save to ~/.bashrc: export WILDFLY_HOME=${_container_root}"
+    echo "Save to ~/.bashrc: export OPENFIRE_HOME=${_xmpp_root}"
+}
 
-installFITeagle
-startFITeagle
+[ "${#}" -eq 1 ] || { echo "Usage: $(basename $0) bootstrap | startXMPP | startJ2EE | startFITeagle"; exit 1; }
 
-echo -n "Press enter to stop all servers..."; read
-
-kill $_xmpp_pid
-pkill -P $_container_pid
+for arg in "$@"; do
+    [ "${arg}" = "bootstrap" ] && bootstrap
+    [ "${arg}" = "startXMPP" ] && startXMPP
+    [ "${arg}" = "startJ2EE" ] && startContainer
+    [ "${arg}" = "deployAll" ] && deployAll
+done

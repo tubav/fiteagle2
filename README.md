@@ -13,18 +13,25 @@ Bootstrapping
 Get everything up and running within a minute:
 
 ```
-bash -c "$(curl -fsSkL http://fiteagle.org/bootstrap2)"
+bash -c "$(curl -fsSkL http://fiteagle.org/setup) bootstrap"
 ```
 
-After the bootstrap all software components have been downloaded, configured, compiled and installed:
- * ```server```: the J2EE+OSGi container (WildFly) and XMPP server (OpenFire)
+After the bootstrap all software components have been downloaded and configured:
+ * ```server```: the J2EE+OSGi (WildFly) and XMPP (OpenFire) server
  * ```src```: the FITeagle sources
- * ```tmp```: the downloaded binaries
+ * ```tmp```: the downloaded files
+ * ```fiteagle.sh```: a helper script
+ 
+Starting
+--------
+ * J2EE: run ```./fiteagle.sh startJ2EE```
+ * XMPP (optional): run ```./fiteagle.sh startXMPP```
+ * FITeagle: run ```./fiteagle.sh deployAll```
  
 Deployment
 ----------
 
-If you want to (re-)deploy a new component, run ```cd src/PATH/TO/MODULE; mvn clean install package wildfly:deploy```.
+If you want to (re-)deploy a single component, run ```cd src/PATH/TO/MODULE; mvn wildfly:deploy```.
 
 GUI
 ---

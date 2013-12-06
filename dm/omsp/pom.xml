@@ -7,7 +7,7 @@
   </parent>
   <artifactId>omsp</artifactId>
   <packaging>war</packaging>
-  <name>FITeagle :: DM :: TCP :: OMSP</name>
+  <name>FITeagle :: DM :: OMSP</name>
   
       <build>
         <plugins>

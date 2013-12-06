@@ -13,7 +13,7 @@
   	<module>ws</module>
   	<module>rest</module>
   	<module>xmpp</module>
-  	<module>tcp</module>
+  	<module>omsp</module>
   	<module>unifi</module>
   </modules>
   <dependencies>

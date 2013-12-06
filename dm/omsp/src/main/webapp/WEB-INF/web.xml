@@ -3,6 +3,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<listener>
-		<listener-class>org.fiteagle.dm.tcp.omsp.servlet.OmspEJB</listener-class>
+		<listener-class>org.fiteagle.dm.tcp.omsp.servlet.OmspServlet</listener-class>
 	</listener>
 </web-app>

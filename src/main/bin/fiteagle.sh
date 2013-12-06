@@ -164,7 +164,7 @@ function installFITeagle {
 
 function startXMPP() {
     echo "Starting XMPP Server..."
-    [ -z "${OPENFIRE_HOME}" ] || OPENFIRE_HOME="${_xmpp_root}"
+    [ ! -z "${OPENFIRE_HOME}" ] || OPENFIRE_HOME="${_xmpp_root}"
     export OPENFIRE_LIB="${OPENFIRE_HOME}/lib"
     export OPENFIRE_OPTS="-Xmx256m -DopenfireHome=${OPENFIRE_HOME} -Dopenfire.lib.dir=${OPENFIRE_LIB}"
     export OPENFIRE_JAR="${OPENFIRE_LIB}/startup.jar"
@@ -175,7 +175,7 @@ function startXMPP() {
 
 function startContainer() {
     echo "Starting J2EE Container..."
-    [ -z "${WILDFLY_HOME}" ] || WILDFLY_HOME="${_container_root}"
+    [ ! -z "${WILDFLY_HOME}" ] || WILDFLY_HOME="${_container_root}"
     CMD="${WILDFLY_HOME}/bin/standalone.sh"
     [ -x "${CMD}" ] || { echo "Please set WILDFLY_HOME first "; exit 2; }
     cd "${WILDFLY_HOME}"

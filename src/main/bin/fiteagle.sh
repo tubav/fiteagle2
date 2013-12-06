@@ -96,7 +96,7 @@ function installContainer() {
     echo "Installing container..."
     mkdir -p "${_installer_folder}"
     unzip -qu "${_installer_folder}/${_container_file}" -d "${_container_folder}"
-    rm -r "${_container_root}"
+    rm -r "${_container_root}" 2>/dev/null
     mv "${_container_folder}/${_container_name}" "${_container_root}"
 }
 
@@ -157,7 +157,7 @@ function installFITeagle {
     git clone -q --recursive --depth 1 ${git_url} ${_src_folder}
   fi
   
-  cp "${_src_folder}/src/main/bin/fiteagle.sh" .
+  cp "${_src_folder}/src/main/bin/fiteagle.sh" "${_base}"
   echo "OK"
 }
 
@@ -204,7 +204,8 @@ function bootstrap() {
     echo "Save to ~/.bashrc: export OPENFIRE_HOME=${_xmpp_root}"
 }
 
-[ "${#}" -eq 1 ] || { echo "Usage: $(basename $0) bootstrap | startXMPP | startJ2EE | startFITeagle"; exit 1; }
+[ "${#}" -eq 1 ] || { echo "Usage: $(basename $0) bootstrap | startXMPP | startJ2EE | deployAll"; exit 1; }
+[ "${0}" == "bootstrap" ] && bootstrap
 
 for arg in "$@"; do
     [ "${arg}" = "bootstrap" ] && bootstrap

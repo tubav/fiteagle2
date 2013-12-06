@@ -13,7 +13,7 @@ Bootstrapping
 Get everything up and running within a minute:
 
 ```
-bash -c "$(curl -fsSkL http://fiteagle.org/setup) bootstrap"
+bash -c "$(curl -fsSkL http://fiteagle.org/run)" bootstrap
 ```
 
 After the bootstrap all software components have been downloaded and configured:

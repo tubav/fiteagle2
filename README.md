@@ -37,8 +37,9 @@ GUI
 ---
 
  * WildFly: [http://localhost:8080](http://localhost:8080)
- * WildFly backend: [http://localhost:8080/console](http://localhost:8080/console) (user "admin", password "admin")
+ * WildFly backend: [http://localhost:9990](http://localhost:9990) (user "admin", password "admin")
  * OSGi: [http://localhost:8080/system/console](http://localhost:8080/system/console) (user "admin", password "admin")
+ * XMPP (optional): [http://localhost:9090](http://localhost:9090) (user "admin", password "admin")
  * FITeagle Backend: [http://localhost:8080/admin](http://localhost:8080/admin)
 
 CLI

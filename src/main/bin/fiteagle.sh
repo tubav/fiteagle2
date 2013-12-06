@@ -204,8 +204,8 @@ function bootstrap() {
     echo "Save to ~/.bashrc: export OPENFIRE_HOME=${_xmpp_root}"
 }
 
+[ "${0}" == "bootstrap" ] && { bootstrap; exit 0; }
 [ "${#}" -eq 1 ] || { echo "Usage: $(basename $0) bootstrap | startXMPP | startJ2EE | deployAll"; exit 1; }
-[ "${0}" == "bootstrap" ] && bootstrap
 
 for arg in "$@"; do
     [ "${arg}" = "bootstrap" ] && bootstrap

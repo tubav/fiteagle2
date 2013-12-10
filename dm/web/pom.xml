@@ -12,6 +12,5 @@
   <modules>
     <module>admin</module>
     <module>app</module>
-    <module>fff13</module>
   </modules>
 </project>

@@ -34,7 +34,7 @@ function onMessage(evt) {
 
 try {
 	var success = false;
-	websocket = new WebSocket(getRootUri() + "/ws/status/json");
+	websocket = new WebSocket(getRootUri() + "/fff13/status/json");
 	websocket.onopen = function(evt) {
 		success = true;
 		onOpen(evt);

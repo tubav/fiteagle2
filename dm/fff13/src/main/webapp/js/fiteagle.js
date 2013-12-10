@@ -7,23 +7,21 @@ function addResource(node, resource) {
 
 function updateStatus(resource, status, statustext) {
     node = document.getElementById(resource);
+    logo = 'question-circle';
+    name = 'default';
+    statustext = 'unknown';
     if (status == 0) {
-        var logo = 'check-square';
-        var name = 'success';
-        var statustext = 'unlimited bandwidth';
+        logo = 'check-square';
+        name = 'success';
+        statustext = 'unlimited bandwidth';
     } else if (status == 1) {
-        var logo = 'warning';
-        var name = 'warning';
-        var statustext = 'limited bandwidth';
+        logo = 'warning';
+        name = 'warning';
+        statustext = 'limited bandwidth';
     } else if (status == 2) {
-        var logo = 'times-circle-o';
-        var name = 'danger';
-        var statustext = 'error';
-
-    } else {
-        var logo = 'question-circle';
-        var name = 'default';
-        var statustext = 'unknown';
+        logo = 'times-circle-o';
+        name = 'danger';
+        statustext = 'error';
     }
     var data = {
         resource_name:resource,

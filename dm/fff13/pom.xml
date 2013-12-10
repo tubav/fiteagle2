@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>fff13</artifactId>
 	<packaging>war</packaging>
-	<name>FITeagle :: DM :: Web :: FFF13</name>
+	<name>FITeagle :: DM :: FFF13</name>
 
 	<build>
         <finalName>${project.artifactId}</finalName>
@@ -22,4 +22,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependencies>
+<dependency>
+ <groupId>javax.websocket</groupId>
+ <artifactId>javax.websocket-api</artifactId>
+ <version>1.0</version> 
+</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>org.json</artifactId>
+			<version>chargebee-1.0</version>
+		</dependency>
+	</dependencies>
 </project>

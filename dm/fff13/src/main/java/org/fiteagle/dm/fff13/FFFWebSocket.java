@@ -1,6 +1,7 @@
-package org.fiteagle.dm.ws;
+package org.fiteagle.dm.fff13;
 
 import java.util.logging.Level;
+
 import java.util.logging.Logger;
 
 import javax.jms.JMSException;
@@ -16,7 +17,7 @@ import org.fiteagle.boundary.MessageBus;
 import org.fiteagle.boundary.MessageBus.Type;
 import org.fiteagle.boundary.MessageBusApplicationServerFactory;
 
-@ServerEndpoint("/fff")
+@ServerEndpoint("/fff13")
 public class FFFWebSocket {
 	private static final Logger LOGGER = Logger.getLogger(FFFWebSocket.class
 			.getName());

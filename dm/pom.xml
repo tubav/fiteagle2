@@ -15,6 +15,7 @@
   	<module>xmpp</module>
   	<module>omsp</module>
   	<module>unifi</module>
+  	<module>fff13</module>
   </modules>
   <dependencies>
         <dependency>

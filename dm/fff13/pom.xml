@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.fiteagle</groupId>
-		<artifactId>web</artifactId>
+		<artifactId>dm</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>fff13</artifactId>

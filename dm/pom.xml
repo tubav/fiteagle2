@@ -16,6 +16,7 @@
   	<module>omsp</module>
   	<module>unifi</module>
   	<module>fff13</module>
+  	<module>fantaastic</module>
   	<module>federationge</module>
   </modules>
   <dependencies>

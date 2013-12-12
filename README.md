@@ -36,7 +36,6 @@ If you want to (re-)deploy a single component, run ```cd src/PATH/TO/MODULE; mvn
 GUI
 ---
 
- * WildFly: [http://localhost:8080](http://localhost:8080)
  * WildFly backend: [http://localhost:9990](http://localhost:9990) (user "admin", password "admin")
  * OSGi: [http://localhost:8080/system/console](http://localhost:8080/system/console) (user "admin", password "admin")
  * XMPP (optional): [http://localhost:9090](http://localhost:9090) (user "admin", password "admin")

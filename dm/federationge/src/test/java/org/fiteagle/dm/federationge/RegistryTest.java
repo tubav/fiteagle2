@@ -21,7 +21,7 @@ public class RegistryTest {
 	@Test
 	public void testEchoMessageJSON() {
 		
-		String output = this.registry.echoMessageJSON(version, regionid, serviceid);
+		String output = this.registry.handleMessageJSON(regionid, serviceid);
 		Assert.assertTrue(output.startsWith("{"));
 		Assert.assertTrue(output.contains(serviceid));
 	}
@@ -29,7 +29,7 @@ public class RegistryTest {
 	@Test
 	public void testEchoMessageXML() {
 		
-		String output = this.registry.echoMessageXML(version, regionid, serviceid);
+		String output = this.registry.handleMessageXML(regionid, serviceid);
 		Assert.assertTrue(output.startsWith("<xml"));
 		Assert.assertTrue(output.contains(serviceid));
 	}

@@ -13,12 +13,12 @@ import javax.ws.rs.core.MediaType;
  * FI-PPP Federation GE Implementation.
  * 
  * Test with:
- *   - curl http://localhost:8080/federationge/registry/v1/regions/1/services/2.json
- *   - curl http://localhost:8080/federationge/registry/v1/regions/1/services/2.xml
+ *   - curl http://localhost:8080/federationge/api/v1/registry/regions/1/services/2.json
+ *   - curl http://localhost:8080/federationge/api/v1/registry/regions/1/services/2.xml
  * 
  * @author Alexander Willner <alexander.willner@tu-berlin.de>
  */
-@Path("/registry")
+@Path("/v1")
 public class Registry {
 	private static final Logger LOGGER = Logger.getLogger(Registry.class
 			.getName());
@@ -28,14 +28,13 @@ public class Registry {
 	//@PUT
 	//@Consumes(MediaType.APPLICATION_JSON)
 	@GET
-	@Path("/{version}/regions/{regionid}/services/{serviceid}.json")
+	@Path("/registry/regions/{regionid}/services/{serviceid}.json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String echoMessageJSON(
-			@PathParam("version") final String version,
+	public String handleMessageJSON(
 			@PathParam("regionid") final String regionid,
 			@PathParam("serviceid") final String serviceid) {
 		Registry.LOGGER.log(Level.INFO, "getting JSON for service " + serviceid);
-		return "{\"serviceid\":\"" + this.createTestMessage(serviceid) + "\"}";
+		return "{\"serviceid\":\"" + this.handleMessage(serviceid) + "\"}";
 	}
 
 	//@POST
@@ -43,18 +42,17 @@ public class Registry {
 	//@PUT
 	//@Consumes(MediaType.APPLICATION_XML)
 	@GET
-	@Path("/{version}/regions/{regionid}/services/{serviceid}.xml")
+	@Path("/registry/regions/{regionid}/services/{serviceid}.xml")
 	@Produces(MediaType.APPLICATION_XML)
-	public String echoMessageXML(
-			@PathParam("version") final String version,
+	public String handleMessageXML(
 			@PathParam("regionid") final String regionid,
 			@PathParam("serviceid") final String serviceid) {
 		Registry.LOGGER.log(Level.INFO, "getting XML for service " + serviceid);
-		return "<xml><serviceid>" + this.createTestMessage(serviceid)
+		return "<xml><serviceid>" + this.handleMessage(serviceid)
 				+ "</serviceid></xml>";
 	}
 
-	private String createTestMessage(final String content) {
+	private String handleMessage(final String content) {
 		return content;
 	}
 }

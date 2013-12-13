@@ -13,7 +13,6 @@
   </head>
 
   <body>
-
     <div id="wrapper">
 
       <!-- Sidebar -->
@@ -26,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Service Status</a>
+          <a class="navbar-brand" href="index.html">Testbed Status</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -34,8 +33,8 @@
           <ul class="nav navbar-nav side-nav">
             <li class="navel"><a href="#dashboard" class="dashboardbtn"><i class="fa fa-dashboard"></i> Current Status</a>
             <ul id="testbeds">
-              <li><a href="#fpg" class="fpgbtn">FUSECO Playground</a></li>
-              <li><a href="#ple" class="plebtn">PlanetLab Europe</a></li>
+              <li><i class="fa fa-check text-success"></i><a href="#fpg" class="fpgbtn"> FUSECO Playground</a></li>
+              <li><i class="fa fa-check text-success"></i><a href="#ple" class="plebtn"> PlanetLab Europe</a></li>
             </ul>
             </li>
             <li class="navel"><a href="#history" class="historybtn"><i class="fa fa-bar-chart-o"></i> Status History</a></li>
@@ -48,6 +47,9 @@
       </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
 
+
+
+
 <script type="text/html" id="tmplReport">
         <div class="row">
           <div class="col-lg-6">
@@ -57,7 +59,7 @@
                   <div class="form-group">
                     <label>Testbed</label>
                     <select class="form-control">
-                      <option>FUSCEO Playground</option>
+                      <option>FUSECO Playground</option>
                       <option>PlanetLab Europe</option>
                     </select>
                   </div>
@@ -111,68 +113,43 @@
               <li>This page reports on known incidents affecting the FanTaaStIC Testbeds. If you're experiencing a problem that is not shown here, <a href="#report">please report it</a>.</li>
             </ol>
           </div>
-        </div>        
+        </div>
         <div class="row">
-          <div class="col-lg-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">UP</p>
-                    <p class="announcement-text">No Issues</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <a href="#fpg" class="fpgbtn">
-                    <div class="col-xs-6 tbname">
-                      FUSECO Playground
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                    </a>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-           <div class="col-lg-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">UP</p>
-                    <p class="announcement-text">No Issues</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <a href="#ple" class="plebtn">
-                    <div class="col-xs-6 tbname">
-                      PlanetLab Europe</a>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                    </a>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
+<div id="testbedCards">
         </div>
 </script>
+<script type="text/html" id="tmplTestbedBoard">
+          <div class="col-lg-3">
+            <div class="panel panel-<%=color%>">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-<%=type%> fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading"><%=short%></p>
+                    <p class="announcement-text"><%=long%></p>
+                  </div>
+                </div>
+              </div>
+              <a href="#">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <a href="#<%=id%>" class="<%=id%>btn">
+                    <div class="col-xs-6 tbname">
+                      <%=title%>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+</script>
+
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/snippet.js"></script>

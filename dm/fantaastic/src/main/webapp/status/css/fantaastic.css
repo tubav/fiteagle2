@@ -1,6 +1,10 @@
+#testbeds li  a {
+    /*color:#ee7030;*/
+    color:#000;
+}
+
 #testbeds li.active a {
     font-weight:bold;
-    color:#ee7030;
 }
 
 #testbeds li a:hover {

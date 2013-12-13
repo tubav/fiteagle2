@@ -43,7 +43,7 @@ function showTab() {
 	var data = getData();
 	var hash = window.location.hash;
     $('li.active').removeClass('active')
-
+    
     for (var prop in data) {
     	if (hash.match("^#"+prop)) {
     	    $('.'+prop+'btn').parent().addClass('active')

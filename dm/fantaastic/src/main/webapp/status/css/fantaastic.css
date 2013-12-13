@@ -1,3 +1,14 @@
+@media (max-width: 767px) {
+    .navbar-inverse {
+        background-color: #3070ee;
+    }
+}
+
+#logo {
+	float:right;
+	height: 5em;
+}
+
 #testbeds li  a {
     /*color:#ee7030;*/
     color:#000;

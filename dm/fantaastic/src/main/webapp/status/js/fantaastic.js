@@ -45,17 +45,17 @@ function showTab() {
     $('li.active').removeClass('active')
 
     for (var prop in data) {
-    	if (hash == "#"+prop) {
+    	if (hash.match("^#"+prop)) {
     	    $('.'+prop+'btn').parent().addClass('active')
     	    showTestbed("tmplTestbed", data[prop]);
     	    return;
     	}
     }
 
-    if (hash == "#history") {
+    if (hash.match("^#history")) {
         $('.historybtn').parent().addClass('active')
         showContent("tmplHistory");
-    } else if (hash == "#report") {
+    } else if (hash.match("^#report")) {
         $('.reportbtn').parent().addClass('active')
         showContent("tmplReport");
     } else {

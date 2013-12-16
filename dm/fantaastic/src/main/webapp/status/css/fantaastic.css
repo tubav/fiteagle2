@@ -4,6 +4,15 @@
     }
 }
 
+.twitter-follow-button {
+	margin-left:2em;
+}
+
+hr {
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
 #logo {
 	float:right;
 	height: 5em;

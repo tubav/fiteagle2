@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="fanTaaStic Federation Status Dashboard">
-    <meta name="author" content="Alexander Willner <alexander.willner@tu-berlin.de>">
-    <title>fanTaaStic - Dashboard</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/fantaastic.css" rel="stylesheet">
-  </head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description"
+	content="fanTaaStic Federation Status Dashboard">
+<meta name="author"
+	content="Alexander Willner <alexander.willner@tu-berlin.de>">
+<title>fanTaaStic - Dashboard</title>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="css/fantaastic.css" rel="stylesheet">
+</head>
 
-  <body>
-    <div id="wrapper">
+<body>
+	<div id="wrapper">
 
-      <!-- Sidebar -->
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">fanTaaStic Status</a>
-        </div>
+		<!-- Sidebar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">fanTaaStic Status</a>
+			</div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
-            <li class="navel"><a href="#dashboard" class="dashboardbtn"><i class="fa fa-dashboard"></i> Current Status</a>
-            <ul id="testbeds">
-              <li><i class="fa fa-check text-success"></i><a href="#fan" class="fanbtn"> fanTaaStic Federator</a></li>
-              <li><i class="fa fa-check text-success"></i><a href="#fpg" class="fpgbtn"> FUSECO Playground</a></li>
-              <li><i class="fa fa-check text-success"></i><a href="#ple" class="plebtn"> PlanetLab Europe</a></li>
-            </ul>
-            </li>
-            <li class="navel"><a href="#history" class="historybtn"><i class="fa fa-bar-chart-o"></i> Status History</a></li>
-            <li class="navel"><a href="#report" class="reportbtn"><i class="fa fa-edit"></i> Report a Problem</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </nav>
-      <div id="page-wrapper">
-      <img id="logo" src="img/fanTaaStic_logo.png" />
-        <div id="content"></div>
-      </div><!-- /#page-wrapper -->
-    </div><!-- /#wrapper -->
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav side-nav">
+					<li class="navel"><a href="#dashboard" class="dashboardbtn"><i
+							class="fa fa-dashboard"></i> Current Status</a>
+						<ul id="testbeds">
+							<li><i class="fa fa-check text-success"></i><a href="#fan"
+								class="fanbtn"> fanTaaStic Federator</a></li>
+							<li><i class="fa fa-check text-success"></i><a href="#fpg"
+								class="fpgbtn"> FUSECO Playground</a></li>
+							<li><i class="fa fa-check text-success"></i><a href="#ple"
+								class="plebtn"> PlanetLab Europe</a></li>
+						</ul></li>
+					<li class="navel"><a href="#history" class="historybtn"><i
+							class="fa fa-bar-chart-o"></i> Status History</a></li>
+					<li class="navel"><a href="#report" class="reportbtn"><i
+							class="fa fa-edit"></i> Report a Problem</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+		<div id="page-wrapper">
+			<img id="logo" src="img/fanTaaStic_logo.png" />
+			<div id="content"></div>
+		</div>
+		<!-- /#page-wrapper -->
+<hr>
+    <a href="https://twitter.com/testbedstatus" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @testbedstatus</a>
+	</div>
+	<!-- /#wrapper -->
 
-
-
-
-<script type="text/html" id="tmplReport">
+	<script type="text/html" id="tmplReport">
         <div class="row">
           <div class="col-lg-6">
             <h1>Report a Problem <small>Testbeds</small></h1>
@@ -77,7 +86,7 @@
         </div>
 </script>
 
-<script type="text/html" id="tmplHistory">
+	<script type="text/html" id="tmplHistory">
         <div class="row">
           <div class="col-lg-12">
             <h1>Status History <small>Testbeds</small></h1>
@@ -94,7 +103,7 @@
         </div>
 </script>
 
-<script type="text/html" id="tmplTestbed">
+	<script type="text/html" id="tmplTestbed">
         <div class="row">
           <div class="col-lg-12">
             <h1><%=title%> <small>Status</small></h1>
@@ -111,25 +120,28 @@
         </div>
 </script>
 
-<script type="text/html" id="tmplTestbedServices">
+	<script type="text/html" id="tmplTestbedServices">
 <li><i class="fa fa-<%=type%> text-<%=color%>"></i> <%=name%></li>
 </script>
 
-<script type="text/html" id="tmplDashboard">
+	<script type="text/html" id="tmplDashboard">
         <div class="row">
           <div class="col-lg-12">
             <h1>Current Status <small>Overview</small></h1>
             <ol class="breadcrumb">
               <li><i class="fa fa-dashboard"></i> Current Status</li>
-              <li>This page reports on known incidents affecting the fanTaaStic federation. If you're experiencing a problem that is not shown here, <a href="#report">please report it</a>.</li>
             </ol>
           </div>
+<div>
+This page reports on known incidents affecting the fanTaaStic federation. If you're experiencing a problem that is not shown here, <a href="#report">please report it</a>.
+</br></br>
+</div>
         </div>
         <div class="row">
 <div id="testbedCards">
         </div>
 </script>
-<script type="text/html" id="tmplTestbedBoard">
+	<script type="text/html" id="tmplTestbedBoard">
           <div class="col-lg-3">
             <div class="panel panel-<%=color%>">
               <div class="panel-heading">
@@ -161,9 +173,20 @@
           </div>
 </script>
 
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/snippet.js"></script>
-<script src="js/fantaastic.js"></script>
-  </body>
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/snippet.js"></script>
+	<script src="js/fantaastic.js"></script>
+	<script>
+		!function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (!d.getElementById(id)) {
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "http:////platform.twitter.com/widgets.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}
+		}(document, "script", "twitter-wjs");
+	</script>
+</body>
 </html>

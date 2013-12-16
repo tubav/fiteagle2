@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FanTaaStIC Testbed Status Dashboard">
+    <meta name="description" content="fanTaaStic Testbed Status Dashboard">
     <meta name="author" content="Alexander Willner <alexander.willner@tu-berlin.de>">
-    <title>Dashboard - FanTaaStIC</title>
+    <title>fanTaaStic - Dashboard</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Testbed Status</a>
+          <a class="navbar-brand" href="index.html">fanTaaStic Status</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -33,6 +33,7 @@
           <ul class="nav navbar-nav side-nav">
             <li class="navel"><a href="#dashboard" class="dashboardbtn"><i class="fa fa-dashboard"></i> Current Status</a>
             <ul id="testbeds">
+              <li><i class="fa fa-check text-success"></i><a href="#fan" class="fanbtn"> fanTaaStic Federator</a></li>
               <li><i class="fa fa-check text-success"></i><a href="#fpg" class="fpgbtn"> FUSECO Playground</a></li>
               <li><i class="fa fa-check text-success"></i><a href="#ple" class="plebtn"> PlanetLab Europe</a></li>
             </ul>
@@ -60,7 +61,7 @@
                   <div class="form-group">
                     <label>Context</label>
                     <select class="form-control">
-                      <option>General: FanTaaStIC Federation</option>
+                      <option>General: fanTaaStic Federation</option>
                       <option>Testbed: FUSECO Playground</option>
                       <option>Testbed: PlanetLab Europe</option>
                     </select>
@@ -100,19 +101,27 @@
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-<%=type%> text-<%=color%>"></i> <%=message%></li>
             </ol>
+            <h2>Resources and Services</h2>
+<ul>
+<%=services%>
+</ul>
             <h2>Report a Problem</h2>
             <div>If you are experiencing a problem that is not listed here, <a href="#report/<%=id%>">please report it</a>. To see recently resolved problems, go to the <a href="#history">history page</a>.</div>
           </div>
         </div>
 </script>
 
+<script type="text/html" id="tmplTestbedServices">
+<li><i class="fa fa-<%=type%> text-<%=color%>"></i> <%=name%></li>
+</script>
+
 <script type="text/html" id="tmplDashboard">
         <div class="row">
           <div class="col-lg-12">
-            <h1>Current Status <small>Testbeds</small></h1>
+            <h1>Current Status <small>Overview</small></h1>
             <ol class="breadcrumb">
               <li><i class="fa fa-dashboard"></i> Current Status</li>
-              <li>This page reports on known incidents affecting the FanTaaStIC Testbeds. If you're experiencing a problem that is not shown here, <a href="#report">please report it</a>.</li>
+              <li>This page reports on known incidents affecting the fanTaaStic Testbeds. If you're experiencing a problem that is not shown here, <a href="#report">please report it</a>.</li>
             </ol>
           </div>
         </div>

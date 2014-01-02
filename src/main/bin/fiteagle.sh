@@ -2,7 +2,10 @@
 
 _dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 _base="$(pwd)"
-_resources_url="https://raw.github.com/tubav/fiteagle_osgi/master/src/main/resources/"
+_repo="fiteagle2"
+_repo_full="tubav/${_repo}"
+_git_url="git://github.com/${_repo_full}"
+_resources_url="https://raw.github.com/${_repo_full}/master/src/main/resources/"
 
 _xmpp_type="openfire"
 _xmpp_version="3_8_2"
@@ -24,6 +27,7 @@ _xmpp_keystore_url="${_resources_url}/${_xmpp_type}/${_xmpp_keystore_path}/${_xm
 _xmpp_root="${_xmpp_folder}/${_xmpp_type}"
 
 _container_type="wildfly"
+#_container_version="8.0.0.CR1" - waiting for https://issues.jboss.org/browse/JBOSGI-754
 _container_version="8.0.0.Beta1"
 _container_name="${_container_type}-${_container_version}"
 _container_file="${_container_name}.zip"
@@ -146,15 +150,14 @@ function checkEnvironment {
 
 
 function installFITeagle {
-  repo="fiteagle_osgi"
-  git_url="git://github.com/tubav/${repo}"
+  
   
   if [ -d "${_src_folder}/.git" ]; then
     echo -n "Updating FITeagle sources..."
     (cd "${_src_folder}" && git pull -q)
   else
     echo -n "Getting FITeagle sources..."
-    git clone -q --recursive --depth 1 ${git_url} ${_src_folder}
+    git clone -q --recursive --depth 1 ${_git_url} ${_src_folder}
   fi
   
   cp "${_src_folder}/src/main/bin/fiteagle.sh" "${_base}"

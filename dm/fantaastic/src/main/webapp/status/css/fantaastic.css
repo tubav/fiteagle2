@@ -1,0 +1,66 @@
+@media (max-width: 767px) {
+    .navbar-inverse {
+        background-color: #3070ee;
+    }
+}
+
+#logo {
+	float:right;
+	height: 5em;
+}
+
+#testbeds li  a {
+    /*color:#ee7030;*/
+    color:#000;
+}
+
+#testbeds li.active a {
+    font-weight:bold;
+}
+
+#testbeds li a:hover {
+    text-decoration:none;
+}
+
+.side-nav {
+    background: #eee;
+    border-top:1px solid black;
+}
+.navbar-collapse {
+    background: #3070ee;
+}
+
+a, label, h1, h2, th, tr, td, input {
+    font-weight:lighter;
+}
+h2 {
+    font-size:140%;
+}
+h1 {
+    margin-bottom:1em;
+}
+
+.navbar-header,.navbar-inverse, .navbar-brand {
+    font-weight:lighter;
+    color:#fff !important;
+}
+.side-nav li ul, .history {
+    list-style-type: none;
+    color:#000;
+}
+.side-nav li ul li {
+    margin-top:0.5em;
+    margin-bottom:0.5em;
+}
+.history li {
+    margin-top:0.5em;
+    margin-bottom:2em;
+}
+.side-nav li ul li:hover {
+    font-weight:bolder;
+}
+
+.tbname {
+    white-space:nowrap;
+}
+

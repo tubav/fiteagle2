@@ -1,37 +1,137 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.fiteagle</groupId>
-    <artifactId>dm</artifactId>
-    <version>0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>federationge</artifactId>
-  <packaging>war</packaging>
-  <name>FITeagle :: DM :: Federation GE</name>
-  <dependencies>
-  	<dependency>
-  		<groupId>javax.ws.rs</groupId>
-  		<artifactId>javax.ws.rs-api</artifactId>
-  		<version>2.0</version>
-  	</dependency>
-  </dependencies>
-      <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.fiteagle</groupId>
+		<artifactId>dm</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>federationManager</artifactId>
+	<packaging>war</packaging>
+	<name>FITeagle :: DM :: Federation Manager</name>
+	<dependencies>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.0.Beta3</version>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.wildfly</groupId> -->
+<!-- 			<artifactId>wildfly-embedded</artifactId> -->
+<!-- 			<version>8.0.0.Beta1</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.openjpa</groupId> -->
+<!-- 			<artifactId>openjpa</artifactId> -->
+<!-- 			<version>2.2.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.openjpa</groupId> -->
+<!-- 			<artifactId>openjpa-maven-plugin</artifactId> -->
+<!-- 			<version>2.3.0</version> -->
+<!-- 			<type>maven-plugin</type> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<configuration>
-                    <skip>false</skip>
-                </configuration>
+					<skip>false</skip>
+				</configuration>
 			</plugin>
-        </plugins>
-    </build>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.openjpa</groupId> -->
+<!-- 				<artifactId>openjpa-maven-plugin</artifactId> -->
+<!-- 				<version>2.2.0</version> -->
+<!-- 				<configuration> -->
+<!-- 					<includes>**/model/*.class</includes> -->
+<!-- 					<addDefaultConstructor>true</addDefaultConstructor> -->
+<!-- 					<enforcePropertyRestrictions>true</enforcePropertyRestrictions> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>enhancer</id> -->
+<!-- 						<phase>process-classes</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>enhance</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+
+<!-- 			</plugin> -->
+		</plugins>
+<!-- 		<pluginManagement> -->
+<!-- 			<plugins> -->
+<!-- 				This plugin's configuration is used to store Eclipse m2e settings -->
+<!-- 					only. It has no influence on the Maven build itself. --> 
+<!-- 				<plugin> -->
+<!-- 					<groupId>org.eclipse.m2e</groupId> -->
+<!-- 					<artifactId>lifecycle-mapping</artifactId> -->
+<!-- 					<version>1.0.0</version> -->
+<!-- 					<configuration> -->
+<!-- 						<lifecycleMappingMetadata> -->
+<!-- 							<pluginExecutions> -->
+<!-- 								<pluginExecution> -->
+<!-- 									<pluginExecutionFilter> -->
+<!-- 										<groupId> -->
+<!-- 											org.apache.openjpa -->
+<!-- 										</groupId> -->
+<!-- 										<artifactId> -->
+<!-- 											openjpa-maven-plugin -->
+<!-- 										</artifactId> -->
+<!-- 										<versionRange> -->
+<!-- 											[2.2.0,) -->
+<!-- 										</versionRange> -->
+<!-- 										<goals> -->
+<!-- 											<goal>enhance</goal> -->
+<!-- 										</goals> -->
+<!-- 									</pluginExecutionFilter> -->
+<!-- 									<action> -->
+<!-- 										<ignore></ignore> -->
+<!-- 									</action> -->
+<!-- 								</pluginExecution> -->
+<!-- 							</pluginExecutions> -->
+<!-- 						</lifecycleMappingMetadata> -->
+<!-- 					</configuration> -->
+<!-- 				</plugin> -->
+<!-- 			</plugins> -->
+<!-- 		</pluginManagement> -->
+	</build>
 </project>

@@ -1,0 +1,8 @@
+ { "name": "something",
+         "country" : "de",
+         "fax" : "faxit",
+         "phone" : "phoneno",
+         "email" : "somemail",
+         "type" : "organization",
+         "address" : "somewhere"
+}

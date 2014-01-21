@@ -1,0 +1,7 @@
+{
+    "country": "de",
+    "latitude": "1234",
+    "longitude": "54321",
+    "adminUsername": "admin username",
+    "nodeType": "slave"       
+}
